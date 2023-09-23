@@ -1,0 +1,52 @@
+.header {
+  background-color: #1C1C21;
+}
+
+.headerContent {
+  margin: 0 auto;
+  padding: 16px 40px;
+  max-width: 1280px;
+  display: grid;
+  grid-template-columns: 1fr 290px 1fr;
+  grid-gap: 20px;
+}
+
+.navBlock {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navBlock__auth {
+  justify-self: right;
+}
+
+.link {
+  margin: 0;
+  padding: 16px 0 16px;
+  display: flex;
+  flex-shrink: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+
+.link:not(:last-child) {
+  padding: 16px 20px 16px 0;
+}
+
+.link:hover {
+  opacity: .6;
+}
+
+.linkText {
+  margin: 0;
+  padding-left: 8px;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: #F2F2F3;
+}
