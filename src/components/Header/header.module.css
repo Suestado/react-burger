@@ -4,7 +4,8 @@
 
 .headerContent {
   margin: 0 auto;
-  padding: 16px 40px;
+  padding: 16px 20px;
+  box-sizing: border-box;
   max-width: 1280px;
   display: grid;
   grid-template-columns: 1fr 290px 1fr;
