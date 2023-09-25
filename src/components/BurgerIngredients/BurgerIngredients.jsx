@@ -1,9 +1,9 @@
-import styles from './constructorBlock.module.css';
+import styles from './burgerIngredients.module.css';
 import IngredientsSwitchbar from '../IngredientsSwitchbar/IngredientsSwitchbar';
 import IngredientsGroupBlock from '../IngredientsGroupBlock/IngredientsGroupBlock';
 
 
-function ConstructorBlock() {
+function BurgerIngredients() {
   return(
     <section className={styles.constructorSection}>
       <h1 className={styles.header}>Соберите бургер</h1>
@@ -17,4 +17,4 @@ function ConstructorBlock() {
   )
 }
 
-export default ConstructorBlock;
+export default BurgerIngredients;

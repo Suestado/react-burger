@@ -1,7 +1,6 @@
 import styles from './burgerIngredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-
 function BurgerIngredient({ item }) {
   return (
     <article className={styles.burgerIngredient}>

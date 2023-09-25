@@ -3,7 +3,7 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-function Header() {
+function AppHeader() {
   return (
     <header className="header">
       <div className="headerContent">
@@ -30,4 +30,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default AppHeader;

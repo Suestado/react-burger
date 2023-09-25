@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import ConstructorBlock from '../ConstructorBlock/ConstructorBlock';
-import IngredientsBlock from '../IngredientsBlock/IngredientsBlock';
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import MainApi from '../../utils/MainApi';
 import { GlobalContext } from '../../context/GlobalContext';
 
@@ -18,8 +18,8 @@ function Main() {
   return (
     <GlobalContext.Provider value={{ ingredientsList }}>
       <main className="main">
-        <ConstructorBlock/>
-        <IngredientsBlock/>
+        <BurgerIngredients/>
+        <BurgerConstructor/>
       </main>
     </GlobalContext.Provider>
   );

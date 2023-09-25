@@ -1,8 +1,8 @@
 .burgerIngredient {
   margin: 0;
   padding: 0 16px;
+  border-radius: 15px;
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-rows: 120px 24px 48px;
   grid-row-gap: 8px;
   transition: .3s ease-in-out;

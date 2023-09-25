@@ -1,10 +1,10 @@
-import Header from '../Header/Header';
+import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
 
 function App() {
   return (
     <>
-      <Header/>
+      <AppHeader/>
       <Main/>
     </>
   );
