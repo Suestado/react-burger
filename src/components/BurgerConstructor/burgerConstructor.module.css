@@ -55,10 +55,15 @@
 
 .priceTag {
   display: grid;
-  grid-template-columns: 1fr 24px;
+  grid-template-columns: 1fr 36px;
   grid-column-gap: 8px;
   align-items: center;
   justify-items: right;
+}
+
+.priceTag svg {
+  width: 36px;
+  height: 36px;
 }
 
 .ingredientsContainer::-webkit-scrollbar {

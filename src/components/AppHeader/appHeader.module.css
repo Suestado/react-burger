@@ -27,7 +27,10 @@
 .link {
   margin: 0;
   padding: 16px 0 16px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 24px auto;
+  grid-column-gap: 8px;
+  align-items: center;
   flex-shrink: 0;
   text-decoration: none;
   cursor: pointer;
@@ -36,6 +39,7 @@
 
 .link:not(:last-child) {
   padding: 16px 20px 16px 0;
+  margin-right: 28px;
 }
 
 .link:hover {
@@ -47,8 +51,6 @@
   padding-left: 8px;
 
   font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
   line-height: 24px;
   color: #F2F2F3;
 }

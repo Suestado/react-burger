@@ -14,7 +14,10 @@ function IngredientsGroupBlock({ title, type, id }) {
       <h2 className={styles.header} id={id}>{title}</h2>
       <div className={styles.container}>
         {sortedIngredientsList.map((item) => {
-          return <BurgerIngredient item={item}/>
+          return <BurgerIngredient
+            key={item._id}
+            item={item}
+          />
         })}
       </div>
     </section>

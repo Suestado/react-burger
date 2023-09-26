@@ -1,6 +1,6 @@
 .ingredientsGroupBlock {
   margin: 0;
-  padding: 40px 0;
+  padding: 0 0 40px;
 }
 
 .header {
@@ -15,7 +15,7 @@
 
 .container {
   margin: 0;
-  padding: 16px 0;
+  padding: 0;
 
   display: grid;
   grid-template-columns: 1fr 1fr;

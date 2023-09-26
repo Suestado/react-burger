@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0 16px;
   border-radius: 15px;
+  position: relative;
   display: grid;
   grid-template-rows: 120px 24px 48px;
   grid-row-gap: 8px;
@@ -34,4 +35,8 @@
 
 .description {
   text-align: center;
+}
+
+.counter {
+
 }

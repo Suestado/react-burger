@@ -6,7 +6,7 @@ import IngredientsGroupBlock from '../IngredientsGroupBlock/IngredientsGroupBloc
 function BurgerIngredients() {
   return(
     <section className={styles.constructorSection}>
-      <h1 className={styles.header}>Соберите бургер</h1>
+      <h1 className={`text text_type_main-medium ${styles.header}`}>Соберите бургер</h1>
       <IngredientsSwitchbar/>
       <div className={styles.ingredientsSection}>
         <IngredientsGroupBlock title="Булки" type="bun" id="bun"/>

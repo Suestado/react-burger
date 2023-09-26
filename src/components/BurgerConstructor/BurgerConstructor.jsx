@@ -24,12 +24,13 @@ function BurgerConstructor() {
       <div className={`${styles.ingredientsContainer} ${isFillingsEmpty && styles.ingredientsContainer_type_empty}`}>
         {fillingsList.map((element) => {
           return (
-            <div className={styles.ingredient}>
+            <div
+              key={element._id}
+              className={styles.ingredient}>
               <div className={styles.dragIcon}>
                 <DragIcon type="primary"/>
               </div>
               <ConstructorElement
-                key={element._id}
                 text={element.name}
                 price={element.price}
                 thumbnail={element.image}

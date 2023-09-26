@@ -1,0 +1,46 @@
+.ingredientWrapper {
+  margin: 0 auto;
+  width: 520px;
+  display: grid;
+  grid-template-rows: 240px auto auto;
+  grid-row-gap: 16px;
+}
+
+.picture {
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  padding-bottom: 16px;
+}
+
+.nutrientsList {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style-type:  none;
+}
+
+.nutrientBlock {
+  width: 120px;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-row-gap: 8px;
+  justify-content: center;
+}
+
+.nutrientName {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.nutrientValue {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}

@@ -1,28 +1,29 @@
+import styles from './appHeader.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
   return (
-    <header className="header">
-      <div className="headerContent">
-        <nav className="navBlock">
-          <a className="link" href="#">
+    <header className={styles.header}>
+      <div className={styles.headerContent}>
+        <nav className={styles.navBlock}>
+          <a className={styles.link} href="#">
             <BurgerIcon type="primary"/>
-            <span className="linkText">Конструктор</span>
+            <span className={`text text_type_main-default ${styles.linkText}`}>Конструктор</span>
           </a>
 
-          <a className="link" href="#">
+          <a className={styles.link} href="#">
             <ListIcon type="secondary"/>
-            <span className="linkText">Лента заказов</span>
+            <span className={`text text_type_main-default ${styles.linkText}`}>Лента заказов</span>
           </a>
         </nav>
         <Logo/>
-        <nav className="navBlock navBlock__auth">
-          <a className="link" href="#">
+        <nav className={`${styles.navBlock} ${styles.navBlock__auth}`}>
+          <a className={styles.link} href="#">
             <ProfileIcon type="secondary"/>
-            <span className="linkText">Личный кабинет</span>
+            <span className={`text text_type_main-default ${styles.linkText}`}>Личный кабинет</span>
           </a>
         </nav>
       </div>

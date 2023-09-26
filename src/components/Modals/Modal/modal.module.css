@@ -1,0 +1,31 @@
+.modal {
+  width: 720px;
+  padding: 40px 40px 60px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: minmax(64px, auto) auto;
+  border-radius: 40px;
+  border: 1px solid rgba(76, 76, 255, 0.20);
+  background: #1C1C21;
+  align-self: center;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 580px 24px;
+  grid-column-gap: 36px;
+  align-items: center;
+  grid-template-areas:
+  'A B';
+}
+
+.closeBtn {
+  grid-area: B;
+  transition: .3s ease-in-out;
+}
+
+.closeBtn svg:hover {
+  cursor: pointer;
+  opacity: .6;
+}
