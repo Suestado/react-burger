@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
+import styles from './main.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import MainApi from '../../utils/MainApi';
 import { GlobalContext } from '../../context/GlobalContext';
-
 
 function Main() {
   const [ingredientsList, setIngredientsList] = useState([]);
@@ -14,10 +14,9 @@ function Main() {
       .catch((err) => console.log(err));
   }, []);
 
-
   return (
     <GlobalContext.Provider value={{ ingredientsList }}>
-      <main className="main">
+      <main className={styles.main}>
         <BurgerIngredients/>
         <BurgerConstructor/>
       </main>

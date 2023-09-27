@@ -1,13 +1,26 @@
+import { useState } from 'react';
 import styles from './burgerConstructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { baseData } from '../../utils/baseData';
+import Modal from '../Modals/Modal/Modal';
+import OrderDetails from '../Modals/OrderDetails/OrderDetails';
 
 function BurgerConstructor() {
-  const fillingsList = baseData.slice(1, baseData.length - 2)
+  const fillingsList = baseData.slice(1, baseData.length - 2);
   const isFillingsEmpty = fillingsList.length === 0;
+  const [detailsOpened, setDetailsOpened] = useState(false);
+
+  function openModal() {
+    setDetailsOpened(true);
+  }
+
+  function closeModal(evt) {
+    evt.stopPropagation();
+    setDetailsOpened(false);
+  }
 
   return (
     <section className={styles.ingredientsSection}>
@@ -57,14 +70,22 @@ function BurgerConstructor() {
               return currentElement.price + acc;
             }, 0)}
           </p>
-            <CurrencyIcon type="primary"/>
+          <CurrencyIcon type="primary"/>
         </div>
         <Button
           htmlType="button"
           type="primary"
           size="large"
+          onClick={openModal}
         >Оформить заказ</Button>
       </div>
+
+      <Modal
+        isOpen={detailsOpened}
+        closeModal={closeModal}
+      >
+        <OrderDetails/>
+      </Modal>
     </section>
   );
 }

@@ -1,9 +1,16 @@
 import { GlobalContext } from '../../context/GlobalContext';
+import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import styles from './ingredientsGroupBlock.module.css';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 
 function IngredientsGroupBlock({ title, type, id }) {
+  IngredientsGroupBlock.propTypes = {
+    title: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }
+
   const { ingredientsList } = useContext(GlobalContext);
   const sortedIngredientsList = ingredientsList.filter((item) => {
     return item.type === type;
@@ -17,7 +24,7 @@ function IngredientsGroupBlock({ title, type, id }) {
           return <BurgerIngredient
             key={item._id}
             item={item}
-          />
+          />;
         })}
       </div>
     </section>
