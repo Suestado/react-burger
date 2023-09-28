@@ -11,7 +11,7 @@ function Main() {
   useEffect(() => {
     MainApi.getIngredients()
       .then((res) => setIngredientsList(res.data))
-      .catch((err) => console.log(err));
+      .catch((console.error));
   }, []);
 
   return (

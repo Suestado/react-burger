@@ -28,7 +28,7 @@ function BurgerConstructor() {
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={baseData[0].name}
+          text={`${baseData[0].name} (верх)`}
           price={baseData[0].price}
           thumbnail={baseData[0].image}
         />
@@ -57,9 +57,9 @@ function BurgerConstructor() {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={baseData[baseData.length - 1].name}
-          price={baseData[baseData.length - 1].price}
-          thumbnail={baseData[baseData.length - 1].image}
+          text={`${baseData[0].name} (низ)`}
+          price={baseData[0].price}
+          thumbnail={baseData[0].image}
         />
       </div>
 
@@ -80,12 +80,12 @@ function BurgerConstructor() {
         >Оформить заказ</Button>
       </div>
 
-      <Modal
-        isOpen={detailsOpened}
+      {detailsOpened && <Modal
         closeModal={closeModal}
       >
         <OrderDetails/>
       </Modal>
+      }
     </section>
   );
 }

@@ -1,11 +1,7 @@
-import PropTypes from 'prop-types';
 import styles from './modalOverlay.module.css';
+import { MODAL_OVERLAY_TYPES } from '../../../utils/types';
 
 function ModalOverlay({ handleCloseModal, children }) {
-  ModalOverlay.propTypes = {
-    handleCloseModal: PropTypes.func.isRequired,
-    children: PropTypes.node,
-  };
 
   return (
     <div
@@ -16,5 +12,7 @@ function ModalOverlay({ handleCloseModal, children }) {
     </div>
   );
 }
+
+ModalOverlay.propTypes = MODAL_OVERLAY_TYPES;
 
 export default ModalOverlay;
