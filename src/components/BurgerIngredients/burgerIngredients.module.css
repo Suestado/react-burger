@@ -1,0 +1,36 @@
+.constructorSection {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.header {
+  margin: 0;
+  padding: 40px 0 20px;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px;
+  color: #F2F2F3;
+}
+
+.ingredientsSection {
+  margin: 0;
+  padding: 0;
+  max-height: calc(100vh - 296px);
+  min-height: 320px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.ingredientsSection::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredientsSection::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.ingredientsSection::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+

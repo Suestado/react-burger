@@ -1,0 +1,79 @@
+.ingredientsSection {
+  width: 100%;
+  height: calc(100vh - 88px);
+  padding: 100px 16px 52px;
+  box-sizing: border-box;
+}
+
+.fixIngredientsContainer {
+  padding-left: 32px;
+}
+
+.ingredientsContainer {
+  max-height: calc(100vh - 536px);
+  min-height: 80px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+
+  margin: 16px -8px 16px 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  grid-row-gap: 16px;
+}
+
+.ingredientsContainer_type_empty {
+  min-height: 0;
+}
+
+.dragIcon {
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+
+.dragIcon:hover {
+  opacity: .6;
+}
+
+.ingredient {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 8px;
+  align-items: center;
+}
+
+.orderContainer {
+  padding: 40px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 215px;
+  grid-template-rows: 1fr;
+  grid-column-gap: 40px;
+}
+
+.priceTag {
+  display: grid;
+  grid-template-columns: 1fr 36px;
+  grid-column-gap: 8px;
+  align-items: center;
+  justify-items: right;
+}
+
+.priceTag svg {
+  width: 36px;
+  height: 36px;
+}
+
+.ingredientsContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredientsContainer::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.ingredientsContainer::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}

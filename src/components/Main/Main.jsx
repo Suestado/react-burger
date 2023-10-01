@@ -1,0 +1,27 @@
+import { useState, useEffect } from 'react';
+import styles from './main.module.css';
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import MainApi from '../../utils/MainApi';
+import { GlobalContext } from '../../context/GlobalContext';
+
+function Main() {
+  const [ingredientsList, setIngredientsList] = useState([]);
+
+  useEffect(() => {
+    MainApi.getIngredients()
+      .then((res) => setIngredientsList(res.data))
+      .catch((console.error));
+  }, []);
+
+  return (
+    <GlobalContext.Provider value={{ ingredientsList }}>
+      <main className={styles.main}>
+        <BurgerIngredients/>
+        <BurgerConstructor/>
+      </main>
+    </GlobalContext.Provider>
+  );
+}
+
+export default Main;

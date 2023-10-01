@@ -1,0 +1,42 @@
+.burgerIngredient {
+  margin: 0;
+  padding: 0 16px;
+  border-radius: 15px;
+  position: relative;
+  display: grid;
+  grid-template-rows: 120px 24px 48px;
+  grid-row-gap: 8px;
+  transition: .3s ease-in-out;
+}
+
+.burgerIngredient:hover {
+  cursor: pointer;
+  box-shadow: inset 0 0 25px rgba(99, 62, 141, 0.7);
+}
+
+.picture {
+  max-width: 240px;
+  justify-self: center;
+  align-self: center;
+  object-fit: contain;
+}
+
+.priceContainer {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.priceTag {
+  margin-right: 8px;
+}
+
+.description {
+  text-align: center;
+}
+
+.counter {
+
+}
