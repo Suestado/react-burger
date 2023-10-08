@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './burgerConstructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,13 +8,16 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { baseData } from '../../utils/baseData';
 import Modal from '../Modals/Modal/Modal';
 import OrderDetails from '../Modals/OrderDetails/OrderDetails';
+import getOrderStatus from '../../services/actions/orderDetails_actions';
 
 function BurgerConstructor() {
-  const fillingsList = baseData.slice(1, baseData.length - 2);
+  const fillingsList = [];
   const isFillingsEmpty = fillingsList.length === 0;
   const [detailsOpened, setDetailsOpened] = useState(false);
+  const dispatch = useDispatch();
 
   function openModal() {
+    dispatch(getOrderStatus()); //TODO добавить ингредиенты в запрос
     setDetailsOpened(true);
   }
 

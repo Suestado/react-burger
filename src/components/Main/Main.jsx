@@ -1,26 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './main.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import MainApi from '../../utils/MainApi';
-import { GlobalContext } from '../../context/GlobalContext';
+import getIngredients from '../../services/actions/fullIngredientsList_actions';
 
 function Main() {
-  const [ingredientsList, setIngredientsList] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    MainApi.getIngredients()
-      .then((res) => setIngredientsList(res.data))
-      .catch((console.error));
-  }, []);
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   return (
-    <GlobalContext.Provider value={{ ingredientsList }}>
       <main className={styles.main}>
         <BurgerIngredients/>
         <BurgerConstructor/>
       </main>
-    </GlobalContext.Provider>
   );
 }
 

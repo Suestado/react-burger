@@ -1,19 +1,24 @@
-import { GlobalContext } from '../../context/GlobalContext';
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { useEffect, useRef, memo } from 'react';
 import styles from './ingredientsGroupBlock.module.css';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 import { INGREDIENTS_GROUP_BLOCK_TYPES } from '../../utils/types';
 
-function IngredientsGroupBlock({ title, type, id }) {
+const IngredientsGroupBlock = memo(({ title, type, id, handleHeadersRef }) => {
+  const ingredientsList = useSelector((store) => store.ingredients.fullIngredientList);
+  const ref = useRef(null);
 
-  const { ingredientsList } = useContext(GlobalContext);
+  useEffect(() => {
+    handleHeadersRef(ref, type);
+  }, []);
+
   const sortedIngredientsList = ingredientsList.filter((item) => {
     return item.type === type;
   });
 
   return (
     <section className={styles.ingredientsGroupBlock}>
-      <h2 className={styles.header} id={id}>{title}</h2>
+      <h2 className={styles.header} id={id} ref={ref}>{title}</h2>
       <div className={styles.container}>
         {sortedIngredientsList.map((item) => {
           return (
@@ -26,7 +31,7 @@ function IngredientsGroupBlock({ title, type, id }) {
       </div>
     </section>
   );
-}
+})
 
 IngredientsGroupBlock.propTypes = INGREDIENTS_GROUP_BLOCK_TYPES;
 

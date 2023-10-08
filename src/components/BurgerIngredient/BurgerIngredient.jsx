@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './burgerIngredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,15 +7,19 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modals/Modal/Modal';
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails';
 import { BURGER_INGREDIENT_TYPES } from '../../utils/types';
+import { getIngredient, deleteIngredient } from '../../services/actions/ingredientDetails_actions';
 
-function BurgerIngredient({ item }) {
+const BurgerIngredient = memo(({ item }) => {
   const [detailsOpened, setDetailsOpened] = useState(false);
+  const dispatch = useDispatch();
 
   function openModal() {
+    dispatch(getIngredient(item))
     setDetailsOpened(true);
   }
 
   function closeModal(evt) {
+    dispatch(deleteIngredient(item))
     evt.stopPropagation();
     setDetailsOpened(false);
   }
@@ -35,14 +40,12 @@ function BurgerIngredient({ item }) {
         title="Детали ингредиента"
         closeModal={closeModal}
       >
-        <IngredientDetails
-          ingredient={item}
-        />
+        <IngredientDetails/>
       </Modal>
       }
     </article>
   );
-}
+})
 
 IngredientDetails.propTypes = {
   ingredient: PropTypes.shape(BURGER_INGREDIENT_TYPES),

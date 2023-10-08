@@ -5,14 +5,14 @@ const BURGER_INGREDIENT_TYPES = {
   price: PropTypes.number.isRequired,
 };
 
-const INGREDIENTS_DETAILS_TYPES = {
-  image_large: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-};
+// const INGREDIENTS_DETAILS_TYPES = {
+//   image_large: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+//   calories: PropTypes.number.isRequired,
+//   proteins: PropTypes.number.isRequired,
+//   fat: PropTypes.number.isRequired,
+//   carbohydrates: PropTypes.number.isRequired,
+// };
 
 const MODAL_TYPES = {
   title: PropTypes.string,
@@ -33,7 +33,6 @@ const INGREDIENTS_GROUP_BLOCK_TYPES = {
 
 export {
   BURGER_INGREDIENT_TYPES,
-  INGREDIENTS_DETAILS_TYPES,
   MODAL_TYPES,
   MODAL_OVERLAY_TYPES,
   INGREDIENTS_GROUP_BLOCK_TYPES,
