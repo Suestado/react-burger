@@ -1,7 +1,7 @@
 import {
   PUT_BURGER_BUN,
   PUT_BURGER_FILLING,
-  DELETE_BURGER_BUN,
+  REPLACE_BURGER_BUN,
   DELETE_BURGER_FILLING,
   REPLACE_BURGER_FILLING,
 } from '../../utils/constants';
@@ -16,13 +16,14 @@ const putBurgerFilling = (fillingIngredient) => ({
   fillingIngredient: fillingIngredient,
 })
 
-const deleteBurgerBun = () => ({
-  type: DELETE_BURGER_BUN,
+const replaceBurgerBun = (newBun) => ({
+  type: REPLACE_BURGER_BUN,
+  newBun: newBun,
 })
 
-const deleteBurgerFilling = (fillingIngredient) => ({
+const deleteBurgerFilling = (fillingIngredientIndex) => ({
   type: DELETE_BURGER_FILLING,
-  deleteIngredientID: fillingIngredient._id
+  deleteIngredientIndex: fillingIngredientIndex
 })
 
 const replaceBurgerFilling = (fillingIngredient) => ({
@@ -32,7 +33,7 @@ const replaceBurgerFilling = (fillingIngredient) => ({
 export {
   putBurgerBun,
   putBurgerFilling,
-  deleteBurgerBun,
+  replaceBurgerBun,
   deleteBurgerFilling,
   replaceBurgerFilling,
 }

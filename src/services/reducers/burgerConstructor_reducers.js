@@ -1,7 +1,7 @@
 import {
   PUT_BURGER_BUN,
   PUT_BURGER_FILLING,
-  DELETE_BURGER_BUN,
+  REPLACE_BURGER_BUN,
   DELETE_BURGER_FILLING,
   REPLACE_BURGER_FILLING,
 } from '../../utils/constants';
@@ -19,7 +19,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
           ...state.customerBurgerIngredients,
           action.bunIngredient,
           action.bunIngredient,
-        ]
+        ],
       };
     }
     case PUT_BURGER_FILLING: {
@@ -27,24 +27,24 @@ const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         customerBurgerIngredients: [
           ...state.customerBurgerIngredients,
-          action.fillingIngredient
-        ]
+          action.fillingIngredient,
+        ],
       };
     }
-    case DELETE_BURGER_BUN: {
+    case REPLACE_BURGER_BUN: {
       return {
         ...state,
-        customerBurgerIngredients: state.customerBurgerIngredients.filter((item) => {
-          return item.type !== 'bun'
-        })
+        customerBurgerIngredients: state.customerBurgerIngredients.map((item) => {
+          return item.type === 'bun' ? action.newBun : item;
+        }),
       };
     }
     case DELETE_BURGER_FILLING: {
       return {
         ...state,
-        customerBurgerIngredients: state.customerBurgerIngredients.filter((item) => {
-          return item.type !== action.deleteIngredientID
-        })
+        customerBurgerIngredients: state.customerBurgerIngredients.filter((item, index) => {
+          return index !== action.deleteIngredientIndex;
+        }),
       };
     }
     case REPLACE_BURGER_FILLING: {

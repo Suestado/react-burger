@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import styles from './burgerIngredients.module.css';
 import IngredientsSwitchbar from '../IngredientsSwitchbar/IngredientsSwitchbar';
 import IngredientsGroupBlock from '../IngredientsGroupBlock/IngredientsGroupBlock';
@@ -8,12 +8,12 @@ function BurgerIngredients() {
   const [activeTab, setActiveTAb] = useState('bun');
   const ingredientsRef = useRef(null)
 
-  function handleHeadersRef(ref, blockType) {
+  const handleHeadersRef = useCallback((ref, blockType) => {
     setRefIngredientHeaders((prevState) => ([
       ...prevState,
       ref.current
     ]))
-  }
+  }, [])
 
     function handleScroll() {
     const blockTop = ingredientsRef.current.getBoundingClientRect().top;
