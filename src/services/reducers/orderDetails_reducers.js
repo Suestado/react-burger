@@ -2,13 +2,14 @@ import {
   GET_ORDER_STATUS,
   GET_ORDER_STATUS_SUCCESS,
   GET_ORDER_STATUS_FAILURE,
+  CLEAR_ORDER_STATUS,
 } from '../../utils/constants';
 
 const initialState = {
   orderNumber: null,
   name: '',
-  getRequestProcessing: false,
-  getRequestFailure: false,
+  orderRequestProcessing: false,
+  orderRequestFailure: false,
 };
 
 const getOrderStatusReducer = (state = initialState, action) => {
@@ -16,8 +17,8 @@ const getOrderStatusReducer = (state = initialState, action) => {
     case GET_ORDER_STATUS: {
       return {
         ...state,
-        getRequestProcessing: true,
-        getRequestFailure: false,
+        orderRequestProcessing: true,
+        orderRequestFailure: false,
       };
     }
     case GET_ORDER_STATUS_SUCCESS: {
@@ -25,15 +26,20 @@ const getOrderStatusReducer = (state = initialState, action) => {
         ...state,
         orderNumber: action.orderNumber,
         name: action.name,
-        getRequestProcessing: false,
+        orderRequestProcessing: false,
       };
     }
     case GET_ORDER_STATUS_FAILURE: {
       return {
         ...state,
-        getRequestProcessing: false,
-        getRequestFailure: true,
+        orderRequestProcessing: false,
+        orderRequestFailure: true,
       };
+    }
+    case CLEAR_ORDER_STATUS: {
+      return {
+        ...initialState
+      }
     }
     default: {
       return state;

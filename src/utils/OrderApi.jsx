@@ -21,9 +21,9 @@ class OrderApiClass {
   getOrderNumber(ingredients) {
     return this._request(
       'POST',
-      {
-      "ingredients": JSON.stringify([...ingredients])
-      }
+      JSON.stringify({
+        'ingredients': ingredients,
+      }),
     );
   }
 

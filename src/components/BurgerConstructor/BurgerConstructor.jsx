@@ -7,10 +7,9 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { baseData } from '../../utils/baseData';
 import Modal from '../Modals/Modal/Modal';
 import OrderDetails from '../Modals/OrderDetails/OrderDetails';
-import getOrderStatus from '../../services/actions/orderDetails_actions';
+import { getOrderStatus, clearOrderStatus } from '../../services/actions/orderDetails_actions';
 import EmptyBun from './ConstructorElementsEmpty/EmptyBun/EmptyBun';
 import EmptyFillings from './ConstructorElementsEmpty/EmptyFillings/EmptyFillings';
 import {
@@ -21,8 +20,9 @@ import {
 } from '../../services/actions/burgerConstructor_actions';
 
 function BurgerConstructor() {
-  const fillingsList = useSelector((store) => store.customerBurger.customerBurgerIngredients);
-  const [detailsOpened, setDetailsOpened] = useState(false);
+  const customerBurgerIngredients = useSelector((store) => store.customerBurger.customerBurgerIngredients);
+  const { orderNumber,  orderRequestFailure} = useSelector((store) => store.orderStatus);
+  // const [detailsOpened, setDetailsOpened] = useState(false);
   const dispatch = useDispatch();
 
   const [{ isHoverBunTop }, dropTargetBunTop] = useDrop({
@@ -56,7 +56,7 @@ function BurgerConstructor() {
   });
 
   function onDropHandlerBun(item) {
-    if (fillingsList.some((item) => item.type === 'bun')) {
+    if (customerBurgerIngredients.some((item) => item.type === 'bun')) {
       dispatch(replaceBurgerBun(item));
     } else {
       dispatch(putBurgerBun(item));
@@ -72,17 +72,20 @@ function BurgerConstructor() {
   }
 
   function openModal() {
-    dispatch(getOrderStatus()); //TODO добавить ингредиенты в запрос
-    setDetailsOpened(true);
+    const ingredients = customerBurgerIngredients.map((item) => {
+      return item._id;
+    });
+
+    dispatch(getOrderStatus(ingredients));
   }
 
   function closeModal(evt) {
     evt.stopPropagation();
-    setDetailsOpened(false);
+    dispatch(clearOrderStatus())
   }
 
-  const isBunPlaseEmpty = !fillingsList.some((item) => item.type === 'bun');
-  const fillingsListEmpty = !fillingsList.some((item) => item.type !== 'bun');
+  const isBunPlaseEmpty = !customerBurgerIngredients.some((item) => item.type === 'bun');
+  const fillingsListEmpty = !customerBurgerIngredients.some((item) => item.type !== 'bun');
   const bunIsHovered = isHoverBunTop || isHoverBunBottom ? styles.hoveredContainer : '';
   const fillingsIsHovered = isHoverFillings ? styles.hoveredContainer : '';
 
@@ -97,9 +100,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${fillingsList.find((item) => item.type === 'bun').name} (верх)`}
-            price={fillingsList.find((item) => item.type === 'bun').price}
-            thumbnail={fillingsList.find((item) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item) => item.type === 'bun').name} (верх)`}
+            price={customerBurgerIngredients.find((item) => item.type === 'bun').price}
+            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun').image}
           />
         }
       </div>
@@ -110,7 +113,7 @@ function BurgerConstructor() {
       >
         {fillingsListEmpty ? <EmptyFillings/> :
           <>
-            {fillingsList.map((element, index) => {
+            {customerBurgerIngredients.map((element, index) => {
               if (element.type !== 'bun') {
                 return (
                   <div
@@ -141,9 +144,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${fillingsList.find((item) => item.type === 'bun').name} (низ)`}
-            price={fillingsList.find((item) => item.type === 'bun').price}
-            thumbnail={fillingsList.find((item) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item) => item.type === 'bun').name} (низ)`}
+            price={customerBurgerIngredients.find((item) => item.type === 'bun').price}
+            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun').image}
           />
         }
       </div>
@@ -152,7 +155,7 @@ function BurgerConstructor() {
       <div className={styles.orderContainer}>
         <div className={styles.priceTag}>
           <p className="text text_type_main-large">
-            {baseData.reduce((acc, currentElement) => {
+            {customerBurgerIngredients.reduce((acc, currentElement) => {
               return currentElement.price + acc;
             }, 0)}
           </p>
@@ -166,10 +169,12 @@ function BurgerConstructor() {
         >Оформить заказ</Button>
       </div>
 
-      {detailsOpened && <Modal
+      {orderNumber && <Modal
         closeModal={closeModal}
       >
-        <OrderDetails/>
+        <OrderDetails
+          orderNumber={orderNumber}
+        />
       </Modal>
       }
     </section>

@@ -12,7 +12,7 @@ function Main() {
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, []);
 
   return (
     <DndProvider backend={HTML5Backend}>

@@ -2,6 +2,7 @@ import {
   GET_ORDER_STATUS,
   GET_ORDER_STATUS_SUCCESS,
   GET_ORDER_STATUS_FAILURE,
+  CLEAR_ORDER_STATUS,
 } from '../../utils/constants';
 import OrderApi from '../../utils/OrderApi';
 
@@ -27,10 +28,17 @@ function getOrderStatus(ingredients) {
       .catch((err) => {
         dispatch({
           type: GET_ORDER_STATUS_FAILURE,
-        })
-        console.error(err)
+        });
+        console.error(err);
       });
   };
 }
 
-export default getOrderStatus;
+const clearOrderStatus = () => ({
+  type: CLEAR_ORDER_STATUS,
+});
+
+export {
+  getOrderStatus,
+  clearOrderStatus,
+};
