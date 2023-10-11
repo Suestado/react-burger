@@ -20,7 +20,7 @@ import {
 } from '../../services/actions/burgerConstructor_actions';
 
 function BurgerConstructor() {
-  const customerBurgerIngredients = useSelector((store) => store.customerBurger.customerBurgerIngredients);
+  const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);
   const { orderNumber,  orderRequestFailure} = useSelector((store) => store.orderStatus);
   // const [detailsOpened, setDetailsOpened] = useState(false);
   const dispatch = useDispatch();

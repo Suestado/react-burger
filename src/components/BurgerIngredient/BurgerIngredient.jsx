@@ -1,5 +1,5 @@
 import { useState, memo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import styles from './burgerIngredient.module.css';
@@ -36,6 +36,9 @@ const BurgerIngredient = memo(({ item }) => {
   }, []);
 
   const ingredientRef = item.type === 'bun' ? dragRefBun : dragRefFillings;
+  const orderedCount = useSelector((store) => store.customerBurger.customerBurgerIngredients.reduce((acc, ingredient) => {
+    return ingredient._id === item._id ? acc + 1 : acc;
+  }, 0));
 
   return (
     <article
@@ -49,7 +52,7 @@ const BurgerIngredient = memo(({ item }) => {
         <CurrencyIcon type="primary"/>
       </div>
       <span className={`text text_type_main-default ${styles.description}`}>{item.name}</span>
-      <Counter count={1} size="default" extraClass="m-1"/>
+      {orderedCount > 0 && <Counter count={orderedCount} size="default" extraClass="m-1"/>}
       {detailsOpened && <Modal
         title="Детали ингредиента"
         closeModal={closeModal}
