@@ -1,7 +1,8 @@
 import styles from './ingredientsSwitchbar.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { INGREDIENTS_SWITCHBAR } from '../../utils/types';
 
-function IngredientsSwitchbar({ activeTab, setActiveTAb }) {
+function IngredientsSwitchbar({ activeTab }) {
 
   return (
     <div className={styles.ingredientsSwitchbar}>
@@ -23,5 +24,7 @@ function IngredientsSwitchbar({ activeTab, setActiveTAb }) {
     </div>
   );
 }
+
+IngredientsSwitchbar.propTypes = INGREDIENTS_SWITCHBAR;
 
 export default IngredientsSwitchbar;

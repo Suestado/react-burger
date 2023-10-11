@@ -31,7 +31,7 @@ const IngredientsGroupBlock = memo(({ title, type, id, handleHeadersRef }) => {
       </div>
     </section>
   );
-})
+});
 
 IngredientsGroupBlock.propTypes = INGREDIENTS_GROUP_BLOCK_TYPES;
 

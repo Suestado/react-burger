@@ -9,26 +9,27 @@ import {
 const putBurgerBun = (bunIngredient) => ({
   type: PUT_BURGER_BUN,
   bunIngredient: bunIngredient,
-})
+});
 
 const putBurgerFilling = (fillingIngredient) => ({
   type: PUT_BURGER_FILLING,
   fillingIngredient: fillingIngredient,
-})
+});
 
 const replaceBurgerBun = (newBun) => ({
   type: REPLACE_BURGER_BUN,
   newBun: newBun,
-})
+});
 
 const deleteBurgerFilling = (fillingIngredientIndex) => ({
   type: DELETE_BURGER_FILLING,
-  deleteIngredientIndex: fillingIngredientIndex
-})
+  deleteIngredientIndex: fillingIngredientIndex,
+});
 
-const replaceBurgerFilling = (fillingIngredient) => ({
+const replaceBurgerFilling = (newIngredientsList) => ({
   type: REPLACE_BURGER_FILLING,
-})
+  newIngredientsList: newIngredientsList,
+});
 
 export {
   putBurgerBun,
@@ -36,4 +37,4 @@ export {
   replaceBurgerBun,
   deleteBurgerFilling,
   replaceBurgerFilling,
-}
+};

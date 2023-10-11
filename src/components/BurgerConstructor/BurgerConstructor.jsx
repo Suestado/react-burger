@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
 import styles from './burgerConstructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modals/Modal/Modal';
@@ -12,17 +11,17 @@ import OrderDetails from '../Modals/OrderDetails/OrderDetails';
 import { getOrderStatus, clearOrderStatus } from '../../services/actions/orderDetails_actions';
 import EmptyBun from './ConstructorElementsEmpty/EmptyBun/EmptyBun';
 import EmptyFillings from './ConstructorElementsEmpty/EmptyFillings/EmptyFillings';
+import ConstructorElementFillings from './ConstructorElementFillings/ConstructorElementFillings';
 import {
   putBurgerBun,
   replaceBurgerBun,
   putBurgerFilling,
-  deleteBurgerFilling,
+  replaceBurgerFilling,
 } from '../../services/actions/burgerConstructor_actions';
 
 function BurgerConstructor() {
   const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);
-  const { orderNumber,  orderRequestFailure} = useSelector((store) => store.orderStatus);
-  // const [detailsOpened, setDetailsOpened] = useState(false);
+  const { orderNumber } = useSelector((store) => store.orderStatus);
   const dispatch = useDispatch();
 
   const [{ isHoverBunTop }, dropTargetBunTop] = useDrop({
@@ -67,10 +66,6 @@ function BurgerConstructor() {
     dispatch(putBurgerFilling(item));
   }
 
-  function onDeleteFillings(fillingIngredientIndex) {
-    dispatch(deleteBurgerFilling(fillingIngredientIndex));
-  }
-
   function openModal() {
     const ingredients = customerBurgerIngredients.map((item) => {
       return item._id;
@@ -81,8 +76,16 @@ function BurgerConstructor() {
 
   function closeModal(evt) {
     evt.stopPropagation();
-    dispatch(clearOrderStatus())
+    dispatch(clearOrderStatus());
   }
+
+  const onReplaceFillings = useCallback((dragIndex, dropIndex) => {
+    const newFillingsList = [...customerBurgerIngredients];
+    newFillingsList.splice(dragIndex, 1);
+    newFillingsList.splice(dropIndex, 0, customerBurgerIngredients[dragIndex]);
+
+    dispatch(replaceBurgerFilling(newFillingsList));
+  }, [customerBurgerIngredients]);
 
   const isBunPlaseEmpty = !customerBurgerIngredients.some((item) => item.type === 'bun');
   const fillingsListEmpty = !customerBurgerIngredients.some((item) => item.type !== 'bun');
@@ -113,22 +116,15 @@ function BurgerConstructor() {
       >
         {fillingsListEmpty ? <EmptyFillings/> :
           <>
-            {customerBurgerIngredients.map((element, index) => {
-              if (element.type !== 'bun') {
+            {customerBurgerIngredients.map((item, index) => {
+              if (item.type !== 'bun') {
                 return (
-                  <div
+                  <ConstructorElementFillings
                     key={nanoid()}
-                    className={styles.ingredient}>
-                    <div className={styles.dragIcon}>
-                      <DragIcon type="primary"/>
-                    </div>
-                    <ConstructorElement
-                      text={element.name}
-                      price={element.price}
-                      thumbnail={element.image}
-                      handleClose={() => onDeleteFillings(index)}
-                    />
-                  </div>
+                    item={item}
+                    index={index}
+                    onReplaceFillings={onReplaceFillings}
+                  />
                 );
               }
             })}
@@ -150,7 +146,6 @@ function BurgerConstructor() {
           />
         }
       </div>
-
 
       <div className={styles.orderContainer}>
         <div className={styles.priceTag}>
@@ -181,4 +176,4 @@ function BurgerConstructor() {
   );
 }
 
-export default BurgerConstructor;
+export default memo(BurgerConstructor);

@@ -14,14 +14,20 @@ const BurgerIngredient = memo(({ item }) => {
   const [detailsOpened, setDetailsOpened] = useState(false);
   const dispatch = useDispatch();
 
-  const [, dragRefBun] = useDrag({
+  const [{ isDragBun }, dragRefBun] = useDrag({
     type: 'bun',
     item: item,
+    collect: monitor => ({
+      isDragBun: monitor.isDragging(),
+    }),
   });
 
-  const [, dragRefFillings] = useDrag({
+  const [{ isDragFillings }, dragRefFillings] = useDrag({
     type: 'fillings',
     item: item,
+    collect: monitor => ({
+      isDragFillings: monitor.isDragging(),
+    }),
   });
 
   function openModal() {
@@ -36,13 +42,14 @@ const BurgerIngredient = memo(({ item }) => {
   }, []);
 
   const ingredientRef = item.type === 'bun' ? dragRefBun : dragRefFillings;
+  const ingredientIsDragging = isDragFillings || isDragBun;
   const orderedCount = useSelector((store) => store.customerBurger.customerBurgerIngredients.reduce((acc, ingredient) => {
     return ingredient._id === item._id ? acc + 1 : acc;
   }, 0));
 
   return (
     <article
-      className={styles.burgerIngredient}
+      className={`${styles.burgerIngredient} ${ingredientIsDragging && styles.isDragging}`}
       onClick={openModal}
       ref={ingredientRef}
     >
@@ -64,7 +71,7 @@ const BurgerIngredient = memo(({ item }) => {
   );
 });
 
-IngredientDetails.propTypes = {
+BurgerIngredient.propTypes = {
   ingredient: PropTypes.shape(BURGER_INGREDIENT_TYPES),
 };
 

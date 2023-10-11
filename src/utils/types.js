@@ -5,15 +5,6 @@ const BURGER_INGREDIENT_TYPES = {
   price: PropTypes.number.isRequired,
 };
 
-// const INGREDIENTS_DETAILS_TYPES = {
-//   image_large: PropTypes.string.isRequired,
-//   name: PropTypes.string.isRequired,
-//   calories: PropTypes.number.isRequired,
-//   proteins: PropTypes.number.isRequired,
-//   fat: PropTypes.number.isRequired,
-//   carbohydrates: PropTypes.number.isRequired,
-// };
-
 const MODAL_TYPES = {
   title: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
@@ -31,9 +22,25 @@ const INGREDIENTS_GROUP_BLOCK_TYPES = {
   id: PropTypes.string.isRequired,
 };
 
+const CONSTRUCTOR_ELEMENT_FILLINGS = {
+  item : PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+  }),
+  index: PropTypes.number.isRequired,
+  onReplaceFillings: PropTypes.func.isRequired,
+}
+
+const INGREDIENTS_SWITCHBAR = {
+  activeTab: PropTypes.string.isRequired,
+}
+
 export {
   BURGER_INGREDIENT_TYPES,
   MODAL_TYPES,
   MODAL_OVERLAY_TYPES,
   INGREDIENTS_GROUP_BLOCK_TYPES,
+  CONSTRUCTOR_ELEMENT_FILLINGS,
+  INGREDIENTS_SWITCHBAR,
 }

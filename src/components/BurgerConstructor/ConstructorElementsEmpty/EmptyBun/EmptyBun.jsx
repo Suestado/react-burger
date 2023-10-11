@@ -1,7 +1,7 @@
 import styles from './emptyBun.module.css';
 
 function EmptyBun({ bottomClass }) {
-  const placeClass = bottomClass ? styles.bottom : styles.top
+  const placeClass = bottomClass ? styles.bottom : styles.top;
 
   return (
     <div className={`${styles.emptyBunBlock} ${placeClass}`}>

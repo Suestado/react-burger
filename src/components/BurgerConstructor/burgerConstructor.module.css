@@ -28,25 +28,6 @@
   opacity: .5
 }
 
-.dragIcon {
-  cursor: pointer;
-  transition: .3s ease-in-out;
-}
-
-.dragIcon:hover {
-  opacity: .6;
-}
-
-.ingredient {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  grid-template-rows: 1fr;
-  grid-column-gap: 8px;
-  align-items: center;
-}
-
 .orderContainer {
   padding: 40px 0 0;
   display: grid;

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, memo } from 'react';
 import styles from './burgerIngredients.module.css';
 import IngredientsSwitchbar from '../IngredientsSwitchbar/IngredientsSwitchbar';
 import IngredientsGroupBlock from '../IngredientsGroupBlock/IngredientsGroupBlock';
@@ -6,29 +6,28 @@ import IngredientsGroupBlock from '../IngredientsGroupBlock/IngredientsGroupBloc
 function BurgerIngredients() {
   const [refIngredientHeaders, setRefIngredientHeaders] = useState([]);
   const [activeTab, setActiveTAb] = useState('bun');
-  const ingredientsRef = useRef(null)
+  const ingredientsRef = useRef(null);
 
-  const handleHeadersRef = useCallback((ref, blockType) => {
+  const handleHeadersRef = useCallback((ref) => {
     setRefIngredientHeaders((prevState) => ([
       ...prevState,
-      ref.current
-    ]))
-  }, [])
+      ref.current,
+    ]));
+  }, []);
 
-    function handleScroll() {
+  function handleScroll() {
     const blockTop = ingredientsRef.current.getBoundingClientRect().top;
     let minDistance = Math.abs(refIngredientHeaders[0].getBoundingClientRect().top - blockTop);
 
     refIngredientHeaders.forEach((item) => {
-      let newDistance = Math.abs(item.getBoundingClientRect().top - blockTop)
+      let newDistance = Math.abs(item.getBoundingClientRect().top - blockTop);
 
-      if(newDistance <= minDistance) {
+      if (newDistance <= minDistance) {
         minDistance = newDistance;
         setActiveTAb(item.id);
       }
-    })
+    });
   }
-
 
   return (
     <section className={styles.constructorSection}>
@@ -43,4 +42,4 @@ function BurgerIngredients() {
   );
 }
 
-export default BurgerIngredients;
+export default memo(BurgerIngredients);

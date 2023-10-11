@@ -48,7 +48,9 @@ const burgerConstructorReducer = (state = initialState, action) => {
       };
     }
     case REPLACE_BURGER_FILLING: {
-      return {};
+      return {
+        customerBurgerIngredients: action.newIngredientsList
+      };
     }
     default: {
       return state;
