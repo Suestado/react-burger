@@ -120,7 +120,8 @@ function BurgerConstructor() {
               if (item.type !== 'bun') {
                 return (
                   <ConstructorElementFillings
-                    key={nanoid()}
+                    key={item.id}
+                    id={item.id}
                     item={item}
                     index={index}
                     onReplaceFillings={onReplaceFillings}

@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import {
   PUT_BURGER_BUN,
   PUT_BURGER_FILLING,
@@ -8,12 +9,12 @@ import {
 
 const putBurgerBun = (bunIngredient) => ({
   type: PUT_BURGER_BUN,
-  bunIngredient: bunIngredient,
+  bunIngredient: { ...bunIngredient, id: nanoid() },
 });
 
 const putBurgerFilling = (fillingIngredient) => ({
   type: PUT_BURGER_FILLING,
-  fillingIngredient: fillingIngredient,
+  fillingIngredient: { ...fillingIngredient, id: nanoid() },
 });
 
 const replaceBurgerBun = (newBun) => ({
