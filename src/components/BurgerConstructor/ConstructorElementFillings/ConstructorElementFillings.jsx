@@ -6,7 +6,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { deleteBurgerFilling } from '../../../services/actions/burgerConstructor_actions';
 import { CONSTRUCTOR_ELEMENT_FILLINGS } from '../../../utils/types';
 
-function ConstructorElementFillings({ id, item, index, onReplaceFillings }) {
+function ConstructorElementFillings({ item, index, onReplaceFillings }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
 
@@ -16,11 +16,11 @@ function ConstructorElementFillings({ id, item, index, onReplaceFillings }) {
 
   const [{ isDragItem }, dragRefItem] = useDrag({
     type: 'constructorItem',
-    item: { id, dragIndex: index },
+    item: { dragIndex: index },
     collect: ((monitor) => ({
       isDragItem: monitor.isDragging(),
     })),
-  }, []);
+  }, [index]);
 
   const [, dropRefItem] = useDrop({
     accept: 'constructorItem',

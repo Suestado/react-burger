@@ -1,7 +1,6 @@
 import { useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { nanoid } from 'nanoid';
 import styles from './burgerConstructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -121,7 +120,6 @@ function BurgerConstructor() {
                 return (
                   <ConstructorElementFillings
                     key={item.id}
-                    id={item.id}
                     item={item}
                     index={index}
                     onReplaceFillings={onReplaceFillings}
