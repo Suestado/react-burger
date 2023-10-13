@@ -4,7 +4,7 @@ import styles from './ingredientsGroupBlock.module.css';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 import { INGREDIENTS_GROUP_BLOCK_TYPES } from '../../utils/types';
 
-const IngredientsGroupBlock = memo(({ title, type, id, handleHeadersRef }) => {
+const IngredientsGroupBlock = memo(({ title, type, id, handleHeadersRef, openModal }) => {
   const ingredientsList = useSelector((store) => store.ingredients.fullIngredientList);
   const ref = useRef(null);
 
@@ -25,6 +25,7 @@ const IngredientsGroupBlock = memo(({ title, type, id, handleHeadersRef }) => {
             <BurgerIngredient
               key={item._id}
               item={item}
+              openModal={openModal}
             />
           );
         })}

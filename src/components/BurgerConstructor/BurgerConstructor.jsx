@@ -11,6 +11,7 @@ import { getOrderStatus, clearOrderStatus } from '../../services/actions/orderDe
 import EmptyBun from './ConstructorElementsEmpty/EmptyBun/EmptyBun';
 import EmptyFillings from './ConstructorElementsEmpty/EmptyFillings/EmptyFillings';
 import ConstructorElementFillings from './ConstructorElementFillings/ConstructorElementFillings';
+import Preloader from './Preloader/Preloader';
 import {
   putBurgerBun,
   replaceBurgerBun,
@@ -20,6 +21,7 @@ import {
 
 function BurgerConstructor() {
   const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);
+  const { orderRequestProcessing } = useSelector((store) => store.orderStatus)
   const { orderNumber } = useSelector((store) => store.orderStatus);
   const dispatch = useDispatch();
 
@@ -90,6 +92,9 @@ function BurgerConstructor() {
   const fillingsListEmpty = !customerBurgerIngredients.some((item) => item.type !== 'bun');
   const bunIsHovered = isHoverBunTop || isHoverBunBottom ? styles.hoveredContainer : '';
   const fillingsIsHovered = isHoverFillings ? styles.hoveredContainer : '';
+  const orderCompleted =
+    customerBurgerIngredients.some((ingredient) => ingredient.type === 'bun')
+    && customerBurgerIngredients.some((ingredient) => ingredient.type === 'sauce' || ingredient.type === 'main');
 
   return (
     <section className={styles.ingredientsSection}>
@@ -155,13 +160,18 @@ function BurgerConstructor() {
           </p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={openModal}
-        >Оформить заказ</Button>
+        {orderCompleted ?
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={openModal}
+          >Оформить заказ</Button>
+          : <div className={`text text_type_main-default ${styles.submitDisabled}`}>Оформить заказ</div>
+        }
       </div>
+
+      {orderRequestProcessing && <Preloader/>}
 
       {orderNumber && <Modal
         closeModal={closeModal}

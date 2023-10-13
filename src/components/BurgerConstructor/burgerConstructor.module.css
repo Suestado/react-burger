@@ -49,6 +49,24 @@
   height: 36px;
 }
 
+.submitDisabled {
+  max-width: 215px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 64px;
+  border: 1px solid #2F2F37;
+  box-sizing: border-box;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: #8585AD;
+}
+
+
 .ingredientsContainer::-webkit-scrollbar {
   width: 8px;
 }

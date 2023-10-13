@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './orderDetails.module.css';
 import okImage from '../../../images/done.png';
 
@@ -11,6 +12,10 @@ function OrderDetails({ orderNumber }) {
       <p className="text text_type_main-default text_color_inactive">Дождитесь готовности на орбитальной станции</p>
     </div>
   );
+}
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;

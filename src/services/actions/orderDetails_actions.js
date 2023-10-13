@@ -4,14 +4,14 @@ import {
   GET_ORDER_STATUS_FAILURE,
   CLEAR_ORDER_STATUS,
 } from '../../utils/constants';
-import OrderApi from '../../utils/OrderApi';
+import MainApi from '../../utils/MainApi';
 
 function getOrderStatus(ingredients) {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_STATUS,
     });
-    OrderApi.getOrderNumber(ingredients)
+    MainApi.getOrderNumber(ingredients)
       .then((res) => {
         if (res && res.success) {
           dispatch({
