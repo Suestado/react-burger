@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './constructorElementFillings.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { deleteBurgerFilling } from '../../../services/actions/burgerConstructor_actions';
+import { deleteBurgerFilling } from '../../../services/actions/burgerConstructorActions';
 import { CONSTRUCTOR_ELEMENT_FILLINGS } from '../../../utils/types';
 
 function ConstructorElementFillings({ item, index, onReplaceFillings }) {

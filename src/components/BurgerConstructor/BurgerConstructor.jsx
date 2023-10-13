@@ -7,7 +7,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modals/Modal/Modal';
 import OrderDetails from '../Modals/OrderDetails/OrderDetails';
-import { getOrderStatus, clearOrderStatus } from '../../services/actions/orderDetails_actions';
+import { getOrderStatus, clearOrderStatus } from '../../services/actions/orderDetailsActions';
 import EmptyBun from './ConstructorElementsEmpty/EmptyBun/EmptyBun';
 import EmptyFillings from './ConstructorElementsEmpty/EmptyFillings/EmptyFillings';
 import ConstructorElementFillings from './ConstructorElementFillings/ConstructorElementFillings';
@@ -17,7 +17,7 @@ import {
   replaceBurgerBun,
   putBurgerFilling,
   replaceBurgerFilling,
-} from '../../services/actions/burgerConstructor_actions';
+} from '../../services/actions/burgerConstructorActions';
 
 function BurgerConstructor() {
   const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);

@@ -5,7 +5,7 @@ import IngredientsSwitchbar from '../IngredientsSwitchbar/IngredientsSwitchbar';
 import IngredientsGroupBlock from '../IngredientsGroupBlock/IngredientsGroupBlock';
 import Modal from '../Modals/Modal/Modal';
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails';
-import { deleteIngredient, getIngredient } from '../../services/actions/ingredientDetails_actions';
+import { deleteIngredient, getIngredient } from '../../services/actions/ingredientDetailsActions';
 
 function BurgerIngredients() {
   const [refIngredientHeaders, setRefIngredientHeaders] = useState([]);

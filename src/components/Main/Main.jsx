@@ -5,7 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './main.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import getIngredients from '../../services/actions/fullIngredientsList_actions';
+import getIngredients from '../../services/actions/fullIngredientsListActions';
 
 function Main() {
   const dispatch = useDispatch();
