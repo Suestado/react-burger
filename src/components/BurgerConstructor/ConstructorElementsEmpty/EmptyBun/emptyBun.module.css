@@ -1,0 +1,27 @@
+.emptyBunBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  border: 2px solid #2F2F37;
+}
+
+.top {
+  border-radius: 88px 88px 40px 40px;
+}
+
+.bottom {
+  border-radius: 40px 40px 88px 88px;
+}
+
+.emptyBunText {
+  margin: 0;
+  padding: 0;
+  font-family: JetBrains Mono, Arial, serif;
+  color: #8585AD;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+}

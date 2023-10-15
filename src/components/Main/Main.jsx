@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './main.module.css';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import MainApi from '../../utils/MainApi';
-import { GlobalContext } from '../../context/GlobalContext';
+import getIngredients from '../../services/actions/fullIngredientsListActions';
 
 function Main() {
-  const [ingredientsList, setIngredientsList] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    MainApi.getIngredients()
-      .then((res) => setIngredientsList(res.data))
-      .catch((console.error));
+    dispatch(getIngredients());
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ingredientsList }}>
+    <DndProvider backend={HTML5Backend}>
       <main className={styles.main}>
         <BurgerIngredients/>
         <BurgerConstructor/>
       </main>
-    </GlobalContext.Provider>
+    </DndProvider>
   );
 }
 

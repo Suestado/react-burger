@@ -7,6 +7,7 @@
 
 .fixIngredientsContainer {
   padding-left: 32px;
+  transition: .3s ease-in-out;
 }
 
 .ingredientsContainer {
@@ -20,29 +21,11 @@
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-row-gap: 16px;
-}
-
-.ingredientsContainer_type_empty {
-  min-height: 0;
-}
-
-.dragIcon {
-  cursor: pointer;
   transition: .3s ease-in-out;
 }
 
-.dragIcon:hover {
-  opacity: .6;
-}
-
-.ingredient {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  grid-template-rows: 1fr;
-  grid-column-gap: 8px;
-  align-items: center;
+.hoveredContainer {
+  opacity: .5
 }
 
 .orderContainer {
@@ -65,6 +48,24 @@
   width: 36px;
   height: 36px;
 }
+
+.submitDisabled {
+  max-width: 215px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 64px;
+  border: 1px solid #2F2F37;
+  box-sizing: border-box;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: #8585AD;
+}
+
 
 .ingredientsContainer::-webkit-scrollbar {
   width: 8px;
