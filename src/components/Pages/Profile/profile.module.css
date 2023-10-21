@@ -1,0 +1,57 @@
+.profile {
+  margin: 120px auto 0;
+  max-width: 480px;
+  position: relative;
+}
+
+.form {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.navContainer {
+  max-width: 320px;
+  position: absolute;
+  top: 0;
+  left: -380px
+}
+
+.navBar {
+  margin-bottom: 80px;
+}
+
+.navList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navItem {
+  margin: 0;
+  padding: 0;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  transition: ease-in-out .3s;
+}
+
+.navItem:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+.navDescription {
+  margin: 0;
+  padding: 0;
+  opacity: 0.4;
+  color: #8585AD;
+}
+
+@media screen and (max-width: 1280px) {
+  .profile {
+    margin: 120px 400px 0;
+  }
+}

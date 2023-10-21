@@ -6,6 +6,7 @@ import Register from '../Pages/Register/Reegister';
 import Login from '../Pages/Login/Login';
 import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword';
 import ResetPassword from '../Pages/ResetPassword/ResetPassword';
+import Profile from '../Pages/Profile/Profile';
 
 function App() {
   return (
@@ -47,6 +48,8 @@ function App() {
 
       <Route path="/profile" element={
         <>
+          <AppHeader/>
+          <Profile/>
         </>
       }/>
 
