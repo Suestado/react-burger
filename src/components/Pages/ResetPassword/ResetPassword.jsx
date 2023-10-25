@@ -1,11 +1,35 @@
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import FormContainer from '../../FormContainer/FormContainer';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import MainApi from '../../../utils/MainApi';
 
 function ResetPassword() {
   const [passwordValue, setPasswordValue] = useState('');
   const [smsValue, setSmsValue] = useState('');
+  const currentUser = useSelector((store) => store.currentUser);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const onSubmit = () => {
+    MainApi.resetPassword(passwordValue, smsValue)
+      .then((res) => {
+        if (res.success) {
+          navigate('/login', { replace: true });
+        }
+      })
+      .catch((err) => {
+        console.log(`При попытке смены пароля произошла ошибка - ${err}`);
+      });
+  };
+
+  useEffect(() => {
+    if (currentUser.email || !location.state?.forgotPassword) {
+      navigate('login');
+    }
+  }, [currentUser]);
 
   return (
     <FormContainer
@@ -16,6 +40,7 @@ function ResetPassword() {
         navLink: '/login',
         linkText: 'Войти',
       }}
+      onSubmit={onSubmit}
     >
       <PasswordInput
         placeholder={'Введите новый пароль'}

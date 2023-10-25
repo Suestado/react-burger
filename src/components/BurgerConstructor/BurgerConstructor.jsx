@@ -1,6 +1,7 @@
 import { useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useNavigate } from 'react-router-dom';
 import styles from './burgerConstructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -21,9 +22,12 @@ import {
 
 function BurgerConstructor() {
   const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);
-  const { orderRequestProcessing } = useSelector((store) => store.orderStatus)
+  const { orderRequestProcessing } = useSelector((store) => store.orderStatus);
   const { orderNumber } = useSelector((store) => store.orderStatus);
+  const { isLoggedIn } = useSelector((store) => store.currentUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   const [{ isHoverBunTop }, dropTargetBunTop] = useDrop({
     accept: 'bun',
@@ -67,16 +71,20 @@ function BurgerConstructor() {
     dispatch(putBurgerFilling(item));
   }
 
-  function openModal() {
+  function submitOrder() {
     const ingredients = customerBurgerIngredients.map((item) => {
       return item._id;
     });
 
-    dispatch(getOrderStatus(ingredients));
+    if (isLoggedIn) {
+      dispatch(getOrderStatus(ingredients));
+    } else {
+      navigate('/login');
+    }
+
   }
 
-  function closeModal(evt) {
-    evt.stopPropagation();
+  function closeModal() {
     dispatch(clearOrderStatus());
   }
 
@@ -165,7 +173,7 @@ function BurgerConstructor() {
             htmlType="button"
             type="primary"
             size="large"
-            onClick={openModal}
+            onClick={submitOrder}
           >Оформить заказ</Button>
           : <div className={`text text_type_main-default ${styles.submitDisabled}`}>Оформить заказ</div>
         }

@@ -1,19 +1,83 @@
-import { memo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { memo, useState, useEffect, useCallback, useRef } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile.module.css';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import MainApi from '../../../utils/MainApi';
+import { logOutUser, refreshUser } from '../../../services/actions/userActions';
 
 function Profile() {
-  const [nameValue, setNameValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
+  const currentUser = useSelector((store) => store.currentUser);
+  const [nameValue, setNameValue] = useState(currentUser.name);
+  const [emailValue, setEmailValue] = useState(currentUser.email);
   const [passwordValue, setPasswordValue] = useState('');
+  const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const currentLocation = useLocation().pathname;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const nameInputRef = useRef();
+  const resetButtonRef = useRef();
+
+  useEffect(() => {
+    if (nameValue !== currentUser.name || emailValue !== currentUser.email || passwordValue) {
+      setIsButtonActive(true);
+    } else {
+      setIsButtonActive(false);
+    }
+  }, [nameValue, emailValue, passwordValue]);
+
+  useEffect(() => {
+    nameInputRef.current.focus();
+  }, [isDisabled]);
+
+  const handleLogout = useCallback(() => {
+    MainApi.logOut(localStorage.getItem('refreshToken'))
+      .then((res) => {
+        if (res.success) {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          dispatch(logOutUser());
+          navigate('/login', { replace: true });
+        }
+      })
+      .catch((err) => {
+        console.log(`При попытке выхода из аккаунта произошла ошибка - ${err}`);
+      });
+  }, []);
+
+  const onActivateInput = useCallback(() => {
+    setIsDisabled(false);
+  }, []);
+
+  const onDisableInput = useCallback(() => {
+    setIsDisabled(true);
+  }, []);
+
+  const updateUser = () => {
+    MainApi.updateUser(nameValue, emailValue, passwordValue, localStorage.getItem('accessToken'))
+      .then((res) => {
+        if (res.success) {
+          dispatch(refreshUser(res.name, res.email));
+        }
+      })
+      .catch((err) => {
+        console.log(`При обновлении данных пользователя произошла ошибка - ${err}`);
+      });
+  };
+
+  const resetForm = useCallback(() => {
+    setNameValue(currentUser.name);
+    setEmailValue(currentUser.email);
+    setPasswordValue('');
+  }, [setNameValue, setEmailValue, setPasswordValue]);
 
   return (
     <section className={styles.profile}>
-      <form className={styles.form}>
+      <form className={styles.form} ref={resetButtonRef}>
         <Input
           type={'text'}
           placeholder={'Имя'}
@@ -21,6 +85,10 @@ function Profile() {
           value={nameValue}
           name={'nameInput'}
           icon={'EditIcon'}
+          disabled={isDisabled}
+          onIconClick={onActivateInput}
+          onBlur={onDisableInput}
+          ref={nameInputRef}
         />
         <EmailInput
           onChange={evt => setEmailValue(evt.target.value)}
@@ -36,13 +104,25 @@ function Profile() {
           name={'passwordInput'}
           icon={'EditIcon'}
         />
+        {isButtonActive && <div className={styles.buttonsContainer}>
+          <Button htmlType="button" type="secondary" size="medium" onClick={resetForm}>Отменить</Button>
+          <Button htmlType="button" type="primary" size="medium" onClick={updateUser}>Сохранить</Button>
+        </div>}
+
       </form>
       <div className={styles.navContainer}>
         <nav className={styles.navBar}>
           <ul className={`${styles.navList} text text_type_main-medium`}>
-            <li className={`${styles.navItem} ${currentLocation !== '/profile' && 'text_color_inactive'}`}>Профиль</li>
-            <li className={`${styles.navItem} ${currentLocation !== '/history' && 'text_color_inactive'}`}>История заказов</li>
-            <li className={`${styles.navItem} ${currentLocation !== '/exit' && 'text_color_inactive'}`}>Выход</li>
+            <li className={`${styles.navItem} ${currentLocation !== '/profile' && 'text_color_inactive'}`}>
+              <Link to="/profile" className={styles.navLink}>Профиль</Link>
+            </li>
+            <li className={`${styles.navItem} ${currentLocation !== '/profile/orders' && 'text_color_inactive'}`}>
+              <Link to="/profile/orders" className={styles.navLink}>История заказов</Link>
+            </li>
+            <li className={`${styles.navItem} ${currentLocation !== '/exit' && 'text_color_inactive'}`}
+                onClick={handleLogout}
+            >Выход
+            </li>
           </ul>
         </nav>
         <p className={`${styles.navDescription} text text_type_main-default`}>

@@ -34,10 +34,10 @@ function AppHeader() {
         <Logo/>
         <nav className={`${styles.navBlock} ${styles.navBlock__auth}`}>
           <Link className={styles.link} to="/profile">
-            <ProfileIcon type={location === '/profile' ? 'primary' : 'secondary'}/>
+            <ProfileIcon type={~location.indexOf('/profile') ? 'primary' : 'secondary'}/>
             <span className={
               `text text_type_main-default
-              ${location !== '/profile' && 'text_color_inactive'}
+              ${!~location.indexOf('/profile') && 'text_color_inactive'}
               ${styles.linkText}`}
             >Личный кабинет</span>
           </Link>

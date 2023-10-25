@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 import styles from './formContainer.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function FormContainer({ children, header, buttonText, bottomOptionOne, bottomOptionTwo }) {
+function FormContainer({ children, header, buttonText, bottomOptionOne, bottomOptionTwo, onSubmit }) {
   return (
     <div className={styles.formContainer}>
       <h2 className={`text text_type_main-medium ${styles.header}`}>{header}</h2>
-      <form className={styles.form} action="">
+      <form className={styles.form}>
           {children}
         <div>
-          <Button htmlType="button" type="primary" size="large">
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={onSubmit}>
             {buttonText}
           </Button>
         </div>
