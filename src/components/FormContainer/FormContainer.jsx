@@ -4,17 +4,25 @@ import styles from './formContainer.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function FormContainer({ children, header, buttonText, bottomOptionOne, bottomOptionTwo, onSubmit }) {
+  const handleFormSubmit = (evt) => {
+    evt.preventDefault();
+    onSubmit();
+  };
+
   return (
     <div className={styles.formContainer}>
       <h2 className={`text text_type_main-medium ${styles.header}`}>{header}</h2>
-      <form className={styles.form}>
-          {children}
+      <form
+        className={styles.form}
+        onSubmit={handleFormSubmit}
+      >
+        {children}
         <div>
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="large"
-            onClick={onSubmit}>
+          >
             {buttonText}
           </Button>
         </div>

@@ -106,7 +106,7 @@ function App() {
           isLoggedIn={isLoggedIn}
           element={
             <>
-              <AppHeader/>
+
               <Profile/>
             </>
           }/>

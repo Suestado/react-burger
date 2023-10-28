@@ -61,7 +61,8 @@ function Profile() {
     MainApi.updateUser(nameValue, emailValue, passwordValue, localStorage.getItem('accessToken'))
       .then((res) => {
         if (res.success) {
-          dispatch(refreshUser(res.name, res.email));
+          dispatch(refreshUser(res.user.name, res.user.email));
+          setIsButtonActive(false);
         }
       })
       .catch((err) => {
@@ -69,11 +70,11 @@ function Profile() {
       });
   };
 
-  const resetForm = useCallback(() => {
+  const resetForm = () => {
     setNameValue(currentUser.name);
     setEmailValue(currentUser.email);
     setPasswordValue('');
-  }, [setNameValue, setEmailValue, setPasswordValue]);
+  };
 
   return (
     <section className={styles.profile}>
