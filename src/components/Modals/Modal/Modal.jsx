@@ -6,7 +6,6 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { MODAL_TYPES } from '../../../utils/types';
 
 function Modal({ title, closeModal, children }) {
-
   const modalPortal = document.querySelector('#modalPortal');
 
   useEffect(() => {

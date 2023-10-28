@@ -21,7 +21,6 @@ const INGREDIENTS_GROUP_BLOCK_TYPES = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   handleHeadersRef: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
 };
 
 const CONSTRUCTOR_ELEMENT_FILLINGS = {

@@ -12,7 +12,7 @@ import { getOrderStatus, clearOrderStatus } from '../../services/actions/orderDe
 import EmptyBun from './ConstructorElementsEmpty/EmptyBun/EmptyBun';
 import EmptyFillings from './ConstructorElementsEmpty/EmptyFillings/EmptyFillings';
 import ConstructorElementFillings from './ConstructorElementFillings/ConstructorElementFillings';
-import Preloader from './Preloader/Preloader';
+import Preloader from '../Preloader/Preloader';
 import {
   putBurgerBun,
   replaceBurgerBun,

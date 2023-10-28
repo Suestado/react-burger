@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
@@ -12,10 +12,17 @@ import Profile from '../Pages/Profile/Profile';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import MainApi from '../../utils/MainApi';
 import { refreshUser, logOutUser } from '../../services/actions/userActions';
+import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails';
+import Modal from '../Modals/Modal/Modal';
+import IngredientPage from '../IngredientPage/IngredientPage';
 
 function App() {
   const { isLoggedIn } = useSelector((store) => store.currentUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  let location = useLocation();
+  let stateRoute = location.state?.backgroundLocation;
 
   const checkAuth = useCallback(() => {
     MainApi.checkAuth(localStorage.getItem('accessToken'))
@@ -52,75 +59,46 @@ function App() {
     checkAuth();
   }, []);
 
+  const closeModal = useCallback(() => {
+    navigate('/', {replace: true});
+  }, []);
+
   return (
-    <Routes>
-      <Route path="/" element={
-        <>
-          <AppHeader/>
-          <Main/>
-        </>
-      }/>
+    <>
+      <AppHeader/>
+      <Routes location={stateRoute || location}>
+        <Route path="/" element={<Main/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
+        <Route path="/reset-password" element={<ResetPassword/>}/>
+        <Route path="/ingredients/:id" element={<IngredientPage/>}/>
+        <Route path="/profile" element={
+          <ProtectedRouteElement
+            isLoggedIn={isLoggedIn}
+            element={<Profile/>}/>
+        }/>
+        <Route path="/profile/orders" element={
+          <ProtectedRouteElement
+            isLoggedIn={isLoggedIn}
+            element={<Profile/>}/>
+        }/>
+        <Route path="*" element={<Page404/>}/>
+      </Routes>
 
-      <Route path="/login" element={
-        <>
-          <AppHeader/>
-          <Login/>
-        </>
-      }/>
-
-      <Route path="/register" element={
-        <>
-          <AppHeader/>
-          <Register/>
-        </>
-      }/>
-
-      <Route path="/forgot-password" element={
-        <>
-          <AppHeader/>
-          <ForgotPassword/>
-        </>
-      }/>
-
-      <Route path="/reset-password" element={
-        <>
-          <AppHeader/>
-          <ResetPassword/>
-        </>
-      }
-      />
-
-      <Route path="/profile" element={
-        <ProtectedRouteElement
-          isLoggedIn={isLoggedIn}
-          element={
-            <>
-              <AppHeader/>
-              <Profile/>
-            </>
+      {stateRoute && (
+        <Routes>
+          <Route path="/ingredients/:id" element={
+            <Modal
+              title="Детали ингредиента"
+              closeModal={closeModal}
+            >
+              <IngredientDetails/>
+            </Modal>
           }/>
-      }/>
-
-      <Route path="/profile/orders" element={
-        <ProtectedRouteElement
-          isLoggedIn={isLoggedIn}
-          element={
-            <>
-
-              <Profile/>
-            </>
-          }/>
-      }/>
-
-      <Route path="/ingredients/:id" element={
-        <>
-        </>
-      }/>
-
-      <Route path="*" element={
-        <Page404/>
-      }/>
-    </Routes>
+        </Routes>
+      )}
+    </>
   );
 }
 
