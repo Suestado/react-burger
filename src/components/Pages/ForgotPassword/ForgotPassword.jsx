@@ -13,14 +13,14 @@ function ForgotPassword() {
   const onSubmit = () => {
     MainApi.forgotPassword(emailValue)
       .then((res) => {
-        if(res.success) {
-          const fpState = { forgotPassword: true }
-          navigate('/reset-password', {state: fpState})
+        if (res.success) {
+          const fpState = { forgotPassword: true };
+          navigate('/reset-password', { state: fpState });
         }
       })
       .catch((err) => {
         console.log(`При попытке восстановления пароля произошла ошибка - ${err}`);
-      })
+      });
   };
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function ForgotPassword() {
         placeholder="Укажите e-mail"
       />
     </FormContainer>
-  )
+  );
 }
 
 export default memo(ForgotPassword);

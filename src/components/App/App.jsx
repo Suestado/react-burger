@@ -14,7 +14,7 @@ import MainApi from '../../utils/MainApi';
 import { refreshUser, logOutUser } from '../../services/actions/userActions';
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails';
 import Modal from '../Modals/Modal/Modal';
-import IngredientPage from '../IngredientPage/IngredientPage';
+import IngredientPage from '../Pages/Ingredients/Ingredients';
 
 function App() {
   const { isLoggedIn } = useSelector((store) => store.currentUser);
@@ -60,7 +60,7 @@ function App() {
   }, []);
 
   const closeModal = useCallback(() => {
-    navigate('/', {replace: true});
+    navigate('/', { replace: true });
   }, []);
 
   return (
