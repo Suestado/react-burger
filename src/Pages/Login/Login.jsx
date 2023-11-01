@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,9 +10,9 @@ function Login() {
   const [passwordValue, setPasswordValue] = useState('');
   const dispatch = useDispatch();
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     dispatch(loginUser(emailValue, passwordValue));
-  }, [emailValue, passwordValue]);
+  };
 
   return (
     <FormContainer

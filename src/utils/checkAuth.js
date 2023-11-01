@@ -1,7 +1,8 @@
 import MainApi from './MainApi';
-import { logOutUser, refreshUser } from '../services/actions/userActions';
+import { fetchUserProcessing, logOutUser, refreshUser } from '../services/actions/userActions';
 
 function checkAuth(dispatch) {
+  dispatch(fetchUserProcessing())
   MainApi.checkAuth(localStorage.getItem('accessToken'))
     .then((res) => {
       dispatch(refreshUser(res.user.name, res.user.email));

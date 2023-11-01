@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styles from './modalOverlay.module.css';
 import { MODAL_OVERLAY_TYPES } from '../../../utils/types';
 
@@ -15,4 +16,4 @@ function ModalOverlay({ handleCloseModal, children }) {
 
 ModalOverlay.propTypes = MODAL_OVERLAY_TYPES;
 
-export default ModalOverlay;
+export default memo(ModalOverlay);

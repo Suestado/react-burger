@@ -19,7 +19,7 @@ import UnAuthRouteElement from '../ProtectedRouteElement/UnAuthRouteElement';
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let location = useLocation();
+  const location = useLocation();
   let stateRoute = location.state?.backgroundLocation;
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import ReactDom from 'react-dom';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
@@ -20,12 +20,12 @@ function Modal({ title, closeModal, children }) {
     return () => document.removeEventListener('keydown', handleEscClose);
   }, []);
 
-  function handleCloseModalOverlay(evt) {
+  const handleCloseModalOverlay = useCallback((evt) => {
     evt.stopPropagation();
     if (evt.target === evt.currentTarget) {
       closeModal(evt);
     }
-  }
+  }, []);
 
   return ReactDom.createPortal(
     <ModalOverlay

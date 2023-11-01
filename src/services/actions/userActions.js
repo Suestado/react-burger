@@ -84,6 +84,10 @@ const userResetFailure = () => ({
   type: USER_RESET_FAILURE,
 });
 
+const fetchUserProcessing = () => ({
+  type: GET_USER_CREDENTIALS,
+});
+
 
 export {
   createUser,
@@ -91,4 +95,5 @@ export {
   refreshUser,
   logOutUser,
   userResetFailure,
+  fetchUserProcessing,
 };

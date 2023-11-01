@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile.module.css';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -17,7 +17,6 @@ function Profile() {
   const [isButtonActive, setIsButtonActive] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const currentLocation = useLocation().pathname;
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const nameInputRef = useRef();
   const resetButtonRef = useRef();
@@ -34,7 +33,7 @@ function Profile() {
     nameInputRef.current.focus();
   }, [isDisabled]);
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = () => {
     MainApi.logOut(localStorage.getItem('refreshToken'))
       .then((res) => {
         if (res.success) {
@@ -46,15 +45,15 @@ function Profile() {
       .catch((err) => {
         console.log(`При попытке выхода из аккаунта произошла ошибка - ${err}`);
       });
-  }, []);
+  };
 
-  const onActivateInput = useCallback(() => {
+  const onActivateInput = () => {
     setIsDisabled(false);
-  }, []);
+  };
 
-  const onDisableInput = useCallback(() => {
+  const onDisableInput = () => {
     setIsDisabled(true);
-  }, []);
+  };
 
   const updateUser = () => {
     MainApi.updateUser(nameValue, emailValue, passwordValue, localStorage.getItem('accessToken'))
