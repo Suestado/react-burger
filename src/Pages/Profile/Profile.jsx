@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile.module.css';
@@ -6,8 +6,8 @@ import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import MainApi from '../../../utils/MainApi';
-import { logOutUser, refreshUser } from '../../../services/actions/userActions';
+import MainApi from '../../utils/MainApi';
+import { logOutUser, refreshUser } from '../../services/actions/userActions';
 
 function Profile() {
   const currentUser = useSelector((store) => store.currentUser);
@@ -41,7 +41,6 @@ function Profile() {
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           dispatch(logOutUser());
-          navigate('/login', { replace: true });
         }
       })
       .catch((err) => {
@@ -134,4 +133,4 @@ function Profile() {
   );
 }
 
-export default memo(Profile);
+export default Profile;

@@ -1,10 +1,10 @@
 import { memo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import FormContainer from '../../FormContainer/FormContainer';
+import FormContainer from '../../components/FormContainer/FormContainer';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import MainApi from '../../../utils/MainApi';
+import MainApi from '../../utils/MainApi';
 
 function ResetPassword() {
   const [passwordValue, setPasswordValue] = useState('');
@@ -26,8 +26,8 @@ function ResetPassword() {
   };
 
   useEffect(() => {
-    if (currentUser.email || !location.state?.forgotPassword) {
-      navigate('login');
+    if (!location.state?.forgotPassword) {
+      navigate('/forgot-password');
     }
   }, [currentUser]);
 
@@ -41,6 +41,7 @@ function ResetPassword() {
         linkText: 'Войти',
       }}
       onSubmit={onSubmit}
+      errorTitle="При попытке восстановления пароля произошла ошибка"
     >
       <PasswordInput
         placeholder={'Введите новый пароль'}

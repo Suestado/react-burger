@@ -3,6 +3,7 @@ import {
   GET_USER_CREDENTIALS_SUCCESS,
   GET_USER_CREDENTIALS_FAILURE,
   USER_LOGOUT,
+  USER_RESET_FAILURE,
 } from '../../utils/constants';
 
 const initialState = {
@@ -10,6 +11,8 @@ const initialState = {
   email: null,
   getUserProcessing: false,
   getUserFailure: false,
+  showFailureMessage: false,
+  failureMessage: null,
   isLoggedIn: false,
 };
 
@@ -36,11 +39,20 @@ const getUserCredentialsReducer = (state = initialState, action) => {
         ...state,
         getUserProcessing: false,
         getUserFailure: true,
+        showFailureMessage: true,
+        failureMessage: action.failureMessage,
         isLoggedIn: false,
       };
     }
     case USER_LOGOUT : {
       return { initialState };
+    }
+    case USER_RESET_FAILURE : {
+      return {
+        ...state,
+        showFailureMessage: false,
+        failureMessage: null,
+      }
     }
     default : {
       return state;

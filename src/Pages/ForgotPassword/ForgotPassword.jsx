@@ -1,13 +1,11 @@
-import { memo, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FormContainer from '../../FormContainer/FormContainer';
+import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import MainApi from '../../../utils/MainApi';
+import MainApi from '../../utils/MainApi';
 
 function ForgotPassword() {
   const [emailValue, setEmailValue] = useState('');
-  const currentUser = useSelector((store) => store.currentUser);
   const navigate = useNavigate();
 
   const onSubmit = () => {
@@ -23,12 +21,6 @@ function ForgotPassword() {
       });
   };
 
-  useEffect(() => {
-    if (currentUser.email) {
-      navigate(-1);
-    }
-  }, [currentUser]);
-
   return (
     <FormContainer
       header="Восстановление пароля"
@@ -39,6 +31,7 @@ function ForgotPassword() {
         linkText: 'Войти',
       }}
       onSubmit={onSubmit}
+      errorTitle="При попытке восстановления пароля произошла ошибка"
     >
       <EmailInput
         onChange={evt => setEmailValue(evt.target.value)}

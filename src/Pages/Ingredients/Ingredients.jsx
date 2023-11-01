@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styles from './ingredients.module.css'
-import IngredientDetails from '../../Modals/IngredientDetails/IngredientDetails';
+import IngredientDetails from '../../components/Modals/IngredientDetails/IngredientDetails';
 
 function Ingredients() {
   return (

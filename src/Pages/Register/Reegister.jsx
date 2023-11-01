@@ -1,29 +1,20 @@
-import { memo, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import FormContainer from '../../FormContainer/FormContainer';
+import { memo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { createUser } from '../../../services/actions/userActions';
+import { createUser } from '../../services/actions/userActions';
 
 function Register() {
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const dispatch = useDispatch();
-  const currentUser = useSelector((store) => store.currentUser);
-  const navigate = useNavigate();
 
   const onSubmit = () => {
     dispatch(createUser(nameValue, emailValue, passwordValue));
   };
-
-  useEffect(() => {
-    if (currentUser.email) {
-      navigate('/', { replace: true });
-    }
-  }, [currentUser]);
 
   return (
     <FormContainer
@@ -35,6 +26,7 @@ function Register() {
         linkText: 'Войти',
       }}
       onSubmit={onSubmit}
+      errorTitle="При регистрации пользователя произошла ошибка"
     >
       <Input
         type={'text'}

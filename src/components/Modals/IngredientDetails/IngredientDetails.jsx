@@ -1,34 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { createSelector } from 'reselect';
 import styles from './ingredientDetails.module.css';
 import getIngredients from '../../../services/actions/fullIngredientsListActions';
 import Preloader from '../../Preloader/Preloader';
 
+const selectAllIngredients = (store) => store.ingredients.fullIngredientList;
+
 function IngredientDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const ingredient = useSelector((state) => state.ingredients.fullIngredientList).find((item) => item._id === id);
-  const [isOpenDetails, setIsOpenDetails] = useState(false);
+  const selectIngredient = createSelector(
+    [selectAllIngredients],
+    (allIngredients) => {
+      return allIngredients.find((item) => item._id === id);
+    },
+  );
+  const ingredient = useSelector(selectIngredient);
 
   useEffect(() => {
-    if(!ingredient) {
+    if (!ingredient) {
       dispatch(getIngredients());
     }
   }, []);
 
-  useEffect(() => {
-    if (ingredient) {
-      setIsOpenDetails(true);
-    }
-    console.log(ingredient);
-  }, [ingredient]);
-
   return (
     <>
-      {!isOpenDetails && <Preloader/>}
+      {!ingredient && <Preloader/>}
 
-      {isOpenDetails && <article className={styles.ingredientWrapper}>
+      {ingredient && <article className={styles.ingredientWrapper}>
         <img className={styles.picture} src={ingredient.image_large} alt={ingredient.name}/>
         <p className={`text text_type_main-medium ${styles.header}`}>{ingredient.name}</p>
         <ul className={styles.nutrientsList}>
