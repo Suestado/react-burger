@@ -21,7 +21,6 @@ const INGREDIENTS_GROUP_BLOCK_TYPES = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   handleHeadersRef: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
 };
 
 const CONSTRUCTOR_ELEMENT_FILLINGS = {
@@ -38,6 +37,24 @@ const INGREDIENTS_SWITCHBAR = {
   activeTab: PropTypes.string.isRequired,
 }
 
+const FORM_CONTAINER_TYPES = {
+  children: PropTypes.node.isRequired,
+  header: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  bottomOptionOne: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    navLink: PropTypes.string.isRequired,
+    linkText: PropTypes.string.isRequired,
+  }),
+  bottomOptionTwo: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    navLink: PropTypes.string.isRequired,
+    linkText: PropTypes.string.isRequired,
+  }),
+  onSubmit: PropTypes.func.isRequired,
+  errorTitle: PropTypes.string.isRequired,
+}
+
 export {
   BURGER_INGREDIENT_TYPES,
   MODAL_TYPES,
@@ -45,4 +62,5 @@ export {
   INGREDIENTS_GROUP_BLOCK_TYPES,
   CONSTRUCTOR_ELEMENT_FILLINGS,
   INGREDIENTS_SWITCHBAR,
+  FORM_CONTAINER_TYPES
 }

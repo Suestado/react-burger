@@ -13,7 +13,7 @@ function getOrderStatus(ingredients) {
     });
     MainApi.getOrderNumber(ingredients)
       .then((res) => {
-        if (res && res.success) {
+        if (res) {
           dispatch({
             type: GET_ORDER_STATUS_SUCCESS,
             orderNumber: res.order.number,

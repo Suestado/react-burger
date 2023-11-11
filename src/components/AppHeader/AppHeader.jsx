@@ -1,3 +1,5 @@
+import { memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './appHeader.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -5,30 +7,44 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
+  const location = useLocation().pathname;
+
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <nav className={styles.navBlock}>
-          <a className={styles.link} href="#">
-            <BurgerIcon type="primary"/>
-            <span className={`text text_type_main-default ${styles.linkText}`}>Конструктор</span>
-          </a>
+          <Link className={styles.link} to="/">
+            <BurgerIcon type={location === '/' ? 'primary' : 'secondary'}/>
+            <span className={
+              `text text_type_main-default
+              ${location !== '/' && 'text_color_inactive'}
+              ${styles.linkText}`}
+            >Конструктор</span>
+          </Link>
 
           <a className={styles.link} href="#">
-            <ListIcon type="secondary"/>
-            <span className={`text text_type_main-default ${styles.linkText}`}>Лента заказов</span>
+            <ListIcon type={location === '/history' ? 'primary' : 'secondary'}/>
+            <span className={
+              `text text_type_main-default
+              ${location !== '/history' && 'text_color_inactive'}
+              ${styles.linkText}`}
+            >Лента заказов</span>
           </a>
         </nav>
         <Logo/>
         <nav className={`${styles.navBlock} ${styles.navBlock__auth}`}>
-          <a className={styles.link} href="#">
-            <ProfileIcon type="secondary"/>
-            <span className={`text text_type_main-default ${styles.linkText}`}>Личный кабинет</span>
-          </a>
+          <Link className={styles.link} to="/profile">
+            <ProfileIcon type={~location.indexOf('/profile') ? 'primary' : 'secondary'}/>
+            <span className={
+              `text text_type_main-default
+              ${!~location.indexOf('/profile') && 'text_color_inactive'}
+              ${styles.linkText}`}
+            >Личный кабинет</span>
+          </Link>
         </nav>
       </div>
     </header>
   );
 }
 
-export default AppHeader;
+export default memo(AppHeader);

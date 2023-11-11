@@ -2,12 +2,14 @@ import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './burgerIngredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BURGER_INGREDIENT_TYPES } from '../../utils/types';
 
-const BurgerIngredient = memo(({ item, openModal }) => {
+const BurgerIngredient = ({ item }) => {
+  const location = useLocation();
 
   const [{ isDragBun }, dragRefBun] = useDrag({
     type: 'bun',
@@ -32,26 +34,25 @@ const BurgerIngredient = memo(({ item, openModal }) => {
   }, 0));
 
   return (
-    <article
-      className={`${styles.burgerIngredient} ${ingredientIsDragging && styles.isDragging}`}
-      onClick={() => openModal(item)}
-      ref={ingredientRef}
-    >
-      <img className={styles.picture} src={item.image} alt={item.name}/>
-      <div className={styles.priceContainer}>
-        <span className={`text text_type_digits-default ${styles.priceTag}`}>{item.price}</span>
-        <CurrencyIcon type="primary"/>
-      </div>
-      <span className={`text text_type_main-default ${styles.description}`}>{item.name}</span>
-      {orderedCount > 0 && <Counter count={orderedCount} size="default" extraClass="m-1"/>}
-
-    </article>
+    <Link to={`/ingredients/${item._id}`} className={styles.burgerIngredientLink} state={{ backgroundLocation: location }}>
+      <article
+        className={`${styles.burgerIngredient} ${ingredientIsDragging && styles.isDragging}`}
+        ref={ingredientRef}
+      >
+        <img className={styles.picture} src={item.image} alt={item.name}/>
+        <div className={styles.priceContainer}>
+          <span className={`text text_type_digits-default ${styles.priceTag}`}>{item.price}</span>
+          <CurrencyIcon type="primary"/>
+        </div>
+        <span className={`text text_type_main-default ${styles.description}`}>{item.name}</span>
+        {orderedCount > 0 && <Counter count={orderedCount} size="default" extraClass="m-1"/>}
+      </article>
+    </Link>
   );
-});
+};
 
 BurgerIngredient.propTypes = {
   item: PropTypes.shape(BURGER_INGREDIENT_TYPES),
-  openModal: PropTypes.func.isRequired,
 };
 
-export default BurgerIngredient;
+export default memo(BurgerIngredient);
