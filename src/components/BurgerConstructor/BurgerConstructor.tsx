@@ -19,19 +19,20 @@ import {
   putBurgerFilling,
   replaceBurgerFilling,
 } from '../../services/actions/burgerConstructorActions';
+import {IngredientInterface} from "../../utils/commonTypes";
 
 function BurgerConstructor() {
-  const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);
-  const { orderRequestProcessing } = useSelector((store) => store.orderStatus);
-  const { orderNumber } = useSelector((store) => store.orderStatus);
-  const { isLoggedIn } = useSelector((store) => store.currentUser);
+  const { customerBurgerIngredients } = useSelector((store: any) => store.customerBurger);
+  const { orderRequestProcessing } = useSelector((store: any) => store.orderStatus);
+  const { orderNumber } = useSelector((store: any) => store.orderStatus);
+  const { isLoggedIn } = useSelector((store: any) => store.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
   const [{ isHoverBunTop }, dropTargetBunTop] = useDrop({
     accept: 'bun',
-    drop(item) {
+    drop(item: IngredientInterface) {
       onDropHandlerBun(item);
     },
     collect: monitor => ({
@@ -41,7 +42,7 @@ function BurgerConstructor() {
 
   const [{ isHoverBunBottom }, dropTargetBunBottom] = useDrop({
     accept: 'bun',
-    drop(item) {
+    drop(item: IngredientInterface) {
       onDropHandlerBun(item);
     },
     collect: monitor => ({
@@ -51,7 +52,7 @@ function BurgerConstructor() {
 
   const [{ isHoverFillings }, dropTargetFillings] = useDrop({
     accept: 'fillings',
-    drop(item) {
+    drop(item: IngredientInterface) {
       onDropHandlerFillings(item);
     },
     collect: monitor => ({
@@ -59,36 +60,44 @@ function BurgerConstructor() {
     }),
   });
 
-  function onDropHandlerBun(item) {
-    if (customerBurgerIngredients.some((item) => item.type === 'bun')) {
+  type TonDropHandlerBun = (
+    item: {
+      type: string
+    }
+  ) => void;
+
+  const onDropHandlerBun: TonDropHandlerBun = (item) => {
+    if (customerBurgerIngredients.some((item: {type: string}) => item.type === 'bun')) {
       dispatch(replaceBurgerBun(item));
     } else {
       dispatch(putBurgerBun(item));
     }
   }
 
-  function onDropHandlerFillings(item) {
+  type TonDropHandlerFillings = (item: IngredientInterface) => void;
+  const onDropHandlerFillings: TonDropHandlerFillings = (item) => {
     dispatch(putBurgerFilling(item));
   }
 
-  function submitOrder() {
-    const ingredients = customerBurgerIngredients.map((item) => {
+  function submitOrder(): void {
+    const ingredients: IngredientInterface[] = customerBurgerIngredients.map((item: IngredientInterface) => {
       return item._id;
     });
 
     if (isLoggedIn) {
-      dispatch(getOrderStatus(ingredients));
+      dispatch(getOrderStatus(ingredients)); //TODO почему здесь ошибка? В других местах по коду dispatch нормально отрабатывал
     } else {
       navigate('/login');
     }
 
   }
 
-  function closeModal() {
+  function closeModal(): void {
     dispatch(clearOrderStatus());
   }
 
-  const onReplaceFillings = useCallback((dragIndex, dropIndex) => {
+  type TonReplaceFillings = (dragIndex: number, dropIndex: number) => void;
+  const onReplaceFillings = useCallback<TonReplaceFillings>((dragIndex, dropIndex) => {
     const newFillingsList = [...customerBurgerIngredients];
     newFillingsList.splice(dragIndex, 1);
     newFillingsList.splice(dropIndex, 0, customerBurgerIngredients[dragIndex]);
@@ -96,13 +105,13 @@ function BurgerConstructor() {
     dispatch(replaceBurgerFilling(newFillingsList));
   }, [customerBurgerIngredients]);
 
-  const isBunPlaseEmpty = !customerBurgerIngredients.some((item) => item.type === 'bun');
-  const fillingsListEmpty = !customerBurgerIngredients.some((item) => item.type !== 'bun');
-  const bunIsHovered = isHoverBunTop || isHoverBunBottom ? styles.hoveredContainer : '';
-  const fillingsIsHovered = isHoverFillings ? styles.hoveredContainer : '';
-  const orderCompleted =
-    customerBurgerIngredients.some((ingredient) => ingredient.type === 'bun')
-    && customerBurgerIngredients.some((ingredient) => ingredient.type === 'sauce' || ingredient.type === 'main');
+  const isBunPlaseEmpty: boolean = !customerBurgerIngredients.some((item: IngredientInterface) => item.type === 'bun');
+  const fillingsListEmpty: boolean = !customerBurgerIngredients.some((item: IngredientInterface) => item.type !== 'bun');
+  const bunIsHovered: string = isHoverBunTop || isHoverBunBottom ? styles.hoveredContainer : '';
+  const fillingsIsHovered: string = isHoverFillings ? styles.hoveredContainer : '';
+  const orderCompleted: boolean =
+    customerBurgerIngredients.some((ingredient: IngredientInterface) => ingredient.type === 'bun')
+    && customerBurgerIngredients.some((ingredient: IngredientInterface) => ingredient.type === 'sauce' || ingredient.type === 'main');
 
   return (
     <section className={styles.ingredientsSection}>
@@ -115,9 +124,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item) => item.type === 'bun').name} (верх)`}
-            price={customerBurgerIngredients.find((item) => item.type === 'bun').price}
-            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').name} (верх)`}
+            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').price}
+            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').image}
           />
         }
       </div>
@@ -128,7 +137,7 @@ function BurgerConstructor() {
       >
         {fillingsListEmpty ? <EmptyFillings/> :
           <>
-            {customerBurgerIngredients.map((item, index) => {
+            {customerBurgerIngredients.map((item: IngredientInterface, index: number) => {
               if (item.type !== 'bun') {
                 return (
                   <ConstructorElementFillings
@@ -152,9 +161,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item) => item.type === 'bun').name} (низ)`}
-            price={customerBurgerIngredients.find((item) => item.type === 'bun').price}
-            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').name} (низ)`}
+            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').price}
+            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').image}
           />
         }
       </div>
@@ -162,7 +171,7 @@ function BurgerConstructor() {
       <div className={styles.orderContainer}>
         <div className={styles.priceTag}>
           <p className="text text_type_main-large">
-            {customerBurgerIngredients.reduce((acc, currentElement) => {
+            {customerBurgerIngredients.reduce((acc: number, currentElement: IngredientInterface) => {
               return currentElement.price + acc;
             }, 0)}
           </p>

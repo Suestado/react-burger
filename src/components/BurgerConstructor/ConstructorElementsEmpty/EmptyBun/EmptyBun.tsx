@@ -1,7 +1,8 @@
+import {FC} from 'react';
 import styles from './emptyBun.module.css';
 
-function EmptyBun({ bottomClass }) {
-  const placeClass = bottomClass ? styles.bottom : styles.top;
+const EmptyBun: FC<{ bottomClass?: boolean }> = ({bottomClass}) => {
+  const placeClass: string = bottomClass ? styles.bottom : styles.top;
 
   return (
     <div className={`${styles.emptyBunBlock} ${placeClass}`}>

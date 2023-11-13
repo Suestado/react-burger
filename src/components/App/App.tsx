@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {useCallback, useEffect} from 'react';
+import {Routes, Route, useLocation, useNavigate, Location} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
 import Page404 from '../Page404/Page404';
@@ -20,14 +20,16 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  let stateRoute = location.state?.backgroundLocation;
+  const backgroundState = location.state as { backgroundLocation: Location }
+  const stateRoute = backgroundState && backgroundState.backgroundLocation;
 
   useEffect(() => {
     checkAuth(dispatch);
   }, []);
 
-  const closeModal = useCallback(() => {
-    navigate('/', { replace: true });
+  type TCloseModal = () => void;
+  const closeModal = useCallback<TCloseModal>(() => {
+    navigate('/', {replace: true});
   }, []);
 
   return (

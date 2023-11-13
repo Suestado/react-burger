@@ -1,8 +1,12 @@
+import {FC} from 'react';
 import styles from './ingredientsSwitchbar.module.css';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { INGREDIENTS_SWITCHBAR } from '../../utils/types';
+import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 
-function IngredientsSwitchbar({ activeTab }) {
+interface IIngredientsSwitchbar {
+  activeTab: string,
+}
+
+const IngredientsSwitchbar: FC<IIngredientsSwitchbar> = ({activeTab}) => {
 
   return (
     <div className={styles.ingredientsSwitchbar}>
@@ -24,7 +28,5 @@ function IngredientsSwitchbar({ activeTab }) {
     </div>
   );
 }
-
-IngredientsSwitchbar.propTypes = INGREDIENTS_SWITCHBAR;
 
 export default IngredientsSwitchbar;

@@ -3,7 +3,6 @@ import { useEffect, useCallback } from 'react';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
-import { MODAL_TYPES } from '../../../utils/types';
 
 function Modal({ title, closeModal, children }) {
   const modalPortal = document.querySelector('#modalPortal');
@@ -46,7 +45,5 @@ function Modal({ title, closeModal, children }) {
     modalPortal,
   );
 }
-
-Modal.propTypes = MODAL_TYPES;
 
 export default Modal;

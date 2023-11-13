@@ -1,16 +1,26 @@
-import { useRef, memo } from 'react';
+import React, { useRef, memo, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './constructorElementFillings.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { deleteBurgerFilling } from '../../../services/actions/burgerConstructorActions';
-import { CONSTRUCTOR_ELEMENT_FILLINGS } from '../../../utils/types';
 
-function ConstructorElementFillings({ item, index, onReplaceFillings }) {
+interface IConstructorElementFillings {
+  item: {
+    name: string,
+    price: number,
+    image: string,
+  }
+  index: number;
+  onReplaceFillings: (dragIndex: number, dropIndex: number) => void
+}
+
+const ConstructorElementFillings: FC<IConstructorElementFillings> = ({ item, index, onReplaceFillings }) => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  function onDeleteFillings(fillingIngredientIndex) {
+  type TonDeleteFillings = (fillingIngredientIndex: number) => void;
+  const onDeleteFillings: TonDeleteFillings = (fillingIngredientIndex) => {
     dispatch(deleteBurgerFilling(fillingIngredientIndex));
   }
 
@@ -24,16 +34,16 @@ function ConstructorElementFillings({ item, index, onReplaceFillings }) {
 
   const [, dropRefItem] = useDrop({
     accept: 'constructorItem',
-    hover: (item, monitor) => {
+    hover: (item: {dragIndex: number} , monitor) => {
 
       if (item.dragIndex === index) {
         return;
       }
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2; //TODO почему TS выдает ошибки со всеми функциями получения кооринат. И так по всему коду.
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top; //TODO почему TS выдает ошибки со всеми функциями получения кооринат. И так по всему коду.
 
       if (item.dragIndex < index && hoverClientY < hoverMiddleY / 2) {
         return;
@@ -67,7 +77,5 @@ function ConstructorElementFillings({ item, index, onReplaceFillings }) {
     </div>
   );
 }
-
-ConstructorElementFillings.propTypes = CONSTRUCTOR_ELEMENT_FILLINGS;
 
 export default memo(ConstructorElementFillings);
