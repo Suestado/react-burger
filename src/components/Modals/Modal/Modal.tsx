@@ -1,5 +1,5 @@
 import ReactDom from 'react-dom';
-import React, {useEffect, useCallback, FC, KeyboardEvent, MouseEvent} from 'react';
+import React, {useEffect, useCallback, FC, MouseEvent} from 'react';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
@@ -7,7 +7,7 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 interface IModal {
   title?: string,
   closeModal: () => void,
-  children: React.ReactNode | React.ReactElement
+  children: React.ReactElement
 }
 
 const Modal: FC<IModal> = ({ title, closeModal, children }) => {

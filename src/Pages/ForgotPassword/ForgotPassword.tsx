@@ -1,14 +1,14 @@
-import { memo, useState } from 'react';
+import React, { memo, useState, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import MainApi from '../../utils/MainApi';
 
-function ForgotPassword() {
-  const [emailValue, setEmailValue] = useState('');
+const ForgotPassword: FC = (): React.ReactElement => {
+  const [emailValue, setEmailValue] = useState<string>('');
   const navigate = useNavigate();
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     MainApi.forgotPassword(emailValue)
       .then((res) => {
         if (res.success) {

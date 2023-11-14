@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FC, ChangeEvent } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile.module.css';
@@ -9,17 +9,16 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import MainApi from '../../utils/MainApi';
 import { logOutUser, refreshUser } from '../../services/actions/userActions';
 
-function Profile() {
-  const currentUser = useSelector((store) => store.currentUser);
-  const [nameValue, setNameValue] = useState(currentUser.name);
-  const [emailValue, setEmailValue] = useState(currentUser.email);
-  const [passwordValue, setPasswordValue] = useState('');
-  const [isButtonActive, setIsButtonActive] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
-  const currentLocation = useLocation().pathname;
+const Profile: FC = (): React.ReactElement => {
+  const currentUser = useSelector((store: any) => store.currentUser);
+  const [nameValue, setNameValue] = useState<string>(currentUser.name);
+  const [emailValue, setEmailValue] = useState<string>(currentUser.email);
+  const [passwordValue, setPasswordValue] = useState<string>('');
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const currentLocation: string = useLocation().pathname;
   const dispatch = useDispatch();
-  const nameInputRef = useRef();
-  const resetButtonRef = useRef();
+  const nameInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (nameValue !== currentUser.name || emailValue !== currentUser.email || passwordValue) {
@@ -29,11 +28,14 @@ function Profile() {
     }
   }, [nameValue, emailValue, passwordValue]);
 
+  //TODO почему TS игнорирует проверку? С учетом ее до кода с ошибкой дойдет дело только в случее, если nameInputRef!== undefined
   useEffect(() => {
-    nameInputRef.current.focus();
+    if(nameInputRef) {
+      nameInputRef.current.focus();
+    }
   }, [isDisabled]);
 
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     MainApi.logOut(localStorage.getItem('refreshToken'))
       .then((res) => {
         if (res.success) {
@@ -47,15 +49,15 @@ function Profile() {
       });
   };
 
-  const onActivateInput = () => {
+  const onActivateInput = (): void => {
     setIsDisabled(false);
   };
 
-  const onDisableInput = () => {
+  const onDisableInput = (): void => {
     setIsDisabled(true);
   };
 
-  const updateUser = () => {
+  const updateUser = (): void => {
     MainApi.updateUser(nameValue, emailValue, passwordValue, localStorage.getItem('accessToken'))
       .then((res) => {
         if (res.success) {
@@ -68,7 +70,7 @@ function Profile() {
       });
   };
 
-  const resetForm = () => {
+  const resetForm = (): void => {
     setNameValue(currentUser.name);
     setEmailValue(currentUser.email);
     setPasswordValue('');
@@ -76,11 +78,11 @@ function Profile() {
 
   return (
     <section className={styles.profile}>
-      <form className={styles.form} ref={resetButtonRef}>
+      <form className={styles.form}>
         <Input
           type={'text'}
           placeholder={'Имя'}
-          onChange={evt => setNameValue(evt.target.value)}
+          onChange={(evt: ChangeEvent<HTMLInputElement>) => setNameValue(evt.target.value)}
           value={nameValue}
           name={'nameInput'}
           icon={'EditIcon'}
@@ -90,15 +92,14 @@ function Profile() {
           ref={nameInputRef}
         />
         <EmailInput
-          onChange={evt => setEmailValue(evt.target.value)}
+          onChange={(evt: ChangeEvent<HTMLInputElement>) => setEmailValue(evt.target.value)}
           value={emailValue}
           name={'emailInput'}
           placeholder="Логин"
           isIcon={true}
-          icon={'EditIcon'}
         />
         <PasswordInput
-          onChange={evt => setPasswordValue(evt.target.value)}
+          onChange={(evt: ChangeEvent<HTMLInputElement>) => setPasswordValue(evt.target.value)}
           value={passwordValue}
           name={'passwordInput'}
           icon={'EditIcon'}

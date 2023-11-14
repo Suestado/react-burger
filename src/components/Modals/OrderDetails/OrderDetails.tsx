@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import PropTypes from 'prop-types';
 import styles from './orderDetails.module.css';
 import okImage from '../../../images/done.png';
@@ -7,7 +7,7 @@ interface IOrderDetails {
   orderNumber: number
 }
 
-const OrderDetails: FC<IOrderDetails> = ({orderNumber}) => {
+const OrderDetails: FC<IOrderDetails> = ({orderNumber}): React.ReactElement => {
   return (
     <div className={styles.orderDetails}>
       <p className={`text text_type_digits-large ${styles.number}`}>{orderNumber}</p>
