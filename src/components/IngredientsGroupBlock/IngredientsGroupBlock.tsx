@@ -16,10 +16,10 @@ const IngredientsGroupBlock: FC<IIngredientsGroupBlock> = memo(({ title, type, i
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    handleHeadersRef(ref.current); //TODO откуда мне здесь взять HTML элемент, если он позже по коду только назначится? Или как эту ошибку убрать, чтобы на null не ругался?
+    handleHeadersRef(ref.current as HTMLHeadingElement);
   }, []);
 
-  const sortedIngredientsList = ingredientsList.filter((item) => {
+  const sortedIngredientsList = ingredientsList.filter((item: IngredientInterface) => {
     return item.type === type;
   });
 

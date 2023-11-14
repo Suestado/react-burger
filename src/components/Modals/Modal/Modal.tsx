@@ -1,28 +1,34 @@
 import ReactDom from 'react-dom';
-import { useEffect, useCallback } from 'react';
+import React, {useEffect, useCallback, FC, KeyboardEvent, MouseEvent} from 'react';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
-function Modal({ title, closeModal, children }) {
-  const modalPortal = document.querySelector('#modalPortal');
+interface IModal {
+  title?: string,
+  closeModal: () => void,
+  children: React.ReactNode | React.ReactElement
+}
+
+const Modal: FC<IModal> = ({ title, closeModal, children }) => {
+  const modalPortal = document.querySelector('#modalPortal') as HTMLElement;
 
   useEffect(() => {
-    function handleEscClose(evt) {
+    function handleEscClose(evt: KeyboardEvent) {
       if (evt.key === 'Escape') {
-        closeModal(evt);
+        closeModal();
       }
     }
 
-    document.addEventListener('keydown', handleEscClose);
+    document.addEventListener('keydown' as const, handleEscClose);
 
-    return () => document.removeEventListener('keydown', handleEscClose);
+    return () => document.removeEventListener('keydown' as const, handleEscClose);
   }, []);
 
-  const handleCloseModalOverlay = useCallback((evt) => {
+  const handleCloseModalOverlay = useCallback((evt: MouseEvent) => {
     evt.stopPropagation();
     if (evt.target === evt.currentTarget) {
-      closeModal(evt);
+      closeModal();
     }
   }, []);
 

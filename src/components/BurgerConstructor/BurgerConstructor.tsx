@@ -85,7 +85,8 @@ function BurgerConstructor() {
     });
 
     if (isLoggedIn) {
-      dispatch(getOrderStatus(ingredients)); //TODO почему здесь ошибка? В других местах по коду dispatch нормально отрабатывал
+      // @ts-ignore
+      dispatch(getOrderStatus(ingredients));
     } else {
       navigate('/login');
     }

@@ -1,6 +1,6 @@
 import React, { useRef, memo, FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { useDrag, useDrop } from 'react-dnd';
+import {useDrag, useDrop, XYCoord} from 'react-dnd';
 import styles from './constructorElementFillings.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { deleteBurgerFilling } from '../../../services/actions/burgerConstructorActions';
@@ -40,10 +40,10 @@ const ConstructorElementFillings: FC<IConstructorElementFillings> = ({ item, ind
         return;
       }
 
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2; //TODO почему TS выдает ошибки со всеми функциями получения кооринат. И так по всему коду.
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top; //TODO почему TS выдает ошибки со всеми функциями получения кооринат. И так по всему коду.
+      const hoverBoundingRect = ref.current?.getBoundingClientRect() as DOMRect;
+      const clientOffset = monitor.getClientOffset() as XYCoord;
+      const hoverMiddleY: number = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverClientY: number = clientOffset.y - hoverBoundingRect.top;
 
       if (item.dragIndex < index && hoverClientY < hoverMiddleY / 2) {
         return;

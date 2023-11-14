@@ -18,7 +18,8 @@ function BurgerIngredients() {
 
   type ThandleScroll = () => void;
   const handleScroll: ThandleScroll = () => {
-    const blockTop: number = ingredientsRef.current.getBoundingClientRect().top; //TODO почему TS выдает ошибки со всеми функциями получения кооринат. И так по всему коду.
+    if(!ingredientsRef.current) return;
+    const blockTop: number = ingredientsRef.current.getBoundingClientRect().top;
     let minDistance: number = Math.abs(refIngredientHeaders[0].getBoundingClientRect().top - blockTop);
 
     refIngredientHeaders.forEach((item: HTMLDivElement) => {

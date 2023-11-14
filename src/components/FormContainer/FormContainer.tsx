@@ -57,18 +57,18 @@ const FormContainer: FC<IFormContainer> = ({ children, header, buttonText, botto
           </div>
         </form>
 
-        <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
-          {`${bottomOptionOne.text} `} {/*TODO почему TS пишет, что bottomOptionOne скорее всего undefined, если я напрямую в пропсах передаю все в явном виде?*/}
+        {bottomOptionOne && <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
+          {`${bottomOptionOne.text} `}
           <Link
             className={`${styles.bottomLink} text text_type_main-default text_color_inactive`}
             to={bottomOptionOne.navLink}
           >
             {bottomOptionOne.linkText}
           </Link>
-        </div>
+        </div>}
         {bottomOptionTwo &&
           <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
-            {`${bottomOptionTwo.text} `} {/* TODO При этом во втором, таком же, случае, все в порядке*/}
+            {`${bottomOptionTwo.text} `}
             <Link
               className={`${styles.bottomLink} text text_type_main-default text_color_inactive`}
               to={bottomOptionTwo.navLink}

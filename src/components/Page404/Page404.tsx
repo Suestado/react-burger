@@ -4,7 +4,7 @@ import styles from './Page404.module.css';
 function Page404() {
   const navigate = useNavigate();
 
-  function backToPrevPage() {
+  function backToPrevPage(): void {
     navigate(-1);
   }
 

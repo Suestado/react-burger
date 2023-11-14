@@ -11,17 +11,17 @@ const IngredientsSwitchbar: FC<IIngredientsSwitchbar> = ({activeTab}) => {
   return (
     <div className={styles.ingredientsSwitchbar}>
       <a className={styles.link} href="#bun">
-        <Tab value="one" active={activeTab === 'bun'}>
+        <Tab value="one" active={activeTab === 'bun'} onClick={() => void 0}>
           Булки
         </Tab>
       </a>
       <a className={styles.link} href="#sauce">
-        <Tab value="two" active={activeTab === 'sauce'}>
+        <Tab value="two" active={activeTab === 'sauce'} onClick={() => void 0}>
           Соусы
         </Tab>
       </a>
       <a className={styles.link} href="#main">
-        <Tab value="three" active={activeTab === 'main'}>
+        <Tab value="three" active={activeTab === 'main'} onClick={() => void 0}>
           Начинки
         </Tab>
       </a>

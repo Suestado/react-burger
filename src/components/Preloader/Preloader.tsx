@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import styles from './preloader.module.css';
 
 function Preloader() {
-  const modalPortal = document.querySelector('#modalPortal');
+  const modalPortal = document.querySelector('#modalPortal') as HTMLElement;
 
   return ReactDom.createPortal(
     <div className={styles.preloader}>
