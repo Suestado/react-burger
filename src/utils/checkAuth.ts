@@ -1,20 +1,20 @@
-import MainApi from './MainApi';
+import { checkAuth as checkAuthApi, refreshToken } from './MainApi';
 import { fetchUserProcessing, logOutUser, refreshUser } from '../services/actions/userActions';
 
 function checkAuth(dispatch: any) {
   dispatch(fetchUserProcessing())
-  MainApi.checkAuth(localStorage.getItem('accessToken'))
+  checkAuthApi(localStorage.getItem('accessToken'))
     .then((res) => {
       dispatch(refreshUser(res.user.name, res.user.email));
     })
     .catch((err) => {
       if (err.message === 'jwt expired') {
-        MainApi.refreshToken(localStorage.getItem('refreshToken'))
+        refreshToken(localStorage.getItem('refreshToken'))
           .then((res) => {
             if (res.success) {
               localStorage.setItem('accessToken', res.accessToken);
               localStorage.setItem('refreshToken', res.refreshToken);
-              MainApi.checkAuth(localStorage.getItem('accessToken'))
+              checkAuthApi(localStorage.getItem('accessToken'))
                 .then((res) => {
                   dispatch(refreshUser(res.user.name, res.user.email));
                 })

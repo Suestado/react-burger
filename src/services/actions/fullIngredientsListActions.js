@@ -3,14 +3,14 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILURE,
 } from '../../utils/constants';
-import MainApi from '../../utils/MainApi';
+import { getIngredients as getIngredientsApi } from '../../utils/MainApi';
 
 function getIngredients() {
   return function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS,
     });
-    MainApi.getIngredients()
+    getIngredientsApi()
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -27,7 +27,7 @@ function getIngredients() {
         dispatch({
           type: GET_INGREDIENTS_FAILURE,
         });
-        console.error(err)
+        console.error(err);
       });
   };
 }

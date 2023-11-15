@@ -1,10 +1,10 @@
 import React, {memo, useState, useEffect, FC, ChangeEvent} from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {useNavigate, useLocation} from 'react-router-dom';
 import FormContainer from '../../components/FormContainer/FormContainer';
-import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import MainApi from '../../utils/MainApi';
+import {PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
+import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
+import {resetPassword} from '../../utils/MainApi';
 
 const ResetPassword: FC = (): React.ReactElement => {
   const [passwordValue, setPasswordValue] = useState<string>('');
@@ -14,10 +14,10 @@ const ResetPassword: FC = (): React.ReactElement => {
   const location = useLocation();
 
   const onSubmit = (): void => {
-    MainApi.resetPassword(passwordValue, smsValue)
+    resetPassword(passwordValue, smsValue)
       .then((res) => {
         if (res.success) {
-          navigate('/login', { replace: true });
+          navigate('/login', {replace: true});
         }
       })
       .catch((err) => {

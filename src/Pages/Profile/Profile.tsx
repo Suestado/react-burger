@@ -6,7 +6,7 @@ import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import MainApi from '../../utils/MainApi';
+import {logOut, updateUser} from '../../utils/MainApi';
 import { logOutUser, refreshUser } from '../../services/actions/userActions';
 
 const Profile: FC = (): React.ReactElement => {
@@ -36,7 +36,7 @@ const Profile: FC = (): React.ReactElement => {
   }, [isDisabled]);
 
   const handleLogout = (): void => {
-    MainApi.logOut(localStorage.getItem('refreshToken'))
+    logOut(localStorage.getItem('refreshToken'))
       .then((res) => {
         if (res.success) {
           localStorage.removeItem('accessToken');
@@ -57,8 +57,8 @@ const Profile: FC = (): React.ReactElement => {
     setIsDisabled(true);
   };
 
-  const updateUser = (): void => {
-    MainApi.updateUser(nameValue, emailValue, passwordValue, localStorage.getItem('accessToken'))
+  const handleUpdateUser = (): void => {
+    updateUser(nameValue, emailValue, passwordValue, localStorage.getItem('accessToken'))
       .then((res) => {
         if (res.success) {
           dispatch(refreshUser(res.user.name, res.user.email));
@@ -106,7 +106,7 @@ const Profile: FC = (): React.ReactElement => {
         />
         {isButtonActive && <div className={styles.buttonsContainer}>
           <Button htmlType="button" type="secondary" size="medium" onClick={resetForm}>Отменить</Button>
-          <Button htmlType="button" type="primary" size="medium" onClick={updateUser}>Сохранить</Button>
+          <Button htmlType="button" type="primary" size="medium" onClick={handleUpdateUser}>Сохранить</Button>
         </div>}
 
       </form>

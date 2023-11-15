@@ -1,162 +1,204 @@
-type TServerResponse<T> = {
-  success: boolean,
-} & T;
+import { IngredientInterface } from "./commonTypes";
 
-type TRefreshResponse = TServerResponse<{
-  refreshToken: string,
-  accessToken: string
-}>
+const baseURL = 'https://norma.nomoreparties.space/api/';
+const baseHeaders = {
+  'Content-Type': 'application/json',
+};
 
-class MainApiClass {
-  _baseHeaders: {'Content-Type': string};
-  _checkResponse: (res: Response) => Promise<any>;
-  _checkSuccess: (res: JSON) => Promise<any>;
-
-  constructor({ baseURL }: {baseURL: string}) {
-    this._baseHeaders = {
-      'Content-Type': 'application/json',
-    };
-
-    this._checkResponse = (res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return res.json().then((err) => Promise.reject(err));
-      }
-    };
-
-    this._checkSuccess = (res) => {
-      if (res && res.success) {
-        return res;
-      } else {
-        return res.json().then((err) => Promise.reject(err));
-      }
-    };
-
-    this._request = function (endpoint, method, headers, body) {
-      return fetch(`${baseURL}${endpoint}`, {
-        method: method,
-        headers: headers,
-        body: body,
-      })
-        .then(this._checkResponse)
-        .then(this._checkSuccess);
-    };
+const checkResponse = <T>(res: Response): Promise<T> => {
+  if (res.ok) {
+    return res.json();
+  } else {
+    return res.json().then((err) => Promise.reject(err));
   }
+};
 
-  getIngredients = () => this._request('ingredients', 'GET');
+interface IcheckResponse {
+  success: boolean,
+};
 
-  getOrderNumber = (ingredients) => this._request(
-    'orders',
-    'POST',
-    this._baseHeaders,
-    JSON.stringify({
-      ingredients,
-    }),
-  );
+type TcheckSuccess<T> = {
+  success: boolean,
+  json: () => Promise<any>
+} & T
 
-  registerUser = (name, email, password) => this._request(
-    'auth/register',
-    'POST',
-    this._baseHeaders,
+const checkSuccess = <T>(res: TcheckSuccess<T>): Promise<TcheckSuccess<T>> => {
+  if (res && res.success) {
+    console.log(res)
+    return Promise.resolve(res);
+  } else {
+    return res.json().then((err) => Promise.reject(err));
+  }
+};
+
+export const request = <T>(
+  endpoint: string,
+  method: string,
+  headers?: { [key: string]: string; authorization?: any; },
+  body?: string
+): Promise<T> => {
+  return fetch(`${baseURL}${endpoint}`, {
+    method: method,
+    headers: headers,
+    body: body,
+  })
+    .then(res => checkResponse<T>(res))
+    .then(res => checkSuccess<T>(res));
+};
+
+
+export const getIngredients = (): Promise<IngredientInterface> => request<IngredientInterface>('ingredients', 'GET');
+
+interface IgetOrderNumber extends IcheckResponse {
+  order: {
+    number: number
+  }
+}
+
+export const getOrderNumber = (ingredients: IngredientInterface[]): Promise<IgetOrderNumber> => request<IgetOrderNumber>(
+  'orders',
+  'POST',
+  baseHeaders,
+  JSON.stringify({
+    ingredients,
+  }),
+);
+
+interface UserInterface extends IcheckResponse {
+  user: {
+    email: string,
+    name: string
+  }
+  accessToken: string,
+  refreshToken: string,
+}
+
+export const registerUser = (name: string, email: string, password: string): Promise<UserInterface> => request<UserInterface>(
+  'auth/register',
+  'POST',
+  baseHeaders,
+  JSON.stringify({
+    name,
+    email,
+    password,
+  }),
+)
+  .then((res: UserInterface) => {
+    localStorage.setItem('accessToken', res.accessToken);
+    localStorage.setItem('refreshToken', res.refreshToken);
+    return res;
+  });
+
+export const loginUser = (email: string, password: string): Promise<UserInterface> => request<UserInterface>(
+  'auth/login',
+  'POST',
+  baseHeaders,
+  JSON.stringify({
+    email,
+    password,
+  }),
+)
+  .then((res) => {
+    localStorage.setItem('accessToken', res.accessToken);
+    localStorage.setItem('refreshToken', res.refreshToken);
+    return res;
+  });
+
+interface IcheckAuth extends IcheckResponse {
+  email: string,
+  name: string,
+}
+
+export const checkAuth = (token: string): Promise<IcheckAuth> => request<IcheckAuth>(
+  'auth/user',
+  'GET',
+  {
+    ...baseHeaders,
+    authorization: token,
+  },
+);
+
+interface IrefreshToken extends IcheckResponse {
+  accessToken: string,
+  refreshToken: string,
+}
+
+export const refreshToken = (refreshToken: string): Promise<IrefreshToken> => request<IrefreshToken>(
+  'auth/user',
+  'PATCH',
+  baseHeaders,
+  JSON.stringify({
+    token: refreshToken,
+  }),
+);
+
+interface IforgotPassword extends IcheckResponse {
+  message: string
+}
+
+export const forgotPassword = (email: string): Promise<IforgotPassword> => request<IforgotPassword>(
+  'password-reset',
+  'POST',
+  baseHeaders,
+  JSON.stringify({
+    email: email,
+  }),
+);
+
+interface IresetPassword extends IcheckResponse {
+  message: string
+}
+
+export const resetPassword = (password: string, token: string): Promise<IresetPassword> => request<IresetPassword>(
+  'password-reset/reset',
+  'POST',
+  baseHeaders,
+  JSON.stringify({
+    password: password,
+    token: token,
+  }),
+);
+
+interface IupdateUser extends IcheckResponse {
+  email: string,
+  name: string,
+}
+
+export const updateUser = (
+  name: string,
+  email: string,
+  password: string,
+  token: string,
+): Promise<IupdateUser> => request<IupdateUser>(
+  'auth/user',
+  'PATCH',
+  {
+    ...baseHeaders,
+    authorization: token,
+  },
+  password ?
     JSON.stringify({
       name,
       email,
       password,
-    }),
-  )
-    .then((res) => {
-      localStorage.setItem('accessToken', res.accessToken);
-      localStorage.setItem('refreshToken', res.refreshToken);
-      return res;
-    });
-
-  loginUser = (email, password) => this._request(
-    'auth/login',
-    'POST',
-    this._baseHeaders,
+    })
+    :
     JSON.stringify({
+      name,
       email,
-      password,
     }),
-  )
-    .then((res) => {
-      localStorage.setItem('accessToken', res.accessToken);
-      localStorage.setItem('refreshToken', res.refreshToken);
-      return res;
-    });
+);
 
-  checkAuth = (token) => this._request(
-    'auth/user',
-    'GET',
-    {
-      ...this._baseHeaders,
-      authorization: token,
-    },
-  );
-
-  refreshToken = (refreshToken) => this._request(
-    'auth/user',
-    'PATCH',
-    this._baseHeaders,
-    JSON.stringify({
-      token: refreshToken,
-    }),
-  );
-
-  forgotPassword = (email) => this._request(
-    'password-reset',
-    'POST',
-    this._baseHeaders,
-    JSON.stringify({
-      email: email,
-    }),
-  );
-
-  resetPassword = (password, token) => this._request(
-    'password-reset/reset',
-    'POST',
-    this._baseHeaders,
-    JSON.stringify({
-      password: password,
-      token: token,
-    }),
-  );
-
-  updateUser = (name, email, password, token) => this._request(
-    'auth/user',
-    'PATCH',
-    {
-      ...this._baseHeaders,
-      authorization: token,
-    },
-    password ?
-      JSON.stringify({
-        name,
-        email,
-        password,
-      })
-      :
-      JSON.stringify({
-        name,
-        email,
-      }),
-  );
-
-  logOut = (refreshToken) => this._request(
-    'auth/logout',
-    'POST',
-    this._baseHeaders,
-    JSON.stringify({
-      token: refreshToken,
-    }),
-  );
+interface IlogOut extends IcheckResponse {
+  message: string
 }
 
+export const logOut = (refreshToken: string): Promise<IlogOut> => request<IlogOut>(
+  'auth/logout',
+  'POST',
+  baseHeaders,
+  JSON.stringify({
+    token: refreshToken,
+  }),
+);
 
-
-const MainApi = new MainApiClass({
-  baseURL: 'https://norma.nomoreparties.space/api/',
-});
-
-export default MainApi;
