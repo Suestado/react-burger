@@ -15,7 +15,7 @@ interface IConstructorElementFillings {
   onReplaceFillings: (dragIndex: number, dropIndex: number) => void
 }
 
-const ConstructorElementFillings: FC<IConstructorElementFillings> = ({ item, index, onReplaceFillings }) => {
+const ConstructorElementFillings: FC<IConstructorElementFillings> = ({ item, index, onReplaceFillings }): React.ReactElement => {
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -72,7 +72,7 @@ const ConstructorElementFillings: FC<IConstructorElementFillings> = ({ item, ind
         text={item.name}
         price={item.price}
         thumbnail={item.image}
-        handleClose={() => onDeleteFillings(index)}
+        handleClose={(): void => onDeleteFillings(index)}
       />
     </div>
   );

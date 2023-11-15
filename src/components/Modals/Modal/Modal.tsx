@@ -10,7 +10,7 @@ interface IModal {
   children: React.ReactElement
 }
 
-const Modal: FC<IModal> = ({ title, closeModal, children }) => {
+const Modal: FC<IModal> = ({ title, closeModal, children }): React.ReactElement => {
   const modalPortal = document.querySelector('#modalPortal') as HTMLElement;
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Modal: FC<IModal> = ({ title, closeModal, children }) => {
     return () => document.removeEventListener('keydown' as const, handleEscClose);
   }, []);
 
-  const handleCloseModalOverlay = useCallback((evt: MouseEvent) => {
+  const handleCloseModalOverlay = useCallback((evt: MouseEvent): void => {
     evt.stopPropagation();
     if (evt.target === evt.currentTarget) {
       closeModal();

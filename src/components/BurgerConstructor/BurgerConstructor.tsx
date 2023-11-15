@@ -66,7 +66,7 @@ function BurgerConstructor() {
     }
   ) => void;
 
-  const onDropHandlerBun: TonDropHandlerBun = (item) => {
+  const onDropHandlerBun: TonDropHandlerBun = (item): void => {
     if (customerBurgerIngredients.some((item: {type: string}) => item.type === 'bun')) {
       dispatch(replaceBurgerBun(item));
     } else {
@@ -75,7 +75,7 @@ function BurgerConstructor() {
   }
 
   type TonDropHandlerFillings = (item: IngredientInterface) => void;
-  const onDropHandlerFillings: TonDropHandlerFillings = (item) => {
+  const onDropHandlerFillings: TonDropHandlerFillings = (item): void => {
     dispatch(putBurgerFilling(item));
   }
 
@@ -98,7 +98,7 @@ function BurgerConstructor() {
   }
 
   type TonReplaceFillings = (dragIndex: number, dropIndex: number) => void;
-  const onReplaceFillings = useCallback<TonReplaceFillings>((dragIndex, dropIndex) => {
+  const onReplaceFillings = useCallback<TonReplaceFillings>((dragIndex, dropIndex): void => {
     const newFillingsList = [...customerBurgerIngredients];
     newFillingsList.splice(dragIndex, 1);
     newFillingsList.splice(dropIndex, 0, customerBurgerIngredients[dragIndex]);

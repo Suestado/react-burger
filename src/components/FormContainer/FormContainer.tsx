@@ -7,7 +7,7 @@ import Modal from '../Modals/Modal/Modal';
 import { userResetFailure } from '../../services/actions/userActions';
 
 interface IFormContainer {
-  children: React.ReactNode,
+  children: React.ReactElement | React.ReactElement[],
   header: string,
   buttonText: string,
   bottomOptionOne?: {
@@ -24,7 +24,15 @@ interface IFormContainer {
   errorTitle: string,
 }
 
-const FormContainer: FC<IFormContainer> = ({ children, header, buttonText, bottomOptionOne, bottomOptionTwo, onSubmit, errorTitle }) => {
+const FormContainer: FC<IFormContainer> = (
+  { children,
+    header,
+    buttonText,
+    bottomOptionOne,
+    bottomOptionTwo,
+    onSubmit,
+    errorTitle }
+): React.ReactElement => {
   const { showFailureMessage, failureMessage } = useSelector((store: any) => store.currentUser);
   const dispatch = useDispatch();
 

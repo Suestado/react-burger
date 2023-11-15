@@ -1,4 +1,4 @@
-import React, { memo, useState, FC } from 'react';
+import React, { memo, useState, FC, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -34,7 +34,7 @@ const ForgotPassword: FC = (): React.ReactElement => {
       errorTitle="При попытке восстановления пароля произошла ошибка"
     >
       <EmailInput
-        onChange={evt => setEmailValue(evt.target.value)}
+        onChange={(evt: ChangeEvent<HTMLInputElement>) => setEmailValue(evt.target.value)}
         value={emailValue}
         name={'emailInput'}
         placeholder="Укажите e-mail"

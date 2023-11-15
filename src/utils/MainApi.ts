@@ -1,5 +1,18 @@
+type TServerResponse<T> = {
+  success: boolean,
+} & T;
+
+type TRefreshResponse = TServerResponse<{
+  refreshToken: string,
+  accessToken: string
+}>
+
 class MainApiClass {
-  constructor({ baseURL }) {
+  _baseHeaders: {'Content-Type': string};
+  _checkResponse: (res: Response) => Promise<any>;
+  _checkSuccess: (res: JSON) => Promise<any>;
+
+  constructor({ baseURL }: {baseURL: string}) {
     this._baseHeaders = {
       'Content-Type': 'application/json',
     };

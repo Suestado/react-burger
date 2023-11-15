@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import styles from './ingredientsSwitchbar.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -6,7 +6,7 @@ interface IIngredientsSwitchbar {
   activeTab: string,
 }
 
-const IngredientsSwitchbar: FC<IIngredientsSwitchbar> = ({activeTab}) => {
+const IngredientsSwitchbar: FC<IIngredientsSwitchbar> = ({activeTab}): React.ReactElement => {
 
   return (
     <div className={styles.ingredientsSwitchbar}>

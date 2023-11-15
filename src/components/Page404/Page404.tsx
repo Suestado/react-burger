@@ -1,7 +1,8 @@
+import React, {FC} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Page404.module.css';
 
-function Page404() {
+const Page404: FC = (): React.ReactElement => {
   const navigate = useNavigate();
 
   function backToPrevPage(): void {

@@ -7,7 +7,7 @@ interface IProtectedRouteElement {
   element: React.ReactElement;
 }
 
-const ProtectedRouteElement: FC<IProtectedRouteElement> = ({element: Component}): React.ReactElement => {
+const ProtectedRouteElement: FC<IProtectedRouteElement> = ({element: Component}) => {
   const location = useLocation();
   const {isLoggedIn, getUserProcessing}: {isLoggedIn: boolean, getUserProcessing: boolean} = useSelector((store: any) => store.currentUser);
   const lastPage: { lastPage: string } = {lastPage: location.pathname};

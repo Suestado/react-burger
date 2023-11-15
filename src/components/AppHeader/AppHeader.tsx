@@ -7,7 +7,7 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
-  const location = useLocation().pathname;
+  const location: string = useLocation().pathname;
 
   return (
     <header className={styles.header}>

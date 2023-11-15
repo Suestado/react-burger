@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {FC} from 'react';
 import ReactDom from 'react-dom';
 import styles from './preloader.module.css';
 
-function Preloader() {
+const Preloader: FC = (): React.ReactElement => {
   const modalPortal = document.querySelector('#modalPortal') as HTMLElement;
 
   return ReactDom.createPortal(

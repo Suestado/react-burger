@@ -10,7 +10,7 @@ const Login: FC = (): React.ReactElement => {
   const [passwordValue, setPasswordValue] = useState<string>('');
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     //@ts-ignore
     dispatch(loginUser(emailValue, passwordValue));
   };

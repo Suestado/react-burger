@@ -1,7 +1,7 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import styles from './emptyBun.module.css';
 
-const EmptyBun: FC<{ bottomClass?: boolean }> = ({bottomClass}) => {
+const EmptyBun: FC<{ bottomClass?: boolean }> = ({bottomClass}): React.ReactElement => {
   const placeClass: string = bottomClass ? styles.bottom : styles.top;
 
   return (

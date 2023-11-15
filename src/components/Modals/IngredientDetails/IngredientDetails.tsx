@@ -1,4 +1,4 @@
-import { useEffect, FC } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { createSelector } from 'reselect';
@@ -9,7 +9,7 @@ import {IngredientInterface} from "../../../utils/commonTypes";
 
 const selectAllIngredients = (store: any) => store.ingredients.fullIngredientList;
 
-const IngredientDetails: FC = () => {
+const IngredientDetails: FC = (): React.ReactElement => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const selectIngredient = createSelector(
@@ -20,7 +20,7 @@ const IngredientDetails: FC = () => {
   );
   const ingredient = useSelector(selectIngredient);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (!ingredient) {
       // @ts-ignore
       dispatch(getIngredients());

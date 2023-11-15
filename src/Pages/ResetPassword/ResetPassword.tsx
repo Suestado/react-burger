@@ -25,7 +25,7 @@ const ResetPassword: FC = (): React.ReactElement => {
       });
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     if (!location.state?.forgotPassword) {
       navigate('/forgot-password');
     }

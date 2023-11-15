@@ -3,10 +3,10 @@ import styles from './modalOverlay.module.css';
 
 interface IModalOverlay {
   handleCloseModal: (evt: MouseEvent) => void,
-  children: React.ReactElement | React.ReactNode
+  children: React.ReactElement
 }
 
-const ModalOverlay: FC<IModalOverlay> = ({ handleCloseModal, children }) => {
+const ModalOverlay: FC<IModalOverlay> = ({ handleCloseModal, children }): React.ReactElement => {
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { memo, FC } from 'react';
+import React, { memo, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,7 +11,7 @@ interface IBurgerIngredient {
   item: IngredientInterface,
 };
 
-const BurgerIngredient: FC<IBurgerIngredient> = ({ item }) => {
+const BurgerIngredient: FC<IBurgerIngredient> = ({ item }): React.ReactElement => {
   const location = useLocation();
 
   const [{ isDragBun }, dragRefBun] = useDrag({

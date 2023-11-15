@@ -7,8 +7,7 @@ interface IUnAuthRouteElement {
   element: React.ReactElement;
 }
 
-//TODO Не понимаю, что тут не так, с учетом того, что почти такой же второй защищенный роут ProtectedRouteElement нормально типизировался
-const UnAuthRouteElement: FC<IUnAuthRouteElement> = ({ element: Component}): React.ReactElement | undefined => {
+const UnAuthRouteElement: FC<IUnAuthRouteElement> = ({ element: Component}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoggedIn, getUserProcessing }: { isLoggedIn: boolean, getUserProcessing: boolean } = useSelector((store: any) => store.currentUser);
