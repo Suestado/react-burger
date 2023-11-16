@@ -28,6 +28,8 @@ const UnAuthRouteElement: FC<IUnAuthRouteElement> = ({ element: Component}) => {
   if(isLoggedIn && !from) {
     navigate(-1)
   }
+
+  return null
 }
 
 export default UnAuthRouteElement;

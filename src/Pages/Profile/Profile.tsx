@@ -28,9 +28,8 @@ const Profile: FC = (): React.ReactElement => {
     }
   }, [nameValue, emailValue, passwordValue]);
 
-  //TODO почему TS игнорирует проверку? С учетом ее до кода с ошибкой дойдет дело только в случее, если nameInputRef!== undefined
   useEffect(() => {
-    if(nameInputRef) {
+    if(nameInputRef.current) {
       nameInputRef.current.focus();
     }
   }, [isDisabled]);

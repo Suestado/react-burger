@@ -5,7 +5,7 @@ const baseHeaders = {
   'Content-Type': 'application/json',
 };
 
-const checkResponse = <T>(res: Response): Promise<T> => {
+const checkResponse = <T>(res: Response): Promise<TcheckSuccess<T>> => {
   if (res.ok) {
     return res.json();
   } else {
@@ -15,7 +15,7 @@ const checkResponse = <T>(res: Response): Promise<T> => {
 
 interface IcheckResponse {
   success: boolean,
-};
+}
 
 type TcheckSuccess<T> = {
   success: boolean,
@@ -24,7 +24,6 @@ type TcheckSuccess<T> = {
 
 const checkSuccess = <T>(res: TcheckSuccess<T>): Promise<TcheckSuccess<T>> => {
   if (res && res.success) {
-    console.log(res)
     return Promise.resolve(res);
   } else {
     return res.json().then((err) => Promise.reject(err));
@@ -105,32 +104,42 @@ export const loginUser = (email: string, password: string): Promise<UserInterfac
   });
 
 interface IcheckAuth extends IcheckResponse {
-  email: string,
-  name: string,
+  user: {
+    email: string,
+    name: string,
+  }
 }
 
-export const checkAuth = (token: string): Promise<IcheckAuth> => request<IcheckAuth>(
-  'auth/user',
-  'GET',
-  {
-    ...baseHeaders,
-    authorization: token,
-  },
-);
+export const checkAuth = (token: string | null): Promise<IcheckAuth> => {
+  if (!token) return Promise.reject("Токен не найден в хранилище")
+
+  return request<IcheckAuth>(
+    'auth/user',
+    'GET',
+    {
+      ...baseHeaders,
+      authorization: token,
+    },
+  )
+};
 
 interface IrefreshToken extends IcheckResponse {
   accessToken: string,
   refreshToken: string,
 }
 
-export const refreshToken = (refreshToken: string): Promise<IrefreshToken> => request<IrefreshToken>(
-  'auth/user',
-  'PATCH',
-  baseHeaders,
-  JSON.stringify({
-    token: refreshToken,
-  }),
-);
+export const refreshToken = (refreshToken: string | null): Promise<IrefreshToken> => {
+  if (!refreshToken) return Promise.reject("Токен не найден в хранилище")
+
+  return request<IrefreshToken>(
+    'auth/user',
+    'PATCH',
+    baseHeaders,
+    JSON.stringify({
+      token: refreshToken,
+    }),
+  )
+};
 
 interface IforgotPassword extends IcheckResponse {
   message: string
@@ -160,45 +169,55 @@ export const resetPassword = (password: string, token: string): Promise<IresetPa
 );
 
 interface IupdateUser extends IcheckResponse {
-  email: string,
-  name: string,
+  user: {
+    email: string,
+    name: string,
+  }
 }
 
 export const updateUser = (
   name: string,
   email: string,
   password: string,
-  token: string,
-): Promise<IupdateUser> => request<IupdateUser>(
-  'auth/user',
-  'PATCH',
-  {
-    ...baseHeaders,
-    authorization: token,
-  },
-  password ?
-    JSON.stringify({
-      name,
-      email,
-      password,
-    })
-    :
-    JSON.stringify({
-      name,
-      email,
-    }),
-);
+  token: string | null,
+): Promise<IupdateUser> => {
+  if (!token) return Promise.reject("Токен не найден в хранилище")
+
+  return request<IupdateUser>(
+    'auth/user',
+    'PATCH',
+    {
+      ...baseHeaders,
+      authorization: token,
+    },
+    password ?
+      JSON.stringify({
+        name,
+        email,
+        password,
+      })
+      :
+      JSON.stringify({
+        name,
+        email,
+      }),
+  )
+};
 
 interface IlogOut extends IcheckResponse {
   message: string
 }
 
-export const logOut = (refreshToken: string): Promise<IlogOut> => request<IlogOut>(
-  'auth/logout',
-  'POST',
-  baseHeaders,
-  JSON.stringify({
-    token: refreshToken,
-  }),
-);
+export const logOut = (refreshToken: string | null): Promise<IlogOut> => {
+  if (!refreshToken) return Promise.reject("Токен не найден в хранилище")
+
+  return request<IlogOut>(
+    'auth/logout',
+    'POST',
+    baseHeaders,
+    JSON.stringify({
+      token: refreshToken,
+    }),
+  )
+};
 
