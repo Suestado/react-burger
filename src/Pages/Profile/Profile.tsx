@@ -1,38 +1,13 @@
-import React, { useState, useEffect, useRef, FC, ChangeEvent } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC } from 'react';
+import { useLocation, Link, Outlet } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styles from './profile.module.css';
-import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import {logOut, updateUser} from '../../utils/MainApi';
-import { logOutUser, refreshUser } from '../../services/actions/userActions';
+import { logOut } from '../../utils/MainApi';
+import { logOutUser } from '../../services/actions/userActions';
 
 const Profile: FC = (): React.ReactElement => {
-  const currentUser = useSelector((store: any) => store.currentUser);
-  const [nameValue, setNameValue] = useState<string>(currentUser.name);
-  const [emailValue, setEmailValue] = useState<string>(currentUser.email);
-  const [passwordValue, setPasswordValue] = useState<string>('');
-  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const currentLocation: string = useLocation().pathname;
   const dispatch = useDispatch();
-  const nameInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (nameValue !== currentUser.name || emailValue !== currentUser.email || passwordValue) {
-      setIsButtonActive(true);
-    } else {
-      setIsButtonActive(false);
-    }
-  }, [nameValue, emailValue, passwordValue]);
-
-  useEffect(() => {
-    if(nameInputRef.current) {
-      nameInputRef.current.focus();
-    }
-  }, [isDisabled]);
 
   const handleLogout = (): void => {
     logOut(localStorage.getItem('refreshToken'))
@@ -48,67 +23,10 @@ const Profile: FC = (): React.ReactElement => {
       });
   };
 
-  const onActivateInput = (): void => {
-    setIsDisabled(false);
-  };
-
-  const onDisableInput = (): void => {
-    setIsDisabled(true);
-  };
-
-  const handleUpdateUser = (): void => {
-    updateUser(nameValue, emailValue, passwordValue, localStorage.getItem('accessToken'))
-      .then((res) => {
-        if (res.success) {
-          dispatch(refreshUser(res.user.name, res.user.email));
-          setIsButtonActive(false);
-        }
-      })
-      .catch((err) => {
-        console.log(`При обновлении данных пользователя произошла ошибка - ${err}`);
-      });
-  };
-
-  const resetForm = (): void => {
-    setNameValue(currentUser.name);
-    setEmailValue(currentUser.email);
-    setPasswordValue('');
-  };
-
   return (
     <section className={styles.profile}>
-      <form className={styles.form}>
-        <Input
-          type={'text'}
-          placeholder={'Имя'}
-          onChange={(evt: ChangeEvent<HTMLInputElement>) => setNameValue(evt.target.value)}
-          value={nameValue}
-          name={'nameInput'}
-          icon={'EditIcon'}
-          disabled={isDisabled}
-          onIconClick={onActivateInput}
-          onBlur={onDisableInput}
-          ref={nameInputRef}
-        />
-        <EmailInput
-          onChange={(evt: ChangeEvent<HTMLInputElement>) => setEmailValue(evt.target.value)}
-          value={emailValue}
-          name={'emailInput'}
-          placeholder="Логин"
-          isIcon={true}
-        />
-        <PasswordInput
-          onChange={(evt: ChangeEvent<HTMLInputElement>) => setPasswordValue(evt.target.value)}
-          value={passwordValue}
-          name={'passwordInput'}
-          icon={'EditIcon'}
-        />
-        {isButtonActive && <div className={styles.buttonsContainer}>
-          <Button htmlType="button" type="secondary" size="medium" onClick={resetForm}>Отменить</Button>
-          <Button htmlType="button" type="primary" size="medium" onClick={handleUpdateUser}>Сохранить</Button>
-        </div>}
+      <Outlet/>
 
-      </form>
       <div className={styles.navContainer}>
         <nav className={styles.navBar}>
           <ul className={`${styles.navList} text text_type_main-medium`}>

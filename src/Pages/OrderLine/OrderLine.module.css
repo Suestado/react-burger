@@ -1,0 +1,21 @@
+.mainContainer {
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  max-width: 1280px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "header header"
+    "orderLine orderStat";
+  grid-gap: 60px;
+}
+
+.header {
+  padding: 40px 0 20px;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px
+}

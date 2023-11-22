@@ -1,6 +1,6 @@
-import {useCallback, useEffect} from 'react';
-import {Routes, Route, useLocation, useNavigate, Location} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate, Location } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
 import Page404 from '../Page404/Page404';
@@ -15,6 +15,9 @@ import Modal from '../Modals/Modal/Modal';
 import IngredientPage from '../../Pages/Ingredients/Ingredients';
 import checkAuth from '../../utils/checkAuth';
 import UnAuthRouteElement from '../ProtectedRouteElement/UnAuthRouteElement';
+import ProfileData from "../ProfileData/ProfileData";
+import ProfileOrders from "../ProfileOrders/ProfileOrders";
+import OrderLine from "../../Pages/OrderLine/OrderLine";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,30 +41,19 @@ function App() {
       <Routes location={stateRoute || location}>
         <Route path="/" element={<Main/>}/>
         <Route path="/ingredients/:id" element={<IngredientPage/>}/>
-        <Route path="/login" element={
-          <UnAuthRouteElement
-            element={<Login/>}
-          />}/>
-        <Route path="/register" element={
-          <UnAuthRouteElement
-            element={<Register/>}
-          />}/>
-        <Route path="/forgot-password" element={
-          <UnAuthRouteElement
-            element={<ForgotPassword/>}
-          />}/>
-        <Route path="/reset-password" element={
-          <UnAuthRouteElement
-            element={<ResetPassword/>}
-          />}/>
-        <Route path="/profile" element={
-          <ProtectedRouteElement
-            element={<Profile/>}/>
-        }/>
-        <Route path="/profile/orders" element={
-          <ProtectedRouteElement
-            element={<Profile/>}/>
-        }/>
+        <Route path="/feed" element={<OrderLine/>}/>
+        <Route path="/feed/:number" element={<></>}/>
+
+        <Route path="/login" element={<UnAuthRouteElement element={<Login/>}/>}/>
+        <Route path="/register" element={<UnAuthRouteElement element={<Register/>}/>}/>
+        <Route path="/forgot-password" element={<UnAuthRouteElement element={<ForgotPassword/>}/>}/>
+        <Route path="/reset-password" element={<UnAuthRouteElement element={<ResetPassword/>}/>}/>
+
+        <Route path="/profile" element={<ProtectedRouteElement element={<Profile/>}/>}>
+          <Route index element={<ProfileData/>}/>
+          <Route path="orders" element={<ProfileOrders/>}/>
+          <Route path="orders/:number" element={<></>}/>
+        </Route>
         <Route path="*" element={<Page404/>}/>
       </Routes>
 
