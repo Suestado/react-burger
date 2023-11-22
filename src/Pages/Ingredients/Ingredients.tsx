@@ -1,8 +1,8 @@
-import { memo } from 'react';
+import React, { memo, FC } from 'react';
 import styles from './ingredients.module.css'
 import IngredientDetails from '../../components/Modals/IngredientDetails/IngredientDetails';
 
-function Ingredients() {
+const Ingredients: FC = (): React.ReactElement => {
   return (
     <div className={styles.ingredientPage}>
       <IngredientDetails/>

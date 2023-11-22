@@ -1,14 +1,17 @@
-import { memo } from 'react';
+import React, { memo, FC } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './burgerIngredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BURGER_INGREDIENT_TYPES } from '../../utils/types';
+import {IngredientInterface} from "../../utils/commonTypes";
 
-const BurgerIngredient = ({ item }) => {
+interface IBurgerIngredient {
+  item: IngredientInterface,
+};
+
+const BurgerIngredient: FC<IBurgerIngredient> = ({ item }): React.ReactElement => {
   const location = useLocation();
 
   const [{ isDragBun }, dragRefBun] = useDrag({
@@ -28,8 +31,8 @@ const BurgerIngredient = ({ item }) => {
   });
 
   const ingredientRef = item.type === 'bun' ? dragRefBun : dragRefFillings;
-  const ingredientIsDragging = isDragFillings || isDragBun;
-  const orderedCount = useSelector((store) => store.customerBurger.customerBurgerIngredients.reduce((acc, ingredient) => {
+  const ingredientIsDragging: boolean = isDragFillings || isDragBun;
+  const orderedCount = useSelector((store: any) => store.customerBurger.customerBurgerIngredients.reduce((acc: number, ingredient: IngredientInterface) => {
     return ingredient._id === item._id ? acc + 1 : acc;
   }, 0));
 
@@ -49,10 +52,6 @@ const BurgerIngredient = ({ item }) => {
       </article>
     </Link>
   );
-};
-
-BurgerIngredient.propTypes = {
-  item: PropTypes.shape(BURGER_INGREDIENT_TYPES),
 };
 
 export default memo(BurgerIngredient);

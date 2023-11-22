@@ -1,16 +1,26 @@
-import { useRef, memo } from 'react';
+import React, { useRef, memo, FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { useDrag, useDrop } from 'react-dnd';
+import {useDrag, useDrop, XYCoord} from 'react-dnd';
 import styles from './constructorElementFillings.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { deleteBurgerFilling } from '../../../services/actions/burgerConstructorActions';
-import { CONSTRUCTOR_ELEMENT_FILLINGS } from '../../../utils/types';
 
-function ConstructorElementFillings({ item, index, onReplaceFillings }) {
+interface IConstructorElementFillings {
+  item: {
+    name: string,
+    price: number,
+    image: string,
+  }
+  index: number;
+  onReplaceFillings: (dragIndex: number, dropIndex: number) => void
+}
+
+const ConstructorElementFillings: FC<IConstructorElementFillings> = ({ item, index, onReplaceFillings }): React.ReactElement => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  function onDeleteFillings(fillingIngredientIndex) {
+  type TonDeleteFillings = (fillingIngredientIndex: number) => void;
+  const onDeleteFillings: TonDeleteFillings = (fillingIngredientIndex) => {
     dispatch(deleteBurgerFilling(fillingIngredientIndex));
   }
 
@@ -24,16 +34,16 @@ function ConstructorElementFillings({ item, index, onReplaceFillings }) {
 
   const [, dropRefItem] = useDrop({
     accept: 'constructorItem',
-    hover: (item, monitor) => {
+    hover: (item: {dragIndex: number} , monitor) => {
 
       if (item.dragIndex === index) {
         return;
       }
 
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverBoundingRect = ref.current?.getBoundingClientRect() as DOMRect;
+      const clientOffset = monitor.getClientOffset() as XYCoord;
+      const hoverMiddleY: number = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverClientY: number = clientOffset.y - hoverBoundingRect.top;
 
       if (item.dragIndex < index && hoverClientY < hoverMiddleY / 2) {
         return;
@@ -62,12 +72,10 @@ function ConstructorElementFillings({ item, index, onReplaceFillings }) {
         text={item.name}
         price={item.price}
         thumbnail={item.image}
-        handleClose={() => onDeleteFillings(index)}
+        handleClose={(): void => onDeleteFillings(index)}
       />
     </div>
   );
 }
-
-ConstructorElementFillings.propTypes = CONSTRUCTOR_ELEMENT_FILLINGS;
 
 export default memo(ConstructorElementFillings);

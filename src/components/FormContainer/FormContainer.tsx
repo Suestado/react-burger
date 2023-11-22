@@ -1,22 +1,47 @@
-import { memo } from 'react';
+import React, {memo, FC, SyntheticEvent} from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './formContainer.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FORM_CONTAINER_TYPES } from '../../utils/types';
 import Modal from '../Modals/Modal/Modal';
 import { userResetFailure } from '../../services/actions/userActions';
 
-function FormContainer({ children, header, buttonText, bottomOptionOne, bottomOptionTwo, onSubmit, errorTitle }) {
-  const { showFailureMessage, failureMessage } = useSelector((store) => store.currentUser);
+interface IFormContainer {
+  children: React.ReactElement | React.ReactElement[],
+  header: string,
+  buttonText: string,
+  bottomOptionOne?: {
+    text: string,
+    navLink: string,
+    linkText: string,
+  },
+  bottomOptionTwo?: {
+    text: string,
+    navLink: string,
+    linkText: string,
+  },
+  onSubmit: () => void;
+  errorTitle: string,
+}
+
+const FormContainer: FC<IFormContainer> = (
+  { children,
+    header,
+    buttonText,
+    bottomOptionOne,
+    bottomOptionTwo,
+    onSubmit,
+    errorTitle }
+): React.ReactElement => {
+  const { showFailureMessage, failureMessage } = useSelector((store: any) => store.currentUser);
   const dispatch = useDispatch();
 
-  const handleFormSubmit = (evt) => {
+  const handleFormSubmit = (evt: SyntheticEvent): void => {
     evt.preventDefault();
     onSubmit();
   };
 
-  const onCloseModal = () => {
+  const onCloseModal = (): void => {
     dispatch(userResetFailure());
   };
 
@@ -40,7 +65,7 @@ function FormContainer({ children, header, buttonText, bottomOptionOne, bottomOp
           </div>
         </form>
 
-        <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
+        {bottomOptionOne && <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
           {`${bottomOptionOne.text} `}
           <Link
             className={`${styles.bottomLink} text text_type_main-default text_color_inactive`}
@@ -48,7 +73,7 @@ function FormContainer({ children, header, buttonText, bottomOptionOne, bottomOp
           >
             {bottomOptionOne.linkText}
           </Link>
-        </div>
+        </div>}
         {bottomOptionTwo &&
           <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
             {`${bottomOptionTwo.text} `}
@@ -74,7 +99,5 @@ function FormContainer({ children, header, buttonText, bottomOptionOne, bottomOp
     </>
   );
 }
-
-FormContainer.propTypes = FORM_CONTAINER_TYPES;
 
 export default memo(FormContainer);

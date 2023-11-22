@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types';
+import React, {FC} from 'react';
 import styles from './orderDetails.module.css';
 import okImage from '../../../images/done.png';
 
-function OrderDetails({ orderNumber }) {
+interface IOrderDetails {
+  orderNumber: number
+}
+
+const OrderDetails: FC<IOrderDetails> = ({orderNumber}): React.ReactElement => {
   return (
     <div className={styles.orderDetails}>
       <p className={`text text_type_digits-large ${styles.number}`}>{orderNumber}</p>
@@ -12,10 +16,6 @@ function OrderDetails({ orderNumber }) {
       <p className="text text_type_main-default text_color_inactive">Дождитесь готовности на орбитальной станции</p>
     </div>
   );
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;

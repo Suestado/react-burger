@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import React, {memo, useState, FC, ChangeEvent} from 'react';
 import { useDispatch } from 'react-redux';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,13 +6,14 @@ import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-component
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createUser } from '../../services/actions/userActions';
 
-function Register() {
-  const [nameValue, setNameValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+const Register: FC = (): React.ReactElement => {
+  const [nameValue, setNameValue] = useState<string>('');
+  const [emailValue, setEmailValue] = useState<string>('');
+  const [passwordValue, setPasswordValue] = useState<string>('');
   const dispatch = useDispatch();
 
   const onSubmit = () => {
+    //@ts-ignore
     dispatch(createUser(nameValue, emailValue, passwordValue));
   };
 
@@ -31,18 +32,18 @@ function Register() {
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={evt => setNameValue(evt.target.value)}
+        onChange={(evt: ChangeEvent<HTMLInputElement>) => setNameValue(evt.target.value)}
         value={nameValue}
         name={'nameInput'}
       />
       <EmailInput
-        onChange={evt => setEmailValue(evt.target.value)}
+        onChange={(evt: ChangeEvent<HTMLInputElement>) => setEmailValue(evt.target.value)}
         value={emailValue}
         name={'emailInput'}
         placeholder="E-mail"
       />
       <PasswordInput
-        onChange={evt => setPasswordValue(evt.target.value)}
+        onChange={(evt: ChangeEvent<HTMLInputElement>) => setPasswordValue(evt.target.value)}
         value={passwordValue}
         name={'passwordInput'}
       />

@@ -1,23 +1,23 @@
-import { memo, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, {memo, useState, useEffect, FC, ChangeEvent} from 'react';
+import {useSelector} from 'react-redux';
+import {useNavigate, useLocation} from 'react-router-dom';
 import FormContainer from '../../components/FormContainer/FormContainer';
-import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import MainApi from '../../utils/MainApi';
+import {PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
+import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
+import {resetPassword} from '../../utils/MainApi';
 
-function ResetPassword() {
-  const [passwordValue, setPasswordValue] = useState('');
-  const [smsValue, setSmsValue] = useState('');
-  const currentUser = useSelector((store) => store.currentUser);
+const ResetPassword: FC = (): React.ReactElement => {
+  const [passwordValue, setPasswordValue] = useState<string>('');
+  const [smsValue, setSmsValue] = useState<string>('');
+  const currentUser = useSelector((store: any) => store.currentUser);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onSubmit = () => {
-    MainApi.resetPassword(passwordValue, smsValue)
+  const onSubmit = (): void => {
+    resetPassword(passwordValue, smsValue)
       .then((res) => {
         if (res.success) {
-          navigate('/login', { replace: true });
+          navigate('/login', {replace: true});
         }
       })
       .catch((err) => {
@@ -25,7 +25,7 @@ function ResetPassword() {
       });
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     if (!location.state?.forgotPassword) {
       navigate('/forgot-password');
     }
@@ -45,14 +45,14 @@ function ResetPassword() {
     >
       <PasswordInput
         placeholder={'Введите новый пароль'}
-        onChange={evt => setPasswordValue(evt.target.value)}
+        onChange={(evt: ChangeEvent<HTMLInputElement>) => setPasswordValue(evt.target.value)}
         value={passwordValue}
         name={'passwordInput'}
       />
       <Input
         type={'text'}
         placeholder={'Введите код из письма'}
-        onChange={evt => setSmsValue(evt.target.value)}
+        onChange={(evt: ChangeEvent<HTMLInputElement>) => setSmsValue(evt.target.value)}
         value={smsValue}
         name={'nameInput'}
       />

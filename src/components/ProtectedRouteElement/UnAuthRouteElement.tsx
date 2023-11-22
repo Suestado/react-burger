@@ -1,13 +1,17 @@
+import React, {FC} from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import Preloader from '../Preloader/Preloader';
 
-function UnAuthRouteElement({ element: Component}) {
+interface IUnAuthRouteElement {
+  element: React.ReactElement;
+}
+
+const UnAuthRouteElement: FC<IUnAuthRouteElement> = ({ element: Component}) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn, getUserProcessing } = useSelector((store) => store.currentUser);
-  const from = location.state?.lastPage;
+  const { isLoggedIn, getUserProcessing }: { isLoggedIn: boolean, getUserProcessing: boolean } = useSelector((store: any) => store.currentUser);
+  const from: string | undefined = location.state?.lastPage;
 
   if(getUserProcessing) {
     return <Preloader/>
@@ -24,10 +28,8 @@ function UnAuthRouteElement({ element: Component}) {
   if(isLoggedIn && !from) {
     navigate(-1)
   }
-}
 
-UnAuthRouteElement.propTypes = {
-  element: PropTypes.element.isRequired,
-};
+  return null
+}
 
 export default UnAuthRouteElement;

@@ -5,7 +5,7 @@ import {
   USER_LOGOUT,
   USER_RESET_FAILURE,
 } from '../../utils/constants';
-import MainApi from '../../utils/MainApi';
+import { registerUser, loginUser as loginUserApi } from '../../utils/MainApi';
 
 function createUser(name, email, password) {
   return function (dispatch) {
@@ -13,7 +13,7 @@ function createUser(name, email, password) {
       type: GET_USER_CREDENTIALS,
     });
 
-    MainApi.registerUser(name, email, password)
+    registerUser(name, email, password)
       .then((res) => {
         if (res.success) {
           dispatch({
@@ -44,7 +44,7 @@ function loginUser(email, password) {
       type: GET_USER_CREDENTIALS,
     });
 
-    MainApi.loginUser(email, password)
+    loginUserApi(email, password)
       .then((res) => {
         if (res.success) {
           dispatch({
