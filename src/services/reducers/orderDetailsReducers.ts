@@ -4,15 +4,23 @@ import {
   GET_ORDER_STATUS_FAILURE,
   CLEAR_ORDER_STATUS,
 } from '../../utils/constants';
+import { UTOrderDetails } from "../actions/orderDetailsActions";
 
-const initialState = {
+interface IOrderDetailsState {
+  orderNumber: number | null,
+  name: string,
+  orderRequestProcessing: boolean,
+  orderRequestFailure: boolean,
+}
+
+const initialState: IOrderDetailsState = {
   orderNumber: null,
   name: '',
   orderRequestProcessing: false,
   orderRequestFailure: false,
 };
 
-const getOrderStatusReducer = (state = initialState, action) => {
+const getOrderStatusReducer = (state = initialState, action: UTOrderDetails) => {
   switch (action.type) {
     case GET_ORDER_STATUS: {
       return {

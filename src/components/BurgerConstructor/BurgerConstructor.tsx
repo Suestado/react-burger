@@ -1,5 +1,4 @@
 import { useCallback, memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
 import styles from './burgerConstructor.module.css';
@@ -20,15 +19,15 @@ import {
   replaceBurgerFilling,
 } from '../../services/actions/burgerConstructorActions';
 import {IngredientInterface} from "../../utils/commonTypes";
+import { useDispatch, useSelector } from "../../services/hooks/reduxHooks";
 
 function BurgerConstructor() {
-  const { customerBurgerIngredients } = useSelector((store: any) => store.customerBurger);
-  const { orderRequestProcessing } = useSelector((store: any) => store.orderStatus);
-  const { orderNumber } = useSelector((store: any) => store.orderStatus);
-  const { isLoggedIn } = useSelector((store: any) => store.currentUser);
+  const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);
+  const { orderRequestProcessing } = useSelector((store) => store.orderStatus);
+  const { orderNumber } = useSelector((store) => store.orderStatus);
+  const { isLoggedIn } = useSelector((store) => store.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const [{ isHoverBunTop }, dropTargetBunTop] = useDrop({
     accept: 'bun',
@@ -61,13 +60,11 @@ function BurgerConstructor() {
   });
 
   type TonDropHandlerBun = (
-    item: {
-      type: string
-    }
+    item: IngredientInterface
   ) => void;
 
-  const onDropHandlerBun: TonDropHandlerBun = (item): void => {
-    if (customerBurgerIngredients.some((item: {type: string}) => item.type === 'bun')) {
+  const onDropHandlerBun: TonDropHandlerBun = (item) => {
+    if (customerBurgerIngredients.some((item: IngredientInterface) => item.type === 'bun')) {
       dispatch(replaceBurgerBun(item));
     } else {
       dispatch(putBurgerBun(item));
@@ -80,17 +77,15 @@ function BurgerConstructor() {
   }
 
   function submitOrder(): void {
-    const ingredients: IngredientInterface[] = customerBurgerIngredients.map((item: IngredientInterface) => {
+    const ingredients: string[] = customerBurgerIngredients.map((item: IngredientInterface) => {
       return item._id;
     });
 
     if (isLoggedIn) {
-      // @ts-ignore
       dispatch(getOrderStatus(ingredients));
     } else {
       navigate('/login');
     }
-
   }
 
   function closeModal(): void {
@@ -99,7 +94,7 @@ function BurgerConstructor() {
 
   type TonReplaceFillings = (dragIndex: number, dropIndex: number) => void;
   const onReplaceFillings = useCallback<TonReplaceFillings>((dragIndex, dropIndex): void => {
-    const newFillingsList = [...customerBurgerIngredients];
+    const newFillingsList: IngredientInterface[] = [...customerBurgerIngredients];
     newFillingsList.splice(dragIndex, 1);
     newFillingsList.splice(dropIndex, 0, customerBurgerIngredients[dragIndex]);
 

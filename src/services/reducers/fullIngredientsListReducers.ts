@@ -3,14 +3,22 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILURE,
 } from '../../utils/constants';
+import { IngredientInterface } from "../../utils/commonTypes";
+import { TApplicationActions } from "../actions/types";
 
-const initialState = {
+interface IFullIngredientsState {
+  fullIngredientList: IngredientInterface[],
+  getRequestProcessing: boolean,
+  getRequestFailure: boolean,
+}
+
+const initialState: IFullIngredientsState = {
   fullIngredientList: [],
   getRequestProcessing: false,
   getRequestFailure: false,
 };
 
-const getIngredientsReducer = (state = initialState, action) => {
+const getIngredientsReducer = (state = initialState, action: TApplicationActions) => {
   switch (action.type) {
     case GET_INGREDIENTS : {
       return {

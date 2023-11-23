@@ -5,8 +5,19 @@ import {
   USER_LOGOUT,
   USER_RESET_FAILURE,
 } from '../../utils/constants';
+import { TApplicationActions } from "../actions/types";
 
-const initialState = {
+interface IUserState {
+  name: string | null,
+  email: string | null,
+  getUserProcessing: boolean,
+  getUserFailure: boolean,
+  showFailureMessage: boolean,
+  failureMessage: string | null,
+  isLoggedIn: boolean,
+}
+
+const initialState: IUserState = {
   name: null,
   email: null,
   getUserProcessing: false,
@@ -16,7 +27,7 @@ const initialState = {
   isLoggedIn: false,
 };
 
-const getUserCredentialsReducer = (state = initialState, action) => {
+const getUserCredentialsReducer = (state = initialState, action: TApplicationActions) => {
   switch (action.type) {
     case GET_USER_CREDENTIALS : {
       return {

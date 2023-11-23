@@ -45,16 +45,20 @@ export const request = <T>(
     .then(res => checkSuccess<T>(res));
 };
 
+interface IgetIngredients extends IcheckResponse {
+  data: IngredientInterface[]
+}
 
-export const getIngredients = (): Promise<IngredientInterface> => request<IngredientInterface>('ingredients', 'GET');
+export const getIngredients = (): Promise<IgetIngredients> => request<IgetIngredients>('ingredients', 'GET');
 
 interface IgetOrderNumber extends IcheckResponse {
   order: {
-    number: number
+    number: number;
   }
+  name: string;
 }
 
-export const getOrderNumber = (ingredients: IngredientInterface[]): Promise<IgetOrderNumber> => request<IgetOrderNumber>(
+export const getOrderNumber = (ingredients: string[]): Promise<IgetOrderNumber> => request<IgetOrderNumber>(
   'orders',
   'POST',
   baseHeaders,

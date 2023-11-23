@@ -7,7 +7,7 @@ import './index.css';
 import App from './components/App/App';
 import rootReducer from './services/reducers/rootReducer';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
 });
 

@@ -6,9 +6,40 @@ import {
   USER_RESET_FAILURE,
 } from '../../utils/constants';
 import { registerUser, loginUser as loginUserApi } from '../../utils/MainApi';
+import { AppDispatch } from "./types";
 
-function createUser(name, email, password) {
-  return function (dispatch) {
+interface IFetchUserProcessingAction {
+  readonly type: typeof GET_USER_CREDENTIALS;
+}
+
+interface IFetchUserSuccessAction {
+  readonly type: typeof GET_USER_CREDENTIALS_SUCCESS;
+  name: string;
+  email: string;
+}
+
+interface IFetchUserFailureAction {
+  readonly type: typeof GET_USER_CREDENTIALS_FAILURE;
+  failureMessage?: string;
+}
+
+interface ILogOutUserAction {
+  readonly type: typeof USER_LOGOUT;
+}
+
+interface IUserResetFailureAction {
+  readonly type: typeof USER_RESET_FAILURE;
+}
+
+export type UTUserActions =
+  IFetchUserProcessingAction |
+  IFetchUserSuccessAction |
+  IFetchUserFailureAction |
+  ILogOutUserAction |
+  IUserResetFailureAction;
+
+const createUser = (name: string, email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_CREDENTIALS,
     });
@@ -38,8 +69,8 @@ function createUser(name, email, password) {
   };
 }
 
-function loginUser(email, password) {
-  return function (dispatch) {
+const loginUser = (email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_CREDENTIALS,
     });
@@ -59,7 +90,6 @@ function loginUser(email, password) {
           });
         }
       })
-
       .catch((err) => {
         dispatch({
           type: GET_USER_CREDENTIALS_FAILURE,
@@ -70,21 +100,21 @@ function loginUser(email, password) {
   };
 }
 
-const refreshUser = (name, email) => ({
+const refreshUser = (name: string, email: string): IFetchUserSuccessAction => ({
   type: GET_USER_CREDENTIALS_SUCCESS,
   name: name,
   email: email,
 });
 
-const logOutUser = () => ({
+const logOutUser = (): ILogOutUserAction => ({
   type: USER_LOGOUT,
 });
 
-const userResetFailure = () => ({
+const userResetFailure = (): IUserResetFailureAction => ({
   type: USER_RESET_FAILURE,
 });
 
-const fetchUserProcessing = () => ({
+const fetchUserProcessing = (): IFetchUserProcessingAction => ({
   type: GET_USER_CREDENTIALS,
 });
 
