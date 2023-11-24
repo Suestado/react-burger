@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { useLocation, Link, Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import styles from './profile.module.css';
 import { logOut } from '../../utils/MainApi';
 import { logOutUser } from '../../services/actions/userActions';
+import { useDispatch } from "../../services/hooks/reduxHooks";
 
 const Profile: FC = (): React.ReactElement => {
   const currentLocation: string = useLocation().pathname;

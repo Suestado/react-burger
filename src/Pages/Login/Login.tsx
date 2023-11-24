@@ -1,9 +1,9 @@
 import React, { memo, useState, FC, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../../services/actions/userActions';
+import { useDispatch } from "../../services/hooks/reduxHooks";
 
 const Login: FC = (): React.ReactElement => {
   const [emailValue, setEmailValue] = useState<string>('');
@@ -11,7 +11,6 @@ const Login: FC = (): React.ReactElement => {
   const dispatch = useDispatch();
 
   const onSubmit = (): void => {
-    //@ts-ignore
     dispatch(loginUser(emailValue, passwordValue));
   };
 

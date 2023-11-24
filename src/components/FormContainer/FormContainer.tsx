@@ -1,10 +1,10 @@
 import React, {memo, FC, SyntheticEvent} from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import styles from './formContainer.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modals/Modal/Modal';
 import { userResetFailure } from '../../services/actions/userActions';
+import { useDispatch, useSelector } from "../../services/hooks/reduxHooks";
 
 interface IFormContainer {
   children: React.ReactElement | React.ReactElement[],
@@ -33,7 +33,7 @@ const FormContainer: FC<IFormContainer> = (
     onSubmit,
     errorTitle }
 ): React.ReactElement => {
-  const { showFailureMessage, failureMessage } = useSelector((store: any) => store.currentUser);
+  const { showFailureMessage, failureMessage } = useSelector((store) => store.currentUser);
   const dispatch = useDispatch();
 
   const handleFormSubmit = (evt: SyntheticEvent): void => {

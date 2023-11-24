@@ -1,7 +1,8 @@
 import { checkAuth as checkAuthApi, refreshToken } from './MainApi';
 import { fetchUserProcessing, logOutUser, refreshUser } from '../services/actions/userActions';
+import { AppDispatch } from "../services/actions/types";
 
-function checkAuth(dispatch: any) {
+function checkAuth(dispatch: AppDispatch) {
   dispatch(fetchUserProcessing())
   checkAuthApi(localStorage.getItem('accessToken'))
     .then((res) => {

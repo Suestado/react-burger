@@ -120,9 +120,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').name} (верх)`}
-            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').price}
-            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.name || ''} (верх)`}
+            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.price || 0}
+            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.image || ''}
           />
         }
       </div>
@@ -157,9 +157,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').name} (низ)`}
-            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').price}
-            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.name || ''} (низ)`}
+            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.price || 0}
+            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.image || ''}
           />
         }
       </div>

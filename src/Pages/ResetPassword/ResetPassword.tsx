@@ -1,15 +1,16 @@
 import React, {memo, useState, useEffect, FC, ChangeEvent} from 'react';
-import {useSelector} from 'react-redux';
 import {useNavigate, useLocation} from 'react-router-dom';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import {PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {resetPassword} from '../../utils/MainApi';
+import { useSelector } from "../../services/hooks/reduxHooks";
+import { IUserState } from "../../services/reducers/userReducers";
 
 const ResetPassword: FC = (): React.ReactElement => {
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [smsValue, setSmsValue] = useState<string>('');
-  const currentUser = useSelector((store: any) => store.currentUser);
+  const currentUser = useSelector((store) => store.currentUser) as IUserState;
   const navigate = useNavigate();
   const location = useLocation();
 

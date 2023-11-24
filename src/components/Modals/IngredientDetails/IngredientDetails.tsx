@@ -1,13 +1,14 @@
 import React, { useEffect, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { createSelector } from 'reselect';
 import styles from './ingredientDetails.module.css';
 import getIngredients from '../../../services/actions/fullIngredientsListActions';
 import Preloader from '../../Preloader/Preloader';
 import {IngredientInterface} from "../../../utils/commonTypes";
+import { useDispatch, useSelector } from "../../../services/hooks/reduxHooks";
+import { RootState } from "../../../services/actions/types";
 
-const selectAllIngredients = (store: any) => store.ingredients.fullIngredientList;
+const selectAllIngredients = (store: RootState) => store.ingredients.fullIngredientList;
 
 const IngredientDetails: FC = (): React.ReactElement => {
   const { id } = useParams();
@@ -22,7 +23,6 @@ const IngredientDetails: FC = (): React.ReactElement => {
 
   useEffect((): void => {
     if (!ingredient) {
-      // @ts-ignore
       dispatch(getIngredients());
     }
   }, []);

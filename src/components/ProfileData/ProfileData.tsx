@@ -1,12 +1,13 @@
 import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./ProfileData.module.css";
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { updateUser } from "../../utils/MainApi";
 import { refreshUser } from "../../services/actions/userActions";
+import { useDispatch, useSelector } from "../../services/hooks/reduxHooks";
+import { IUserState } from "../../services/reducers/userReducers";
 
 const ProfileData: FC = (): React.ReactElement => {
-  const currentUser = useSelector((store: any) => store.currentUser);
+  const currentUser = useSelector((store) => store.currentUser) as IUserState;
   const [nameValue, setNameValue] = useState<string>(currentUser.name);
   const [emailValue, setEmailValue] = useState<string>(currentUser.email);
   const [passwordValue, setPasswordValue] = useState<string>('');

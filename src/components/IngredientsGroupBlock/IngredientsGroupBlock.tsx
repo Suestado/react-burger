@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
 import React, { useEffect, useRef, memo, FC } from 'react';
 import styles from './ingredientsGroupBlock.module.css';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 import {IngredientInterface} from "../../utils/commonTypes";
+import { useSelector } from "../../services/hooks/reduxHooks";
 
 interface IIngredientsGroupBlock {
   title: string,
@@ -12,7 +12,7 @@ interface IIngredientsGroupBlock {
 }
 
 const IngredientsGroupBlock: FC<IIngredientsGroupBlock> = memo(({ title, type, id, handleHeadersRef }): React.ReactElement => {
-  const ingredientsList = useSelector((store: any) => store.ingredients.fullIngredientList);
+  const ingredientsList = useSelector((store) => store.ingredients.fullIngredientList);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect((): void => {

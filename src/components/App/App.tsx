@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate, Location } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
 import Page404 from '../Page404/Page404';
@@ -18,6 +17,7 @@ import UnAuthRouteElement from '../ProtectedRouteElement/UnAuthRouteElement';
 import ProfileData from "../ProfileData/ProfileData";
 import ProfileOrders from "../ProfileOrders/ProfileOrders";
 import OrderLine from "../../Pages/OrderLine/OrderLine";
+import { useDispatch } from "../../services/hooks/reduxHooks";
 
 function App() {
   const dispatch = useDispatch();

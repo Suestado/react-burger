@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {Navigate, useLocation} from 'react-router-dom';
-import {useSelector} from 'react-redux';
 import Preloader from '../Preloader/Preloader';
+import { useSelector } from "../../services/hooks/reduxHooks";
 
 interface IProtectedRouteElement {
   element: React.ReactElement;
@@ -9,7 +9,7 @@ interface IProtectedRouteElement {
 
 const ProtectedRouteElement: FC<IProtectedRouteElement> = ({element: Component}) => {
   const location = useLocation();
-  const {isLoggedIn, getUserProcessing}: {isLoggedIn: boolean, getUserProcessing: boolean} = useSelector((store: any) => store.currentUser);
+  const {isLoggedIn, getUserProcessing}: {isLoggedIn: boolean, getUserProcessing: boolean} = useSelector((store) => store.currentUser);
   const lastPage: { lastPage: string } = {lastPage: location.pathname};
 
   if (getUserProcessing) {

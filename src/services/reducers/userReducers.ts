@@ -7,9 +7,9 @@ import {
 } from '../../utils/constants';
 import { TApplicationActions } from "../actions/types";
 
-interface IUserState {
-  name: string | null,
-  email: string | null,
+export interface IUserState {
+  name: string,
+  email: string,
   getUserProcessing: boolean,
   getUserFailure: boolean,
   showFailureMessage: boolean,
@@ -18,8 +18,8 @@ interface IUserState {
 }
 
 const initialState: IUserState = {
-  name: null,
-  email: null,
+  name: '',
+  email: '',
   getUserProcessing: false,
   getUserFailure: false,
   showFailureMessage: false,
