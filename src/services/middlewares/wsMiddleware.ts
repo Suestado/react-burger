@@ -22,7 +22,7 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
     let url: string = '';
 
     return next => (action) => {
-      const dispatch = useDispatch()
+      const {dispatch} = store
       const {
         wsConnect,
         wsConnecting,
