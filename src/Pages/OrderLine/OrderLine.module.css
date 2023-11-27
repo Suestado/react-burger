@@ -7,9 +7,11 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
   grid-template-areas:
-    "header header"
-    "orderLine orderStat";
-  grid-gap: 60px;
+    "A A"
+    "C D";
+  grid-column-gap: 60px;
+  z-index: 100;
+  color: #F2F2F3;
 }
 
 .header {
@@ -17,5 +19,32 @@
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
-  line-height: 40px
+  line-height: 40px;
+  grid-area: A;
+}
+
+.orderCards {
+  margin: 0;
+  padding: 0;
+  max-height: calc(100vh - 188px);
+  min-height: 320px;
+  min-width: 480px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-gap: 16px;
+}
+
+.orderCards::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orderCards::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.orderCards::-webkit-scrollbar-thumb {
+  background: #8585AD;
 }

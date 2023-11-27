@@ -1,0 +1,29 @@
+.ingredient {
+  margin-left: -16px;
+  padding: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 100px;
+  border: 2px solid  #801AB2;
+  background:  #131316;
+  position: relative;
+}
+
+.image {
+  height: calc(100% - 8px);
+  object-fit: contain;
+}
+
+.imageBlured {
+  opacity: .3;
+}
+
+.additionalIngredients {
+  display: block;
+  position: absolute;
+  font-size: 16px;
+}

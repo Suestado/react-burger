@@ -9,6 +9,8 @@ import rootReducer from './services/reducers/rootReducer';
 import { socketMiddleware } from "./services/middlewares/wsMiddleware";
 import { wsActions } from "./services/actions/orderLineActions";
 
+//TODO
+// @ts-ignore
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleware(wsActions))

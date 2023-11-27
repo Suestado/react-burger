@@ -6,6 +6,8 @@ import { UTOrderDetails } from "./orderDetailsActions";
 import { UTUserActions } from "./userActions";
 import { UTOrderLineActions } from "./orderLineActions";
 
+//TODO
+// @ts-ignore
 export type RootState = ReturnType<typeof store.getState>;
 
 export type TApplicationActions = UTBurgerConstructorActions | UTFullIngredientsActions | UTOrderDetails | UTUserActions | UTOrderLineActions;
