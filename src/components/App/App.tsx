@@ -18,6 +18,9 @@ import ProfileData from "../ProfileData/ProfileData";
 import ProfileOrders from "../ProfileOrders/ProfileOrders";
 import OrderLine from "../../Pages/OrderLine/OrderLine";
 import { useDispatch } from "../../services/hooks/reduxHooks";
+import LineOrderDetails from "../Modals/LineOrderDetails/LineOrderDetails";
+import ModalOverlay from "../Modals/ModalOverlay/ModalOverlay";
+import OrderDetailsPage from "../../Pages/OrderDetails/OrderDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,8 +34,12 @@ function App() {
   }, []);
 
   type TCloseModal = () => void;
-  const closeModal = useCallback<TCloseModal>(() => {
+  const closeModalMAin = useCallback<TCloseModal>(() => {
     navigate('/', {replace: true});
+  }, []);
+
+  const closeModalOrderLine = useCallback<TCloseModal>(() => {
+    navigate('/feed', {replace: true});
   }, []);
 
   return (
@@ -42,7 +49,7 @@ function App() {
         <Route path="/" element={<Main/>}/>
         <Route path="/ingredients/:id" element={<IngredientPage/>}/>
         <Route path="/feed" element={<OrderLine/>}/>
-        <Route path="/feed/:number" element={<></>}/>
+        <Route path="/feed/:number" element={<OrderDetailsPage/>}/>
 
         <Route path="/login" element={<UnAuthRouteElement element={<Login/>}/>}/>
         <Route path="/register" element={<UnAuthRouteElement element={<Register/>}/>}/>
@@ -62,10 +69,20 @@ function App() {
           <Route path="/ingredients/:id" element={
             <Modal
               title="Детали ингредиента"
-              closeModal={closeModal}
+              closeModal={closeModalMAin}
             >
               <IngredientDetails/>
             </Modal>
+          }/>
+          <Route path="/feed/:number" element={
+            <ModalOverlay
+              handleCloseModal={closeModalOrderLine}
+            >
+              <LineOrderDetails
+                closeModal={closeModalOrderLine}
+                scroll={true}
+              />
+            </ModalOverlay>
           }/>
         </Routes>
       )}

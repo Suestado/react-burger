@@ -1,3 +1,8 @@
+.orderLineLink {
+  text-decoration: none;
+  color: #F2F2F3;
+}
+
 .cardLayout {
   margin: 0;
   padding: 24px;

@@ -44,7 +44,7 @@ export type UTOrderLineActions =
   ReturnType<typeof wsOrderLineClose> |
   ReturnType<typeof wsOrderLineError>;
 
-export const wsActions = {
+export const wsOrderLineActions = {
   wsConnect: orderLineConnect,
   wsDisconnect: orderLineDisconnect,
   wsConnecting: wsOrderLineConnecting,

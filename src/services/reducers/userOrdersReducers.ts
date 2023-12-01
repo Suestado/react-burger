@@ -1,26 +1,23 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
+  wsUserOrdersConnecting,
+  wsUserOrdersOpen,
+  wsUserOrdersMessage,
+  wsUserOrdersClose,
+  wsUserOrdersError,
+} from "../actions/userOrdersActions";
+import { WebSocketStatus } from "./orderLineReducers";
+import {
   IOrderLineData,
-  wsOrderLineClose,
-  wsOrderLineConnecting,
-  wsOrderLineError,
-  wsOrderLineMessage,
-  wsOrderLineOpen
 } from "../actions/orderLineActions";
 
-export enum WebSocketStatus {
-  CONNECTING = 'CONNECTING...',
-  ONLINE = 'ONLINE',
-  OFFLINE = 'OFFLINE',
-}
-
-interface IOrderLineState {
+interface IUserOrdersState {
   status: WebSocketStatus;
   orderLineData: IOrderLineData;
   error: string;
 }
 
-export const orderLineInitialState: IOrderLineState = {
+export const userOrdersInitialState: IUserOrdersState = {
   status: WebSocketStatus.OFFLINE,
   orderLineData: {
     success: false,
@@ -31,23 +28,23 @@ export const orderLineInitialState: IOrderLineState = {
   error: ''
 }
 
-export const orderLineReducer = createReducer(orderLineInitialState, (builder => {
+export const userOrdersReducer = createReducer(userOrdersInitialState, (builder => {
   builder
-    .addCase(wsOrderLineConnecting, (state) => {
+    .addCase(wsUserOrdersConnecting, (state) => {
       state.status = WebSocketStatus.CONNECTING;
     })
-    .addCase(wsOrderLineOpen, (state) => {
+    .addCase(wsUserOrdersOpen, (state) => {
       state.status = WebSocketStatus.ONLINE;
       state.error = '';
     })
-    .addCase(wsOrderLineClose, (state) => {
+    .addCase(wsUserOrdersClose, (state) => {
       state.status = WebSocketStatus.OFFLINE;
     })
-    .addCase(wsOrderLineError, (state, action) => {
+    .addCase(wsUserOrdersError, (state, action) => {
       state.status = WebSocketStatus.OFFLINE;
       state.error = action.payload;
     })
-    .addCase(wsOrderLineMessage, (state, action) => {
+    .addCase(wsUserOrdersMessage, (state, action) => {
       state.orderLineData = action.payload
     })
 }))

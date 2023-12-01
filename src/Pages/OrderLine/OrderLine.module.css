@@ -25,7 +25,7 @@
 
 .orderCards {
   margin: 0;
-  padding: 0;
+  padding-right: 8px;
   max-height: calc(100vh - 188px);
   min-height: 320px;
   min-width: 480px;

@@ -21,11 +21,13 @@ function checkAuth(dispatch: AppDispatch) {
                 })
                 .catch((err) => {
                   console.log(`При обновлении токена произошла ошибка - ${err.message}`);
+                  dispatch(logOutUser());
                 });
             }
           })
           .catch((err) => {
             console.log(`При обновлении токена произошла ошибка - ${err.message}`);
+            dispatch(logOutUser());
           });
       } else {
         console.log(`При проверке токена произошла ошибка ${err.message}`);

@@ -15,7 +15,7 @@ export type TWSActionTypes = {
 
 //TODO
 // @ts-ignore
-export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, RootState> => {
+export const socketMiddleware = (wsActions: TWSActionTypes, token?: string): Middleware<{}, RootState> => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
     let isConnected: boolean = false;
@@ -35,8 +35,7 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
       } = wsActions;
       if (wsConnect.match(action)) {
         url = action.payload
-        socket = new WebSocket(url);
-        // socket = new WebSocket(`${url}?token=${user.token}`);
+          socket = new WebSocket(url);
       }
       if (socket) {
         socket.onopen = () => {

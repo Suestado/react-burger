@@ -10,6 +10,9 @@ import { RootState } from "../../../services/actions/types";
 
 const selectAllIngredients = (store: RootState) => store.ingredients.fullIngredientList;
 
+//фильтрацию, поиск ингредиентов у лучше делать в селекторе (в хуке useSelector), используя библиотеку reselect.
+// Данная библиотека нужна для создания мемоизированных, пригодных для компоновки селекторных функций.
+// Примеры взаимодействия reselect с useSelector можно посмотреть здесь: https://react-redux.js.org/api/hooks#useselector-examples
 const IngredientDetails: FC = (): React.ReactElement => {
   const { id } = useParams();
   const dispatch = useDispatch();

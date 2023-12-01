@@ -4,6 +4,7 @@ import getOrderStatusReducer from './orderDetailsReducers';
 import burgerConstructorReducer from './burgerConstructorReducers';
 import getUserCredentialsReducer from './userReducers';
 import { orderLineReducer } from "./orderLineReducers";
+import { userOrdersReducer } from "./userOrdersReducers";
 
 const rootReducer = combineReducers({
   ingredients: getIngredientsReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   customerBurger: burgerConstructorReducer,
   currentUser: getUserCredentialsReducer,
   orderLine: orderLineReducer,
+  userOrders: userOrdersReducer,
 });
 
 export default rootReducer;

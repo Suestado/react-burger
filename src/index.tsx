@@ -7,13 +7,14 @@ import './index.css';
 import App from './components/App/App';
 import rootReducer from './services/reducers/rootReducer';
 import { socketMiddleware } from "./services/middlewares/wsMiddleware";
-import { wsActions } from "./services/actions/orderLineActions";
+import { wsOrderLineActions } from "./services/actions/orderLineActions";
+import { wsUserOrdersActions } from "./services/actions/userOrdersActions";
 
 //TODO
 // @ts-ignore
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleware(wsActions))
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleware(wsOrderLineActions), socketMiddleware(wsUserOrdersActions))
 });
 
 const rootElement = document.getElementById('root');

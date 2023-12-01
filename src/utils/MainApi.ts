@@ -58,10 +58,10 @@ interface IgetOrderNumber extends IcheckResponse {
   name: string;
 }
 
-export const getOrderNumber = (ingredients: string[]): Promise<IgetOrderNumber> => request<IgetOrderNumber>(
+export const getOrderNumber = (ingredients: string[], token: string | null): Promise<IgetOrderNumber> => request<IgetOrderNumber>(
   'orders',
   'POST',
-  baseHeaders,
+  token ? {...baseHeaders, 'Authorization': token} : baseHeaders,
   JSON.stringify({
     ingredients,
   }),
@@ -224,4 +224,5 @@ export const logOut = (refreshToken: string | null): Promise<IlogOut> => {
     }),
   )
 };
+
 

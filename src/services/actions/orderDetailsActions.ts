@@ -32,10 +32,11 @@ export type UTOrderDetails =
   IClearOrderStatus;
 
 const getOrderStatus = (ingredients: string[]) => (dispatch: AppDispatch) => {
+  const token: string | null = localStorage.getItem('accessToken')
   dispatch({
     type: GET_ORDER_STATUS,
   });
-  getOrderNumber(ingredients)
+  getOrderNumber(ingredients, token)
     .then((res) => {
       if (res) {
         dispatch({

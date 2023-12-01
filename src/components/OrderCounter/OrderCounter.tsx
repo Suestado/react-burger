@@ -8,10 +8,6 @@ interface IOrderCounter {
   totalToday: number;
 }
 
-const test = [11111,22222,33333,44444,55555,66666, 77777, 88888, 99999, 11111,22222,33333,44444, 55555,66666,22222,33333,44444, 55555,66666]
-
-
-
 const OrderCounter: FC<IOrderCounter> = ({readyItems, inProcessItems, total, totalToday}): React.ReactElement => {
 
   const addThouthandSpace = (number: number): string => {
@@ -29,9 +25,12 @@ const OrderCounter: FC<IOrderCounter> = ({readyItems, inProcessItems, total, tot
       <div className={styles.orderNumbersWrapper}>
         <h3 className={`text text_type_main-medium`}>Готовы:</h3>
         <div className={styles.readyOrders}>
-          {readyItems.map((item: number) => {
+          {readyItems.map((item: number, index: number) => {
             return (
-              <p className={`text text_type_digits-default ${styles.readyOrdersNumber}`}>{item}</p>
+              <p
+                key={index}
+                className={`text text_type_digits-default ${styles.readyOrdersNumber}`}
+              >{item}</p>
             )
           })}
         </div>

@@ -5,7 +5,7 @@ import { IngredientInterface } from "../../../utils/commonTypes";
 
 export interface IOrderIngredientLogo {
   ingredientId: string;
-  zIndexAdjastment: number;
+  zIndexAdjastment?: number;
   lastIngredient?: number;
 }
 
@@ -15,7 +15,7 @@ const OrderIngredientLogo: FC<IOrderIngredientLogo> = ({ingredientId, zIndexAdja
     return ingredient._id === ingredientId;
   })
   const imageUrl: string = targetIngredient[0]?.image;
-  const zIndex = 7 - zIndexAdjastment;
+  const zIndex = zIndexAdjastment ? zIndexAdjastment : 1;
 
   return (
     <div className={styles.ingredient} style={{zIndex: zIndex}}>
