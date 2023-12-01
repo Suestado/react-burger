@@ -7,19 +7,17 @@ import {
   wsUserOrdersError,
 } from "../actions/userOrdersActions";
 import { WebSocketStatus } from "./orderLineReducers";
-import {
-  IOrderLineData,
-} from "../actions/orderLineActions";
+import { IOrderLineData } from "../actions/orderLineActions";
 
 interface IUserOrdersState {
   status: WebSocketStatus;
-  orderLineData: IOrderLineData;
+  userOrdersData: IOrderLineData;
   error: string;
 }
 
 export const userOrdersInitialState: IUserOrdersState = {
   status: WebSocketStatus.OFFLINE,
-  orderLineData: {
+  userOrdersData: {
     success: false,
     orders: [],
     total: 0,
@@ -39,12 +37,13 @@ export const userOrdersReducer = createReducer(userOrdersInitialState, (builder 
     })
     .addCase(wsUserOrdersClose, (state) => {
       state.status = WebSocketStatus.OFFLINE;
+      state.error = '';
     })
     .addCase(wsUserOrdersError, (state, action) => {
       state.status = WebSocketStatus.OFFLINE;
       state.error = action.payload;
     })
     .addCase(wsUserOrdersMessage, (state, action) => {
-      state.orderLineData = action.payload
+      state.userOrdersData = action.payload
     })
 }))

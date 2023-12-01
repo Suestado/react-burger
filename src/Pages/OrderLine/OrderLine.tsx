@@ -21,8 +21,10 @@ const OrderLine: FC = (): React.ReactElement => {
 
   useEffect(() => {
     dispatch(orderLineConnect(WS_SERVER_ALL_ORDERS_URL));
-    return () => (dispatch(orderLineDisconnect()))
-  }, [])
+    return () => {
+      (dispatch(orderLineDisconnect()))
+    }
+  }, [dispatch])
 
   const getOrderNumbersReady = (): number[] => {
     let readyOrders: number[] = [];
