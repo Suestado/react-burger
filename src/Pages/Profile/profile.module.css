@@ -1,14 +1,19 @@
 .profile {
-  margin: 120px auto 0;
-  max-width: 480px;
-  position: relative;
+  margin: 40px auto 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+  max-width: 1280px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  grid-template-rows: auto;
+  grid-gap: 60px;
 }
 
 .navContainer {
   max-width: 320px;
-  position: absolute;
   top: 0;
-  left: -380px
+  left: -380px;
+  padding-top: 80px;
 }
 
 .navBar {
@@ -47,8 +52,3 @@
   color: #8585AD;
 }
 
-@media screen and (max-width: 1280px) {
-  .profile {
-    margin: 120px 400px 0;
-  }
-}

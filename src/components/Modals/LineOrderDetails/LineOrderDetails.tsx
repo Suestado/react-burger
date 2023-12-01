@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './LineOrderDetails.module.css';
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "../../../services/hooks/reduxHooks";
 import { createSelector } from "reselect";
 import { RootState } from "../../../services/actions/types";
@@ -17,16 +17,18 @@ interface ILineOrderDetails {
 }
 
 const selectOrdersList = (store: RootState) => store.orderLine.orderLineData.orders;
+const selectUserOrdersList = (store: RootState) => store.userOrders.userOrdersData.orders;
 
 const LineOrderDetails: FC<ILineOrderDetails> = ({closeModal, scroll}): React.ReactElement => {
   const ingredientsList = useSelector((store) => store.ingredients.fullIngredientList);
   const orderNumber = useParams().number;
+  const location = useLocation()
+  const chooseOrderList = location.pathname.split("/")[1] === 'feed' ? selectOrdersList : selectUserOrdersList
+
   const selectOrderCard = createSelector(
-    [selectOrdersList],
+    [chooseOrderList],
     (allOrders: IOrderData[]) => {
-      //TODO
-      //@ts-ignore
-      return allOrders?.find((item: IOrderData) => item.number === +orderNumber);
+      return allOrders?.find((item: IOrderData) => orderNumber && item.number === +orderNumber);
     },
   );
   const orderCard = useSelector(selectOrderCard);
@@ -44,8 +46,6 @@ const LineOrderDetails: FC<ILineOrderDetails> = ({closeModal, scroll}): React.Re
   } = orderCard as IOrderData;
 
   const finalIngredients: string[] = ingredients.filter(Boolean)
-
-  console.log(ingredientsList)
 
   interface IingredientsCollection {
     [key: string]: number

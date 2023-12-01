@@ -22,7 +22,7 @@ const OrderLine: FC = (): React.ReactElement => {
   useEffect(() => {
     dispatch(orderLineConnect(WS_SERVER_ALL_ORDERS_URL));
     return () => {
-      (dispatch(orderLineDisconnect()))
+      dispatch(orderLineDisconnect())
     }
   }, [dispatch])
 
@@ -58,7 +58,7 @@ const OrderLine: FC = (): React.ReactElement => {
             return (
               <OrderElement
                 key={order._id}
-                orderId={order._id}
+                rootLink={"/feed"}
                 orderNumber={order.number}
                 orderName={order.name}
                 orderTime={order.createdAt}

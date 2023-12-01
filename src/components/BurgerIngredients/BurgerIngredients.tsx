@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback, memo} from 'react';
+import React, { useState, useRef, useCallback, memo } from 'react';
 import styles from './burgerIngredients.module.css';
 import IngredientsSwitchbar from '../IngredientsSwitchbar/IngredientsSwitchbar';
 import IngredientsGroupBlock from '../IngredientsGroupBlock/IngredientsGroupBlock';
@@ -17,7 +17,7 @@ function BurgerIngredients(): React.ReactElement {
   }, []);
 
   const handleScroll = (): void => {
-    if(!ingredientsRef.current) return;
+    if (!ingredientsRef.current) return;
     const blockTop: number = ingredientsRef.current.getBoundingClientRect().top;
     let minDistance: number = Math.abs(refIngredientHeaders[0].getBoundingClientRect().top - blockTop);
 

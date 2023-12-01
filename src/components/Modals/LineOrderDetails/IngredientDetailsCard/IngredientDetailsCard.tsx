@@ -13,11 +13,11 @@ interface IIngredientDetailsCard {
 const IngredientDetailsCard: FC<IIngredientDetailsCard> = ({ingredientId, quantity}): React.ReactElement => {
   const { fullIngredientList} = useSelector((store) => store.ingredients)
   const ingredientName = fullIngredientList.find((item: IngredientInterface) => {
-    return item._id === ingredientId
-  }).name;
+    return item._id === ingredientId;
+  })?.name;
   const ingredientCost = fullIngredientList.find((item: IngredientInterface) => {
     return item._id === ingredientId
-  }).price
+  })?.price
 
   return (
     <div className={styles.ingredientWrapper}>

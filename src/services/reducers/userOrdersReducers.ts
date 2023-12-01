@@ -44,6 +44,6 @@ export const userOrdersReducer = createReducer(userOrdersInitialState, (builder 
       state.error = action.payload;
     })
     .addCase(wsUserOrdersMessage, (state, action) => {
-      state.userOrdersData = action.payload
+      state.userOrdersData = action.payload;
     })
 }))

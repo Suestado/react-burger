@@ -25,8 +25,6 @@ const Profile: FC = (): React.ReactElement => {
 
   return (
     <section className={styles.profile}>
-      <Outlet/>
-
       <div className={styles.navContainer}>
         <nav className={styles.navBar}>
           <ul className={`${styles.navList} text text_type_main-medium`}>
@@ -46,6 +44,8 @@ const Profile: FC = (): React.ReactElement => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
+
+      <Outlet/>
     </section>
   );
 }

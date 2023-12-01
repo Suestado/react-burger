@@ -1,6 +1,24 @@
 .ordersContainer {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-gap: 24px;
 
+  max-height: calc(100vh - 128px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding-right: 8px;
 }
 
+.ordersContainer::-webkit-scrollbar {
+  width: 8px;
+}
 
+.ordersContainer::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.ordersContainer::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
 

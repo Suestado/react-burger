@@ -1,5 +1,5 @@
-import type { Middleware, MiddlewareAPI } from 'redux';
-import { AppDispatch, RootState } from "../actions/types";
+import type { Middleware } from 'redux';
+import { RootState } from "../actions/types";
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 //здесь указываются стоковые типы экшенов, которые есть у самого WS.
@@ -13,10 +13,8 @@ export type TWSActionTypes = {
   onMessage: ActionCreatorWithPayload<any>
 }
 
-//TODO
-// @ts-ignore
-export const socketMiddleware = (wsActions: TWSActionTypes, token?: string): Middleware<{}, RootState> => {
-  return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
+export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, RootState> => {
+  return ((store) => {
     let socket: WebSocket | null = null;
     let isConnected: boolean = false;
     let reconnectTimer: number = 0;
@@ -39,45 +37,30 @@ export const socketMiddleware = (wsActions: TWSActionTypes, token?: string): Mid
       }
       if (socket) {
         socket.onopen = () => {
-          //TODO
-// @ts-ignore
           dispatch(wsConnecting())
-          //TODO
-// @ts-ignore
           dispatch(onOpen());
           isConnected = true
         };
 
         socket.onerror = (event) => {
-          //TODO
-// @ts-ignore
           dispatch(onError(event.type));
         };
 
         socket.onmessage = (event) => {
           const {data} = event;
           const parsedData = JSON.parse(data);
-//TODO
-// @ts-ignore
           dispatch(onMessage(parsedData));
         };
 
         socket.onclose = (event) => {
           if (event.code !== 1000) {
-            //TODO
-// @ts-ignore
             dispatch(onError(event.code.toString()))
-          }//TODO
-// @ts-ignore
+          }
           dispatch(onClose());
 
           if (isConnected) {
-            //TODO
-// @ts-ignore
             dispatch(wsConnecting())
             reconnectTimer = window.setTimeout(() => {
-              //TODO
-// @ts-ignore
               dispatch(wsConnect(url))
             }, 3000)
           }
@@ -88,8 +71,6 @@ export const socketMiddleware = (wsActions: TWSActionTypes, token?: string): Mid
           isConnected = false;
           reconnectTimer = 0;
           socket.close();
-          //TODO
-// @ts-ignore
           dispatch(onClose());
         }
       }

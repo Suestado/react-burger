@@ -8,7 +8,7 @@ import { getOrderDateString } from "../../utils/functions/getOrderDateString";
 import { getFullOrderCost } from "../../utils/functions/getFullOrderCost";
 
 interface IOrderElement {
-  orderId: string;
+  rootLink: string;
   orderNumber: number;
   orderName: string;
   orderTime: string;
@@ -17,7 +17,7 @@ interface IOrderElement {
 
 const OrderElement: FC<IOrderElement> = (
   {
-    orderId,
+    rootLink,
     orderNumber,
     orderName,
     orderTime,
@@ -55,7 +55,7 @@ const OrderElement: FC<IOrderElement> = (
   }
 
   return (
-    <Link to={`/feed/${orderNumber}`} className={styles.orderLineLink} state={{ backgroundLocation: location }}>
+    <Link to={`${rootLink}/${orderNumber}`} className={styles.orderLineLink} state={{ backgroundLocation: location }}>
       <div className={styles.cardLayout}>
         <div className={styles.numDateContainer}>
           <p className={`text text_type_digits-default ${styles.numberText}`}>{`#${orderNumber}`}</p>

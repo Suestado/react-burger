@@ -42,6 +42,10 @@ function App() {
     navigate('/feed', {replace: true});
   }, []);
 
+  const closeModalUserOrders = useCallback<TCloseModal>(() => {
+    navigate('/profile/orders', {replace: true});
+  }, []);
+
   return (
     <>
       <AppHeader/>
@@ -59,7 +63,7 @@ function App() {
         <Route path="/profile" element={<ProtectedRouteElement element={<Profile/>}/>}>
           <Route index element={<ProfileData/>}/>
           <Route path="orders" element={<ProfileOrders/>}/>
-          <Route path="orders/:number" element={<></>}/>
+          <Route path="orders/:number" element={<OrderDetailsPage/>}/>
         </Route>
         <Route path="*" element={<Page404/>}/>
       </Routes>
@@ -80,6 +84,16 @@ function App() {
             >
               <LineOrderDetails
                 closeModal={closeModalOrderLine}
+                scroll={true}
+              />
+            </ModalOverlay>
+          }/>
+          <Route path="/profile/orders/:number" element={
+            <ModalOverlay
+              handleCloseModal={closeModalUserOrders}
+            >
+              <LineOrderDetails
+                closeModal={closeModalUserOrders}
                 scroll={true}
               />
             </ModalOverlay>
