@@ -10,9 +10,10 @@ import { CurrencyIcon, CloseIcon } from "@ya.praktikum/react-developer-burger-ui
 import IngredientDetailsCard from "./IngredientDetailsCard/IngredientDetailsCard";
 import { getOrderDateString } from "../../../utils/functions/getOrderDateString";
 import { getFullOrderCost } from "../../../utils/functions/getFullOrderCost";
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 interface ILineOrderDetails {
-  closeModal?: () => void;
+  closeModal: () => void;
   scroll?: boolean;
 }
 
@@ -70,40 +71,44 @@ const LineOrderDetails: FC<ILineOrderDetails> = ({closeModal, scroll}): React.Re
       {!orderCard && <Preloader/>}
 
       {orderCard &&
-        <section className={styles.popupWrapper}>
-          {closeModal &&
-            <div
-              className={styles.closeIcon}
-              onClick={closeModal}
-            >
-              <CloseIcon type="primary"/>
+        <ModalOverlay
+          handleCloseModal={closeModal}
+        >
+          <section className={styles.popupWrapper}>
+            {closeModal &&
+              <div
+                className={styles.closeIcon}
+                onClick={closeModal}
+              >
+                <CloseIcon type="primary"/>
+              </div>
+            }
+            <p className={`text text_type_digits-default ${styles.orderNumber}`}>{`#${number}`}</p>
+            <h2 className={`text text_type_main-medium ${styles.orderName}`}>{name}</h2>
+            <p className={`text text_type_main-default ${styles.orderStatus}`}>
+              {status === 'done' ? "Выполнен" : "В работе"}
+            </p>
+            <p className={`text text_type_main-medium ${styles.orderIngredientsHeader}`}>Состав:</p>
+            <div className={`${styles.orderIngredientsWrapper} ${scroll && styles.orderIngredientsWrapperScroll}`}>
+              {ingredientsToShow.map((id) => {
+                return (
+                  <IngredientDetailsCard
+                    key={id}
+                    ingredientId={id}
+                    quantity={ingredientsCollection[id]}
+                  />
+                )
+              })}
             </div>
-          }
-          <p className={`text text_type_digits-default ${styles.orderNumber}`}>{`#${number}`}</p>
-          <h2 className={`text text_type_main-medium ${styles.orderName}`}>{name}</h2>
-          <p className={`text text_type_main-default ${styles.orderStatus}`}>
-            {status === 'done' ? "Выполнен" : "В работе"}
-          </p>
-          <p className={`text text_type_main-medium ${styles.orderIngredientsHeader}`}>Состав:</p>
-          <div className={`${styles.orderIngredientsWrapper} ${scroll && styles.orderIngredientsWrapperScroll}`}>
-            {ingredientsToShow.map((id) => {
-              return (
-                <IngredientDetailsCard
-                  key={id}
-                  ingredientId={id}
-                  quantity={ingredientsCollection[id]}
-                />
-              )
-            })}
-          </div>
-          <div className={styles.modalFooter}>
-            <p className={`text text_type_main-default text_color_inactive`}>{getOrderDateString(createdAt)}</p>
-            <div className={styles.orderCostWrapper}>
-              <p className={`text text_type_digits-default ${styles.orderCost}`}>{getFullOrderCost(ingredientsList, finalIngredients)}</p>
-              <CurrencyIcon type="primary"/>
+            <div className={styles.modalFooter}>
+              <p className={`text text_type_main-default text_color_inactive`}>{getOrderDateString(createdAt)}</p>
+              <div className={styles.orderCostWrapper}>
+                <p className={`text text_type_digits-default ${styles.orderCost}`}>{getFullOrderCost(ingredientsList, finalIngredients)}</p>
+                <CurrencyIcon type="primary"/>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </ModalOverlay>
       }
     </>
   )

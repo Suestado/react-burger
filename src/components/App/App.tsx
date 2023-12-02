@@ -19,7 +19,6 @@ import ProfileOrders from "../ProfileOrders/ProfileOrders";
 import OrderLine from "../../Pages/OrderLine/OrderLine";
 import { useDispatch } from "../../services/hooks/reduxHooks";
 import LineOrderDetails from "../Modals/LineOrderDetails/LineOrderDetails";
-import ModalOverlay from "../Modals/ModalOverlay/ModalOverlay";
 import OrderDetailsPage from "../../Pages/OrderDetails/OrderDetailsPage";
 import getIngredients from "../../services/actions/fullIngredientsListActions";
 
@@ -84,24 +83,16 @@ function App() {
             </Modal>
           }/>
           <Route path="/feed/:number" element={
-            <ModalOverlay
-              handleCloseModal={closeModalOrderLine}
-            >
               <LineOrderDetails
                 closeModal={closeModalOrderLine}
                 scroll={true}
               />
-            </ModalOverlay>
           }/>
           <Route path="/profile/orders/:number" element={
-            <ModalOverlay
-              handleCloseModal={closeModalUserOrders}
-            >
               <LineOrderDetails
                 closeModal={closeModalUserOrders}
                 scroll={true}
               />
-            </ModalOverlay>
           }/>
         </Routes>
       )}
