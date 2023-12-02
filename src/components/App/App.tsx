@@ -21,6 +21,7 @@ import { useDispatch } from "../../services/hooks/reduxHooks";
 import LineOrderDetails from "../Modals/LineOrderDetails/LineOrderDetails";
 import ModalOverlay from "../Modals/ModalOverlay/ModalOverlay";
 import OrderDetailsPage from "../../Pages/OrderDetails/OrderDetailsPage";
+import getIngredients from "../../services/actions/fullIngredientsListActions";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ function App() {
 
   useEffect(() => {
     checkAuth(dispatch);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getIngredients());
   }, []);
 
   type TCloseModal = () => void;

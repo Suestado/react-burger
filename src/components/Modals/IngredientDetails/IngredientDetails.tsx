@@ -1,11 +1,9 @@
-import React, { useEffect, FC } from 'react';
+import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { createSelector } from 'reselect';
 import styles from './ingredientDetails.module.css';
-import getIngredients from '../../../services/actions/fullIngredientsListActions';
 import Preloader from '../../Preloader/Preloader';
-import {IngredientInterface} from "../../../utils/commonTypes";
-import { useDispatch, useSelector } from "../../../services/hooks/reduxHooks";
+import { useSelector } from "../../../services/hooks/reduxHooks";
 import { RootState } from "../../../services/actions/types";
 
 const selectAllIngredients = (store: RootState) => store.ingredients.fullIngredientList;
@@ -15,20 +13,13 @@ const selectAllIngredients = (store: RootState) => store.ingredients.fullIngredi
 // Примеры взаимодействия reselect с useSelector можно посмотреть здесь: https://react-redux.js.org/api/hooks#useselector-examples
 const IngredientDetails: FC = (): React.ReactElement => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const selectIngredient = createSelector(
     [selectAllIngredients],
-    (allIngredients: IngredientInterface[]) => {
-      return allIngredients.find((item: IngredientInterface) => item._id === id);
+    (allIngredients) => {
+      return allIngredients.find((item) => item._id === id);
     },
   );
   const ingredient = useSelector(selectIngredient);
-
-  useEffect((): void => {
-    if (!ingredient) {
-      dispatch(getIngredients());
-    }
-  }, []);
 
   return (
     <>

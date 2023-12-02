@@ -32,16 +32,10 @@ const getIngredients = () => (dispatch: AppDispatch) => {
   });
   getIngredientsApi()
     .then((res) => {
-      if (res && res.success) {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           fullIngredientList: res.data,
         });
-      } else {
-        dispatch({
-          type: GET_INGREDIENTS_FAILURE,
-        });
-      }
     })
     .catch((err) => {
       dispatch({

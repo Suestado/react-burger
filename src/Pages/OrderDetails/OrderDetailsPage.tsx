@@ -4,7 +4,6 @@ import LineOrderDetails from "../../components/Modals/LineOrderDetails/LineOrder
 import { useDispatch } from "../../services/hooks/reduxHooks";
 import { orderLineConnect, orderLineDisconnect } from "../../services/actions/orderLineActions";
 import { WS_SERVER_ALL_ORDERS_URL, WS_SERVER_ORDER_URL } from "../../utils/constants";
-import getIngredients from "../../services/actions/fullIngredientsListActions";
 import { useLocation } from "react-router-dom";
 import { userOrdersConnect, userOrdersDisconnect } from "../../services/actions/userOrdersActions";
 
@@ -14,7 +13,6 @@ const OrderDetailsPage: FC = (): React.ReactElement => {
   const location = useLocation()
 
   useEffect(() => {
-    dispatch(getIngredients());
     if(location.pathname.split("/")[1] === 'feed') {
       dispatch(orderLineConnect(WS_SERVER_ALL_ORDERS_URL))
     } else {

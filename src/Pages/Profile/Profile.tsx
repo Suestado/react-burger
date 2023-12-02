@@ -11,12 +11,10 @@ const Profile: FC = (): React.ReactElement => {
 
   const handleLogout = (): void => {
     logOut(localStorage.getItem('refreshToken'))
-      .then((res) => {
-        if (res.success) {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-          dispatch(logOutUser());
-        }
+      .then(() => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        dispatch(logOutUser());
       })
       .catch((err) => {
         console.log(`При попытке выхода из аккаунта произошла ошибка - ${err}`);
@@ -40,9 +38,9 @@ const Profile: FC = (): React.ReactElement => {
             </li>
           </ul>
         </nav>
-        <p className={`${styles.navDescription} text text_type_main-default`}>
+        {currentLocation === '/profile' && <p className={`${styles.navDescription} text text_type_main-default`}>
           В этом разделе вы можете изменить свои персональные данные
-        </p>
+        </p>}
       </div>
 
       <Outlet/>

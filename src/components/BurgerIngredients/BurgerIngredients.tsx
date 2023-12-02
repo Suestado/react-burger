@@ -21,7 +21,7 @@ function BurgerIngredients(): React.ReactElement {
     const blockTop: number = ingredientsRef.current.getBoundingClientRect().top;
     let minDistance: number = Math.abs(refIngredientHeaders[0].getBoundingClientRect().top - blockTop);
 
-    refIngredientHeaders.forEach((item: HTMLDivElement) => {
+    refIngredientHeaders.forEach((item) => {
       let newDistance: number = Math.abs(item.getBoundingClientRect().top - blockTop);
 
       if (newDistance <= minDistance) {

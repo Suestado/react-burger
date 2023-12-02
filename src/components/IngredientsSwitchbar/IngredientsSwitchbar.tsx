@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import styles from './ingredientsSwitchbar.module.css';
-import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 interface IIngredientsSwitchbar {
   activeTab: string,

@@ -26,7 +26,7 @@ const OrderElement: FC<IOrderElement> = (
 ): React.ReactElement => {
   const ingredientsList = useSelector((store) => store.ingredients.fullIngredientList);
   const location = useLocation();
-  const finalIngredients: string[] = ingredients.filter(Boolean)
+  const finalIngredients = ingredients.filter(Boolean)
 
   const choseIngredients = (ingredients: string[]): React.ReactElement[] => {
     let ingredientsToShow: React.ReactElement[] = [];

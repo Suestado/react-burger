@@ -1,17 +1,17 @@
-import React, { memo, useState, FC, ChangeEvent } from 'react';
+import React, { memo, FC } from 'react';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { loginUser } from '../../services/actions/userActions';
 import { useDispatch } from "../../services/hooks/reduxHooks";
+import { useForm } from "../../utils/hooks/useForm";
 
 const Login: FC = (): React.ReactElement => {
-  const [emailValue, setEmailValue] = useState<string>('');
-  const [passwordValue, setPasswordValue] = useState<string>('');
   const dispatch = useDispatch();
+  const {values, handleChange} = useForm();
 
   const onSubmit = (): void => {
-    dispatch(loginUser(emailValue, passwordValue));
+    dispatch(loginUser(values.emailInput, values.passwordInput));
   };
 
   return (
@@ -32,14 +32,14 @@ const Login: FC = (): React.ReactElement => {
       errorTitle="При попытке входа в систему произошла ошибка"
     >
       <EmailInput
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setEmailValue(evt.target.value)}
-        value={emailValue}
+        onChange={handleChange}
+        value={values.emailInput || ''}
         name={'emailInput'}
         placeholder="E-mail"
       />
       <PasswordInput
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setPasswordValue(evt.target.value)}
-        value={passwordValue}
+        onChange={handleChange}
+        value={values.passwordInput || ''}
         name={'passwordInput'}
       />
     </FormContainer>

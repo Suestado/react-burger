@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import styles from './OrderCounter.module.css';
 
 interface IOrderCounter {
@@ -25,7 +25,7 @@ const OrderCounter: FC<IOrderCounter> = ({readyItems, inProcessItems, total, tot
       <div className={styles.orderNumbersWrapper}>
         <h3 className={`text text_type_main-medium`}>Готовы:</h3>
         <div className={styles.readyOrders}>
-          {readyItems.map((item: number, index: number) => {
+          {readyItems.map((item, index) => {
             return (
               <p
                 key={index}
@@ -36,7 +36,7 @@ const OrderCounter: FC<IOrderCounter> = ({readyItems, inProcessItems, total, tot
         </div>
         <h3 className={`text text_type_main-medium`}>В работе:</h3>
         <div className={`text text_type_digits-default ${styles.inProgressOrders}`}>
-          {inProcessItems.map((item: number) => {
+          {inProcessItems.map((item) => {
             return (
               <p className={`text text_type_digits-default`}>{item}</p>
             )

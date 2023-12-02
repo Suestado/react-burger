@@ -1,12 +1,14 @@
 export const getOrderDateString = (orderTime: string) => {
   const currentDate = new Date();
+  const todayLastMs = currentDate.getHours() * 3600000 + currentDate.getMinutes() * 60000;
+  const orderTimeDiffMs = currentDate.getTime() - new Date(Date.parse(orderTime)).getTime();
+  const lastDaysNumber = Math.floor((orderTimeDiffMs - todayLastMs) / 86400000 + 1)
+
   const orderDate = new Date(Date.parse(orderTime))
-  const orderDay = orderDate.getDate()
   const orderHours = orderDate.getHours();
   const orderMin = orderDate.getMinutes();
-  const dateDiff = currentDate.getDate() - orderDay;
 
-  switch (dateDiff) {
+  switch (lastDaysNumber) {
     case (0): {
       return `Сегодня, ${orderHours}:${orderMin}`
     }
@@ -14,14 +16,14 @@ export const getOrderDateString = (orderTime: string) => {
       return `Вчера, ${orderHours}:${orderMin}`
     }
     default: {
-      const lastNumber = dateDiff >= 10 ? dateDiff % 10 : dateDiff
+      const lastNumber = lastDaysNumber >= 10 ? lastDaysNumber % 10 : lastDaysNumber
 
       const daySpell =
-        dateDiff >= 11 && dateDiff <= 20 ? "дней"
+        lastDaysNumber >= 11 && lastDaysNumber <= 20 ? "дней"
           : lastNumber === 1 ? "день"
             : lastNumber >= 2 && lastNumber <= 4 ? "дня"
               : "дней"
-      return `${dateDiff} ${daySpell} назад, ${orderHours}:${orderMin}`
+      return `${lastDaysNumber} ${daySpell} назад, ${orderHours}:${orderMin}`
     }
   }
 }

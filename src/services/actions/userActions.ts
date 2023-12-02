@@ -46,18 +46,11 @@ const createUser = (name: string, email: string, password: string) => {
 
     registerUser(name, email, password)
       .then((res) => {
-        if (res.success) {
           dispatch({
             type: GET_USER_CREDENTIALS_SUCCESS,
             name: res.user.name,
             email: res.user.email,
           });
-        } else {
-          dispatch({
-            type: GET_USER_CREDENTIALS_FAILURE,
-            failureMessage: 'Что-то пошло не так',
-          });
-        }
       })
       .catch((err) => {
         dispatch({
@@ -77,18 +70,11 @@ const loginUser = (email: string, password: string) => {
 
     loginUserApi(email, password)
       .then((res) => {
-        if (res.success) {
           dispatch({
             type: GET_USER_CREDENTIALS_SUCCESS,
             name: res.user.name,
             email: res.user.email,
           });
-        } else {
-          dispatch({
-            type: GET_USER_CREDENTIALS_FAILURE,
-            failureMessage: 'Что-то пошло не так',
-          });
-        }
       })
       .catch((err) => {
         dispatch({

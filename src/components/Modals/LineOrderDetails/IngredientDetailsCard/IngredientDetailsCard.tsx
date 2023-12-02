@@ -3,7 +3,6 @@ import styles from './IngredientDetailsCard.module.css';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderIngredientLogo from "../../../OrderElement/OrderIngredientLogo/OrderIngredientLogo";
 import { useSelector } from "../../../../services/hooks/reduxHooks";
-import { IngredientInterface } from "../../../../utils/commonTypes";
 
 interface IIngredientDetailsCard {
   ingredientId: string;
@@ -12,10 +11,10 @@ interface IIngredientDetailsCard {
 
 const IngredientDetailsCard: FC<IIngredientDetailsCard> = ({ingredientId, quantity}): React.ReactElement => {
   const { fullIngredientList} = useSelector((store) => store.ingredients)
-  const ingredientName = fullIngredientList.find((item: IngredientInterface) => {
+  const ingredientName = fullIngredientList.find((item) => {
     return item._id === ingredientId;
   })?.name;
-  const ingredientCost = fullIngredientList.find((item: IngredientInterface) => {
+  const ingredientCost = fullIngredientList.find((item) => {
     return item._id === ingredientId
   })?.price
 

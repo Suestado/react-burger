@@ -64,7 +64,7 @@ function BurgerConstructor() {
   ) => void;
 
   const onDropHandlerBun: TonDropHandlerBun = (item) => {
-    if (customerBurgerIngredients.some((item: IngredientInterface) => item.type === 'bun')) {
+    if (customerBurgerIngredients.some((item) => item.type === 'bun')) {
       dispatch(replaceBurgerBun(item));
     } else {
       dispatch(putBurgerBun(item));
@@ -77,7 +77,7 @@ function BurgerConstructor() {
   }
 
   function submitOrder(): void {
-    const ingredients: string[] = customerBurgerIngredients.map((item: IngredientInterface) => {
+    const ingredients: string[] = customerBurgerIngredients.map((item) => {
       return item._id;
     });
 
@@ -101,13 +101,13 @@ function BurgerConstructor() {
     dispatch(replaceBurgerFilling(newFillingsList));
   }, [customerBurgerIngredients]);
 
-  const isBunPlaseEmpty: boolean = !customerBurgerIngredients.some((item: IngredientInterface) => item.type === 'bun');
-  const fillingsListEmpty: boolean = !customerBurgerIngredients.some((item: IngredientInterface) => item.type !== 'bun');
+  const isBunPlaseEmpty: boolean = !customerBurgerIngredients.some((item) => item.type === 'bun');
+  const fillingsListEmpty: boolean = !customerBurgerIngredients.some((item) => item.type !== 'bun');
   const bunIsHovered: string = isHoverBunTop || isHoverBunBottom ? styles.hoveredContainer : '';
   const fillingsIsHovered: string = isHoverFillings ? styles.hoveredContainer : '';
   const orderCompleted: boolean =
-    customerBurgerIngredients.some((ingredient: IngredientInterface) => ingredient.type === 'bun')
-    && customerBurgerIngredients.some((ingredient: IngredientInterface) => ingredient.type === 'sauce' || ingredient.type === 'main');
+    customerBurgerIngredients.some((ingredient) => ingredient.type === 'bun')
+    && customerBurgerIngredients.some((ingredient) => ingredient.type === 'sauce' || ingredient.type === 'main');
 
   return (
     <section className={styles.ingredientsSection}>
@@ -120,9 +120,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.name || ''} (верх)`}
-            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.price || 0}
-            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.image || ''}
+            text={`${customerBurgerIngredients.find((item) => item.type === 'bun')?.name || ''} (верх)`}
+            price={customerBurgerIngredients.find((item) => item.type === 'bun')?.price || 0}
+            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun')?.image || ''}
           />
         }
       </div>
@@ -133,7 +133,7 @@ function BurgerConstructor() {
       >
         {fillingsListEmpty ? <EmptyFillings/> :
           <>
-            {customerBurgerIngredients.map((item: IngredientInterface, index: number) => {
+            {customerBurgerIngredients.map((item, index) => {
               if (item.type !== 'bun') {
                 return (
                   <ConstructorElementFillings
@@ -157,9 +157,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.name || ''} (низ)`}
-            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.price || 0}
-            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun')?.image || ''}
+            text={`${customerBurgerIngredients.find((item) => item.type === 'bun')?.name || ''} (низ)`}
+            price={customerBurgerIngredients.find((item) => item.type === 'bun')?.price || 0}
+            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun')?.image || ''}
           />
         }
       </div>
@@ -167,7 +167,7 @@ function BurgerConstructor() {
       <div className={styles.orderContainer}>
         <div className={styles.priceTag}>
           <p className="text text_type_main-large">
-            {customerBurgerIngredients.reduce((acc: number, currentElement: IngredientInterface) => {
+            {customerBurgerIngredients.reduce((acc: number, currentElement) => {
               return currentElement.price + acc;
             }, 0)}
           </p>

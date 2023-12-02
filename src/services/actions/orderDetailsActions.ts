@@ -38,17 +38,11 @@ const getOrderStatus = (ingredients: string[]) => (dispatch: AppDispatch) => {
   });
   getOrderNumber(ingredients, token)
     .then((res) => {
-      if (res) {
         dispatch({
           type: GET_ORDER_STATUS_SUCCESS,
           orderNumber: res.order.number,
           name: res.name,
         });
-      } else {
-        dispatch({
-          type: GET_ORDER_STATUS_FAILURE,
-        });
-      }
     })
     .catch((err) => {
       dispatch({

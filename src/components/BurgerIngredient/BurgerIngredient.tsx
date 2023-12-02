@@ -32,7 +32,7 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({ item }): React.ReactElement =
 
   const ingredientRef = item.type === 'bun' ? dragRefBun : dragRefFillings;
   const ingredientIsDragging: boolean = isDragFillings || isDragBun;
-  const orderedCount = useSelector((store) => store.customerBurger.customerBurgerIngredients.reduce((acc: number, ingredient: IngredientInterface) => {
+  const orderedCount = useSelector((store) => store.customerBurger.customerBurgerIngredients.reduce((acc: number, ingredient) => {
     return ingredient._id === item._id ? acc + 1 : acc;
   }, 0));
 

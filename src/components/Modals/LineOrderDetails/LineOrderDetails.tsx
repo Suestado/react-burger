@@ -27,8 +27,8 @@ const LineOrderDetails: FC<ILineOrderDetails> = ({closeModal, scroll}): React.Re
 
   const selectOrderCard = createSelector(
     [chooseOrderList],
-    (allOrders: IOrderData[]) => {
-      return allOrders?.find((item: IOrderData) => orderNumber && item.number === +orderNumber);
+    (allOrders) => {
+      return allOrders?.find((item) => orderNumber && item.number === +orderNumber);
     },
   );
   const orderCard = useSelector(selectOrderCard);
@@ -52,7 +52,7 @@ const LineOrderDetails: FC<ILineOrderDetails> = ({closeModal, scroll}): React.Re
   }
 
   const ingredientsCollection: IingredientsCollection = {}
-  finalIngredients.forEach((id: string) => {
+  finalIngredients.forEach((id) => {
     if (ingredientsCollection[id]) {
       ingredientsCollection[id] = ingredientsCollection[id] + 1
     } else {
@@ -86,7 +86,7 @@ const LineOrderDetails: FC<ILineOrderDetails> = ({closeModal, scroll}): React.Re
           </p>
           <p className={`text text_type_main-medium ${styles.orderIngredientsHeader}`}>Состав:</p>
           <div className={`${styles.orderIngredientsWrapper} ${scroll && styles.orderIngredientsWrapperScroll}`}>
-            {ingredientsToShow.map((id: string) => {
+            {ingredientsToShow.map((id) => {
               return (
                 <IngredientDetailsCard
                   key={id}
