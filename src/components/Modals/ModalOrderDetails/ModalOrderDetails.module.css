@@ -1,0 +1,21 @@
+.modal {
+  margin: 122px auto auto;
+  padding: 30px;
+  width: 640px;
+  background-color: #131316;
+  color: #F2F2F3;
+  border-radius: 30px;
+  position: relative;
+}
+
+.closeIcon {
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  transition: .3s ease-in-out;
+}
+
+.closeIcon:hover {
+  opacity: .6;
+  cursor: pointer;
+}

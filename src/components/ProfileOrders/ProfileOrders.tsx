@@ -5,11 +5,13 @@ import { WS_SERVER_ORDER_URL } from "../../utils/constants";
 import { userOrdersConnect, userOrdersDisconnect } from "../../services/actions/userOrdersActions";
 import OrderElement from "../OrderElement/OrderElement";
 import { IOrderData } from "../../services/actions/orderLineActions";
+import Preloader from "../Preloader/Preloader";
 
 const ProfileOrders: FC = (): React.ReactElement => {
   const dispatch = useDispatch()
   const accessToken = localStorage.getItem('accessToken')
   const userOrders = useSelector((store) => store.userOrders.userOrdersData.orders)
+
   const userOrdersToShow = [...userOrders].reverse()
 
   useEffect(() => {
@@ -20,21 +22,26 @@ const ProfileOrders: FC = (): React.ReactElement => {
   }, [])
 
   return (
-    <section className={styles.ordersContainer}>
-      {userOrdersToShow.map((order: IOrderData) => {
-        return (
-          <OrderElement
-            key={order._id}
-            rootLink={"/profile/orders"}
-            orderNumber={order.number}
-            orderName={order.name}
-            orderTime={order.createdAt}
-            ingredients={order.ingredients}
-          />
-        )
-      })}
-    </section>
+    <>
+      {!userOrders.length ? <Preloader/> :
+        <section className={styles.ordersContainer}>
+          {userOrdersToShow.map((order: IOrderData) => {
+            return (
+              <OrderElement
+                key={order._id}
+                rootLink={"/profile/orders"}
+                orderNumber={order.number}
+                orderName={order.name}
+                orderTime={order.createdAt}
+                ingredients={order.ingredients}
+              />
+            )
+          })}
+        </section>
+      }
+    </>
   )
 }
 
 export default ProfileOrders
+

@@ -27,9 +27,7 @@ const OrderDetailsPage: FC = (): React.ReactElement => {
 
   return (
     <div className={styles.orderDetailsPage}>
-      <LineOrderDetails
-        closeModal={() => void 0}
-      />
+      <LineOrderDetails/>
     </div>
   )
 }

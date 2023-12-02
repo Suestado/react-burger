@@ -10,7 +10,7 @@ import ResetPassword from '../../Pages/ResetPassword/ResetPassword';
 import Profile from '../../Pages/Profile/Profile';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails';
-import Modal from '../Modals/Modal/Modal';
+import ModalWithHeader from '../Modals/ModalWithHeader/ModalWithHeader';
 import IngredientPage from '../../Pages/Ingredients/Ingredients';
 import checkAuth from '../../utils/checkAuth';
 import UnAuthRouteElement from '../ProtectedRouteElement/UnAuthRouteElement';
@@ -21,6 +21,7 @@ import { useDispatch } from "../../services/hooks/reduxHooks";
 import LineOrderDetails from "../Modals/LineOrderDetails/LineOrderDetails";
 import OrderDetailsPage from "../../Pages/OrderDetails/OrderDetailsPage";
 import getIngredients from "../../services/actions/fullIngredientsListActions";
+import ModalOrderDetails from "../Modals/ModalOrderDetails/ModalOrderDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,35 +65,41 @@ function App() {
         <Route path="/forgot-password" element={<UnAuthRouteElement element={<ForgotPassword/>}/>}/>
         <Route path="/reset-password" element={<UnAuthRouteElement element={<ResetPassword/>}/>}/>
 
-        <Route path="/profile" element={<ProtectedRouteElement element={<Profile/>}/>}>
+        <Route path="/profile" element={<ProtectedRouteElement element={<Profile/>} state={location.state}/>}>
           <Route index element={<ProfileData/>}/>
           <Route path="orders" element={<ProfileOrders/>}/>
-          <Route path="orders/:number" element={<OrderDetailsPage/>}/>
         </Route>
+        <Route path="/profile/orders/:number" element={<ProtectedRouteElement element={<OrderDetailsPage/>} state={location.state}/>}/>
         <Route path="*" element={<Page404/>}/>
       </Routes>
 
       {stateRoute && (
         <Routes>
           <Route path="/ingredients/:id" element={
-            <Modal
+            <ModalWithHeader
               title="Детали ингредиента"
               closeModal={closeModalMAin}
             >
               <IngredientDetails/>
-            </Modal>
+            </ModalWithHeader>
           }/>
           <Route path="/feed/:number" element={
+            <ModalOrderDetails
+              closeModal={closeModalOrderLine}
+            >
               <LineOrderDetails
-                closeModal={closeModalOrderLine}
                 scroll={true}
               />
+            </ModalOrderDetails>
           }/>
           <Route path="/profile/orders/:number" element={
+            <ModalOrderDetails
+              closeModal={closeModalUserOrders}
+            >
               <LineOrderDetails
-                closeModal={closeModalUserOrders}
                 scroll={true}
               />
+            </ModalOrderDetails>
           }/>
         </Routes>
       )}

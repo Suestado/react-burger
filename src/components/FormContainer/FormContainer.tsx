@@ -2,7 +2,7 @@ import React, { memo, FC, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './formContainer.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../Modals/Modal/Modal';
+import ModalWithHeader from '../Modals/ModalWithHeader/ModalWithHeader';
 import { userResetFailure } from '../../services/actions/userActions';
 import { useDispatch, useSelector } from "../../services/hooks/reduxHooks";
 
@@ -90,14 +90,14 @@ const FormContainer: FC<IFormContainer> = (
         }
       </div>
 
-      {showFailureMessage && <Modal
+      {showFailureMessage && <ModalWithHeader
         title={errorTitle}
         closeModal={onCloseModal}
       >
         <span className={`text text_type_main-medium ${styles.errorMessage}`}>
           {failureMessage}
         </span>
-      </Modal>
+      </ModalWithHeader>
       }
     </>
   );

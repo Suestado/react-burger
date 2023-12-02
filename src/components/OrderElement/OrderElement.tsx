@@ -54,8 +54,10 @@ const OrderElement: FC<IOrderElement> = (
     return ingredientsToShow
   }
 
+  const modalLocation = {...location, pathname: `${location.pathname}/${orderNumber}`}
+
   return (
-    <Link to={`${rootLink}/${orderNumber}`} className={styles.orderLineLink} state={{ backgroundLocation: location }}>
+    <Link to={`${rootLink}/${orderNumber}`} className={styles.orderLineLink} state={{ backgroundLocation: location, modalLocation: modalLocation}}>
       <div className={styles.cardLayout}>
         <div className={styles.numDateContainer}>
           <p className={`text text_type_digits-default ${styles.numberText}`}>{`#${orderNumber}`}</p>
