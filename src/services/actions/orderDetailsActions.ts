@@ -3,6 +3,7 @@ import {
   GET_ORDER_STATUS_SUCCESS,
   GET_ORDER_STATUS_FAILURE,
   CLEAR_ORDER_STATUS,
+  CLEAR_BURGER_FILLINGS,
 } from '../../utils/constants';
 import { getOrderNumber } from '../../utils/MainApi';
 import { AppDispatch } from "./types";
@@ -43,6 +44,11 @@ const getOrderStatus = (ingredients: string[]) => (dispatch: AppDispatch) => {
           orderNumber: res.order.number,
           name: res.name,
         });
+    })
+    .then(() => {
+      dispatch({
+        type: CLEAR_BURGER_FILLINGS,
+      })
     })
     .catch((err) => {
       dispatch({

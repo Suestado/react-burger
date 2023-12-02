@@ -5,6 +5,7 @@ import {
   REPLACE_BURGER_BUN,
   DELETE_BURGER_FILLING,
   REPLACE_BURGER_FILLING,
+  CLEAR_BURGER_FILLINGS,
 } from '../../utils/constants';
 import { IngredientInterface } from "../../utils/commonTypes";
 
@@ -33,12 +34,17 @@ export interface IReplaceBurgerFillingAction {
   newIngredientsList: IngredientInterface[]
 }
 
+export interface IClearBurgerFillings {
+  readonly type: typeof CLEAR_BURGER_FILLINGS;
+}
+
 export type UTBurgerConstructorActions =
   IPutBurgerBunAction |
   IPutBurgerFillingAction |
   IReplaceBurgerBunAction |
   IDeleteBurgerFillingAction |
-  IReplaceBurgerFillingAction;
+  IReplaceBurgerFillingAction |
+  IClearBurgerFillings;
 
 const putBurgerBun = (bunIngredient: IngredientInterface): IPutBurgerBunAction => ({
   type: PUT_BURGER_BUN,
@@ -65,10 +71,15 @@ const replaceBurgerFilling = (newIngredientsList: IngredientInterface[]): IRepla
   newIngredientsList: newIngredientsList,
 });
 
+const clearBurgerFillings = (): IClearBurgerFillings => ({
+  type: CLEAR_BURGER_FILLINGS,
+})
+
 export {
   putBurgerBun,
   putBurgerFilling,
   replaceBurgerBun,
   deleteBurgerFilling,
   replaceBurgerFilling,
+  clearBurgerFillings,
 };
