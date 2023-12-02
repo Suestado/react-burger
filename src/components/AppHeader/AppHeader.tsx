@@ -31,7 +31,9 @@ function AppHeader() {
             >Лента заказов</span>
           </Link>
         </nav>
-        <Logo/>
+        <Link to={'/'}>
+          <Logo/>
+        </Link>
         <nav className={`${styles.navBlock} ${styles.navBlock__auth}`}>
           <Link className={styles.link} to="/profile">
             <ProfileIcon type={~location.indexOf('/profile') ? 'primary' : 'secondary'}/>
