@@ -10,7 +10,7 @@ import ResetPassword from '../../Pages/ResetPassword/ResetPassword';
 import Profile from '../../Pages/Profile/Profile';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import IngredientDetails from '../Modals/IngredientDetails/IngredientDetails';
-import Modal, { modalTypes } from '../Modals/Modal/Modal';
+import Modal from '../Modals/Modal/Modal';
 import IngredientPage from '../../Pages/Ingredients/Ingredients';
 import checkAuth from '../../utils/checkAuth';
 import UnAuthRouteElement from '../ProtectedRouteElement/UnAuthRouteElement';
@@ -76,7 +76,6 @@ function App() {
         <Routes>
           <Route path="/ingredients/:id" element={
             <Modal
-              modalType={modalTypes.modalInfo}
               title="Детали ингредиента"
               closeModal={closeModalMAin}
             >
@@ -85,21 +84,21 @@ function App() {
           }/>
           <Route path="/feed/:number" element={
             <Modal
-              modalType={modalTypes.orderDetails}
               closeModal={closeModalOrderLine}
             >
               <LineOrderDetails
                 scroll={true}
+                modalMod
               />
             </Modal>
           }/>
           <Route path="/profile/orders/:number" element={
             <Modal
-              modalType={modalTypes.orderDetails}
-              closeModal={closeModalUserOrders}
+               closeModal={closeModalUserOrders}
             >
               <LineOrderDetails
                 scroll={true}
+                modalMod
               />
             </Modal>
           }/>

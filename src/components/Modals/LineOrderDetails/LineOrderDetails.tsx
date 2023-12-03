@@ -13,12 +13,13 @@ import { getFullOrderCost } from "../../../utils/functions/getFullOrderCost";
 
 interface ILineOrderDetails {
   scroll?: boolean;
+  modalMod?: boolean;
 }
 
 const selectOrdersList = (store: RootState) => store.orderLine.orderLineData.orders;
 const selectUserOrdersList = (store: RootState) => store.userOrders.userOrdersData.orders;
 
-const LineOrderDetails: FC<ILineOrderDetails> = ({scroll}): React.ReactElement => {
+const LineOrderDetails: FC<ILineOrderDetails> = ({scroll, modalMod}): React.ReactElement => {
   const ingredientsList = useSelector((store) => store.ingredients.fullIngredientList);
   const orderNumber = useParams().number;
   const location = useLocation()
@@ -70,7 +71,7 @@ const LineOrderDetails: FC<ILineOrderDetails> = ({scroll}): React.ReactElement =
 
       {orderCard &&
           <section className={styles.popupWrapper}>
-            <p className={`text text_type_digits-default ${styles.orderNumber}`}>{`#${number}`}</p>
+            <p className={`text text_type_digits-default ${modalMod ? styles.orderNumberModal : styles.orderNumber}`}>{`#${number}`}</p>
             <h2 className={`text text_type_main-medium ${styles.orderName}`}>{name}</h2>
             <p className={`text text_type_main-default ${styles.orderStatus}`}>
               {status === 'done' ? "Выполнен" : "В работе"}

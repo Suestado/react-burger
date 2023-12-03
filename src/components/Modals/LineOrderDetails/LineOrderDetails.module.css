@@ -1,6 +1,14 @@
 .orderNumber {
-  text-align: center;
   padding-bottom: 40px;
+  text-align: center;
+}
+
+.orderNumberModal {
+  padding-bottom: 20px;
+  min-height: 64px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 .orderName {

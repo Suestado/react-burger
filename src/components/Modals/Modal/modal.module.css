@@ -10,26 +10,25 @@
   background: #1C1C21;
   align-self: center;
   position: relative;
+  align-items: center;
 }
 
 .header {
-  display: grid;
-  grid-template-columns: 580px 24px;
-  grid-column-gap: 36px;
-  align-items: center;
-  grid-template-areas:
-  'A B';
+  max-width: 580px;
 }
 
 .closeBtnInner {
-  grid-area: B;
+  position: absolute;
   transition: .3s ease-in-out;
+  top: 60px;
+  right: 40px;
 }
 
 .closeBtnInner svg:hover {
   cursor: pointer;
   opacity: .6;
 }
+
 .closeBtnOuter {
   position: absolute;
   right: -20px;
