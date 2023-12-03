@@ -5,7 +5,7 @@ import styles from './burgerConstructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalWithHeader from '../Modals/ModalWithHeader/ModalWithHeader';
+import Modal, { modalTypes } from '../Modals/Modal/Modal';
 import OrderDetails from '../Modals/OrderDetails/OrderDetails';
 import { getOrderStatus, clearOrderStatus } from '../../services/actions/orderDetailsActions';
 import EmptyBun from './ConstructorElementsEmpty/EmptyBun/EmptyBun';
@@ -186,13 +186,14 @@ function BurgerConstructor() {
 
       {orderRequestProcessing && <Preloader/>}
 
-      {orderNumber && <ModalWithHeader
+      {orderNumber && <Modal
+        modalType={modalTypes.modalInfo}
         closeModal={closeModal}
       >
         <OrderDetails
           orderNumber={orderNumber}
         />
-      </ModalWithHeader>
+      </Modal>
       }
     </section>
   );

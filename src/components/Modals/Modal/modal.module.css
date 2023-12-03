@@ -9,6 +9,7 @@
   border: 1px solid rgba(76, 76, 255, 0.20);
   background: #1C1C21;
   align-self: center;
+  position: relative;
 }
 
 .header {
@@ -20,12 +21,23 @@
   'A B';
 }
 
-.closeBtn {
+.closeBtnInner {
   grid-area: B;
   transition: .3s ease-in-out;
 }
 
-.closeBtn svg:hover {
+.closeBtnInner svg:hover {
   cursor: pointer;
   opacity: .6;
+}
+.closeBtnOuter {
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  transition: .3s ease-in-out;
+}
+
+.closeBtnOuter svg:hover {
+  opacity: .6;
+  cursor: pointer;
 }

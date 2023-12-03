@@ -4,28 +4,48 @@ import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
+export enum modalTypes {
+  orderDetails,
+  modalInfo
+}
+
 interface IModalWithHeader {
+  modalType: modalTypes,
   title?: string,
   closeModal: () => void,
   children: React.ReactElement
 }
 
-const ModalWithHeader: FC<IModalWithHeader> = ({title, closeModal, children}): React.ReactElement => {
+const Modal: FC<IModalWithHeader> = ({modalType, title, closeModal, children}): React.ReactElement => {
   const modalPortal = document.querySelector('#modalPortal') as HTMLElement;
 
   return ReactDom.createPortal(
     <ModalOverlay
       handleCloseModal={closeModal}>
       <div className={styles.modal}>
-        <h2 className={`text text_type_main-large ${styles.header}`}>
-          {title}
+        {
+          modalType === modalTypes.modalInfo &&
+          <h2 className={`text text_type_main-large ${styles.header}`}>
+            {title}
+            <div
+              className={styles.closeBtnInner}
+              onClick={closeModal}
+            >
+              <CloseIcon type="primary"/>
+            </div>
+          </h2>
+        }
+
+        {
+          modalType === modalTypes.orderDetails &&
           <div
-            className={styles.closeBtn}
+            className={styles.closeBtnOuter}
             onClick={closeModal}
           >
             <CloseIcon type="primary"/>
           </div>
-        </h2>
+        }
+
         {children}
       </div>
     </ModalOverlay>,
@@ -33,4 +53,4 @@ const ModalWithHeader: FC<IModalWithHeader> = ({title, closeModal, children}): R
   );
 }
 
-export default ModalWithHeader;
+export default Modal;
