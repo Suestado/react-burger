@@ -16,7 +16,7 @@ import {
 } from '../burgerConstructorActions';
 
 
-describe('Action creators', () => {
+describe('Action creators for burgerConstructorActions', () => {
   it('should create an PUT_BURGER_BUN action with correct bun ingredients', () => {
 
     const expectedAction = {

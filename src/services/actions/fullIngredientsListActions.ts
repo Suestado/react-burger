@@ -32,7 +32,6 @@ const getIngredients = () => (dispatch: AppDispatch) => {
   });
   getIngredientsApi()
     .then((res) => {
-      console.log(res.data)
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           fullIngredientList: res.data,
