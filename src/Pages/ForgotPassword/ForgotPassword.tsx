@@ -1,20 +1,19 @@
-import React, {memo, useState, FC, ChangeEvent} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, { memo, FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormContainer from '../../components/FormContainer/FormContainer';
-import {EmailInput} from '@ya.praktikum/react-developer-burger-ui-components';
-import {forgotPassword} from '../../utils/MainApi';
+import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { forgotPassword } from '../../utils/MainApi';
+import { useForm } from "../../utils/hooks/useForm";
 
 const ForgotPassword: FC = (): React.ReactElement => {
-  const [emailValue, setEmailValue] = useState<string>('');
   const navigate = useNavigate();
+  const {values, handleChange} = useForm();
 
   const onSubmit = (): void => {
-    forgotPassword(emailValue)
-      .then((res) => {
-        if (res.success) {
-          const fpState = {forgotPassword: true};
-          navigate('/reset-password', {state: fpState});
-        }
+    forgotPassword(values.emailInput)
+      .then(() => {
+        const fpState = {forgotPassword: true};
+        navigate('/reset-password', {state: fpState});
       })
       .catch((err) => {
         console.log(`При попытке восстановления пароля произошла ошибка - ${err}`);
@@ -34,8 +33,8 @@ const ForgotPassword: FC = (): React.ReactElement => {
       errorTitle="При попытке восстановления пароля произошла ошибка"
     >
       <EmailInput
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setEmailValue(evt.target.value)}
-        value={emailValue}
+        onChange={handleChange}
+        value={values.emailInput || ''}
         name={'emailInput'}
         placeholder="Укажите e-mail"
       />

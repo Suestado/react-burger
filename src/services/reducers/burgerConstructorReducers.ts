@@ -4,13 +4,20 @@ import {
   REPLACE_BURGER_BUN,
   DELETE_BURGER_FILLING,
   REPLACE_BURGER_FILLING,
+  CLEAR_BURGER_FILLINGS,
 } from '../../utils/constants';
+import { IngredientInterface } from "../../utils/commonTypes";
+import { UTBurgerConstructorActions } from "../actions/burgerConstructorActions";
 
-const initialState = {
+interface IBurgerConstructorState {
+  customerBurgerIngredients: ReadonlyArray<IngredientInterface>
+}
+
+const initialState: IBurgerConstructorState = {
   customerBurgerIngredients: [],
 };
 
-const burgerConstructorReducer = (state = initialState, action) => {
+const burgerConstructorReducer = (state = initialState, action: UTBurgerConstructorActions) => {
   switch (action.type) {
     case PUT_BURGER_BUN: {
       return {
@@ -50,6 +57,11 @@ const burgerConstructorReducer = (state = initialState, action) => {
     case REPLACE_BURGER_FILLING: {
       return {
         customerBurgerIngredients: action.newIngredientsList
+      };
+    }
+    case CLEAR_BURGER_FILLINGS: {
+      return {
+        customerBurgerIngredients: []
       };
     }
     default: {

@@ -1,0 +1,68 @@
+.orderNumber {
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+.orderNumberModal {
+  padding-bottom: 20px;
+  min-height: 64px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.orderName {
+  padding-bottom: 12px;
+}
+
+.orderStatus {
+  color: #0CC;
+  padding-bottom: 60px;
+}
+
+.orderIngredientsHeader {
+  padding-bottom: 24px;
+}
+
+.orderIngredientsWrapper {
+  padding-right: 24px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 64px;
+  grid-gap: 16px;
+}
+
+.orderIngredientsWrapperScroll {
+  max-height: 312px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orderCostWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orderCost {
+  margin-right: 8px;
+}
+
+.orderIngredientsWrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.orderIngredientsWrapper::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.orderIngredientsWrapper::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}

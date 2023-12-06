@@ -1,24 +1,23 @@
-import React, {memo, useState, useEffect, FC, ChangeEvent} from 'react';
-import {useSelector} from 'react-redux';
-import {useNavigate, useLocation} from 'react-router-dom';
+import React, { memo, useEffect, FC } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import FormContainer from '../../components/FormContainer/FormContainer';
-import {PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
-import {resetPassword} from '../../utils/MainApi';
+import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { resetPassword } from '../../utils/MainApi';
+import { useSelector } from "../../services/hooks/reduxHooks";
+import { IUserState } from "../../services/reducers/userReducers";
+import { useForm } from "../../utils/hooks/useForm";
 
 const ResetPassword: FC = (): React.ReactElement => {
-  const [passwordValue, setPasswordValue] = useState<string>('');
-  const [smsValue, setSmsValue] = useState<string>('');
-  const currentUser = useSelector((store: any) => store.currentUser);
+  const currentUser = useSelector((store) => store.currentUser) as IUserState;
   const navigate = useNavigate();
   const location = useLocation();
+  const {values, handleChange} = useForm();
 
   const onSubmit = (): void => {
-    resetPassword(passwordValue, smsValue)
-      .then((res) => {
-        if (res.success) {
-          navigate('/login', {replace: true});
-        }
+    resetPassword(values.passwordInput, values.nameInput)
+      .then(() => {
+        navigate('/login', {replace: true});
       })
       .catch((err) => {
         console.log(`При попытке смены пароля произошла ошибка - ${err}`);
@@ -45,15 +44,15 @@ const ResetPassword: FC = (): React.ReactElement => {
     >
       <PasswordInput
         placeholder={'Введите новый пароль'}
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setPasswordValue(evt.target.value)}
-        value={passwordValue}
+        onChange={handleChange}
+        value={values.passwordInput || ''}
         name={'passwordInput'}
       />
       <Input
         type={'text'}
         placeholder={'Введите код из письма'}
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setSmsValue(evt.target.value)}
-        value={smsValue}
+        onChange={handleChange}
+        value={values.nameInput || ''}
         name={'nameInput'}
       />
     </FormContainer>

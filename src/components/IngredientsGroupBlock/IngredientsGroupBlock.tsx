@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux';
 import React, { useEffect, useRef, memo, FC } from 'react';
 import styles from './ingredientsGroupBlock.module.css';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
-import {IngredientInterface} from "../../utils/commonTypes";
+import { useSelector } from "../../services/hooks/reduxHooks";
 
 interface IIngredientsGroupBlock {
   title: string,
@@ -12,14 +11,14 @@ interface IIngredientsGroupBlock {
 }
 
 const IngredientsGroupBlock: FC<IIngredientsGroupBlock> = memo(({ title, type, id, handleHeadersRef }): React.ReactElement => {
-  const ingredientsList = useSelector((store: any) => store.ingredients.fullIngredientList);
+  const ingredientsList = useSelector((store) => store.ingredients.fullIngredientList);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect((): void => {
     handleHeadersRef(ref.current as HTMLHeadingElement);
   }, []);
 
-  const sortedIngredientsList = ingredientsList.filter((item: IngredientInterface) => {
+  const sortedIngredientsList = ingredientsList.filter((item) => {
     return item.type === type;
   });
 
@@ -27,7 +26,7 @@ const IngredientsGroupBlock: FC<IIngredientsGroupBlock> = memo(({ title, type, i
     <section className={styles.ingredientsGroupBlock}>
       <h2 className={styles.header} id={id} ref={ref}>{title}</h2>
       <div className={styles.container}>
-        {sortedIngredientsList.map((item: IngredientInterface) => {
+        {sortedIngredientsList.map((item) => {
           return (
             <BurgerIngredient
               key={item._id}

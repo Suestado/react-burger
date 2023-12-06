@@ -1,5 +1,4 @@
 import { useCallback, memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
 import styles from './burgerConstructor.module.css';
@@ -20,15 +19,15 @@ import {
   replaceBurgerFilling,
 } from '../../services/actions/burgerConstructorActions';
 import {IngredientInterface} from "../../utils/commonTypes";
+import { useDispatch, useSelector } from "../../services/hooks/reduxHooks";
 
 function BurgerConstructor() {
-  const { customerBurgerIngredients } = useSelector((store: any) => store.customerBurger);
-  const { orderRequestProcessing } = useSelector((store: any) => store.orderStatus);
-  const { orderNumber } = useSelector((store: any) => store.orderStatus);
-  const { isLoggedIn } = useSelector((store: any) => store.currentUser);
+  const { customerBurgerIngredients } = useSelector((store) => store.customerBurger);
+  const { orderRequestProcessing } = useSelector((store) => store.orderStatus);
+  const { orderNumber } = useSelector((store) => store.orderStatus);
+  const { isLoggedIn } = useSelector((store) => store.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const [{ isHoverBunTop }, dropTargetBunTop] = useDrop({
     accept: 'bun',
@@ -61,13 +60,11 @@ function BurgerConstructor() {
   });
 
   type TonDropHandlerBun = (
-    item: {
-      type: string
-    }
+    item: IngredientInterface
   ) => void;
 
-  const onDropHandlerBun: TonDropHandlerBun = (item): void => {
-    if (customerBurgerIngredients.some((item: {type: string}) => item.type === 'bun')) {
+  const onDropHandlerBun: TonDropHandlerBun = (item) => {
+    if (customerBurgerIngredients.some((item) => item.type === 'bun')) {
       dispatch(replaceBurgerBun(item));
     } else {
       dispatch(putBurgerBun(item));
@@ -80,17 +77,15 @@ function BurgerConstructor() {
   }
 
   function submitOrder(): void {
-    const ingredients: IngredientInterface[] = customerBurgerIngredients.map((item: IngredientInterface) => {
+    const ingredients: string[] = customerBurgerIngredients.map((item) => {
       return item._id;
     });
 
     if (isLoggedIn) {
-      // @ts-ignore
       dispatch(getOrderStatus(ingredients));
     } else {
       navigate('/login');
     }
-
   }
 
   function closeModal(): void {
@@ -99,20 +94,20 @@ function BurgerConstructor() {
 
   type TonReplaceFillings = (dragIndex: number, dropIndex: number) => void;
   const onReplaceFillings = useCallback<TonReplaceFillings>((dragIndex, dropIndex): void => {
-    const newFillingsList = [...customerBurgerIngredients];
+    const newFillingsList: IngredientInterface[] = [...customerBurgerIngredients];
     newFillingsList.splice(dragIndex, 1);
     newFillingsList.splice(dropIndex, 0, customerBurgerIngredients[dragIndex]);
 
     dispatch(replaceBurgerFilling(newFillingsList));
   }, [customerBurgerIngredients]);
 
-  const isBunPlaseEmpty: boolean = !customerBurgerIngredients.some((item: IngredientInterface) => item.type === 'bun');
-  const fillingsListEmpty: boolean = !customerBurgerIngredients.some((item: IngredientInterface) => item.type !== 'bun');
+  const isBunPlaseEmpty: boolean = !customerBurgerIngredients.some((item) => item.type === 'bun');
+  const fillingsListEmpty: boolean = !customerBurgerIngredients.some((item) => item.type !== 'bun');
   const bunIsHovered: string = isHoverBunTop || isHoverBunBottom ? styles.hoveredContainer : '';
   const fillingsIsHovered: string = isHoverFillings ? styles.hoveredContainer : '';
   const orderCompleted: boolean =
-    customerBurgerIngredients.some((ingredient: IngredientInterface) => ingredient.type === 'bun')
-    && customerBurgerIngredients.some((ingredient: IngredientInterface) => ingredient.type === 'sauce' || ingredient.type === 'main');
+    customerBurgerIngredients.some((ingredient) => ingredient.type === 'bun')
+    && customerBurgerIngredients.some((ingredient) => ingredient.type === 'sauce' || ingredient.type === 'main');
 
   return (
     <section className={styles.ingredientsSection}>
@@ -125,9 +120,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').name} (верх)`}
-            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').price}
-            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item) => item.type === 'bun')?.name || ''} (верх)`}
+            price={customerBurgerIngredients.find((item) => item.type === 'bun')?.price || 0}
+            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun')?.image || ''}
           />
         }
       </div>
@@ -138,7 +133,7 @@ function BurgerConstructor() {
       >
         {fillingsListEmpty ? <EmptyFillings/> :
           <>
-            {customerBurgerIngredients.map((item: IngredientInterface, index: number) => {
+            {customerBurgerIngredients.map((item, index) => {
               if (item.type !== 'bun') {
                 return (
                   <ConstructorElementFillings
@@ -162,9 +157,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').name} (низ)`}
-            price={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').price}
-            thumbnail={customerBurgerIngredients.find((item: IngredientInterface) => item.type === 'bun').image}
+            text={`${customerBurgerIngredients.find((item) => item.type === 'bun')?.name || ''} (низ)`}
+            price={customerBurgerIngredients.find((item) => item.type === 'bun')?.price || 0}
+            thumbnail={customerBurgerIngredients.find((item) => item.type === 'bun')?.image || ''}
           />
         }
       </div>
@@ -172,7 +167,7 @@ function BurgerConstructor() {
       <div className={styles.orderContainer}>
         <div className={styles.priceTag}>
           <p className="text text_type_main-large">
-            {customerBurgerIngredients.reduce((acc: number, currentElement: IngredientInterface) => {
+            {customerBurgerIngredients.reduce((acc: number, currentElement) => {
               return currentElement.price + acc;
             }, 0)}
           </p>

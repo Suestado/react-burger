@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Preloader from '../Preloader/Preloader';
+import { useSelector } from "../../services/hooks/reduxHooks";
 
 interface IUnAuthRouteElement {
   element: React.ReactElement;
@@ -10,7 +10,7 @@ interface IUnAuthRouteElement {
 const UnAuthRouteElement: FC<IUnAuthRouteElement> = ({ element: Component}) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn, getUserProcessing }: { isLoggedIn: boolean, getUserProcessing: boolean } = useSelector((store: any) => store.currentUser);
+  const { isLoggedIn, getUserProcessing } = useSelector((store) => store.currentUser);
   const from: string | undefined = location.state?.lastPage;
 
   if(getUserProcessing) {

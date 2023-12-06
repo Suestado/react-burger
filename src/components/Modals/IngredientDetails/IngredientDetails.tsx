@@ -1,31 +1,25 @@
-import React, { useEffect, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { createSelector } from 'reselect';
 import styles from './ingredientDetails.module.css';
-import getIngredients from '../../../services/actions/fullIngredientsListActions';
 import Preloader from '../../Preloader/Preloader';
-import {IngredientInterface} from "../../../utils/commonTypes";
+import { useSelector } from "../../../services/hooks/reduxHooks";
+import { RootState } from "../../../services/actions/types";
 
-const selectAllIngredients = (store: any) => store.ingredients.fullIngredientList;
+const selectAllIngredients = (store: RootState) => store.ingredients.fullIngredientList;
 
+//фильтрацию, поиск ингредиентов у лучше делать в селекторе (в хуке useSelector), используя библиотеку reselect.
+// Данная библиотека нужна для создания мемоизированных, пригодных для компоновки селекторных функций.
+// Примеры взаимодействия reselect с useSelector можно посмотреть здесь: https://react-redux.js.org/api/hooks#useselector-examples
 const IngredientDetails: FC = (): React.ReactElement => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const selectIngredient = createSelector(
     [selectAllIngredients],
-    (allIngredients: IngredientInterface[]) => {
-      return allIngredients.find((item: IngredientInterface) => item._id === id);
+    (allIngredients) => {
+      return allIngredients.find((item) => item._id === id);
     },
   );
   const ingredient = useSelector(selectIngredient);
-
-  useEffect((): void => {
-    if (!ingredient) {
-      // @ts-ignore
-      dispatch(getIngredients());
-    }
-  }, []);
 
   return (
     <>

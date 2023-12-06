@@ -1,7 +1,8 @@
 import { checkAuth as checkAuthApi, refreshToken } from './MainApi';
 import { fetchUserProcessing, logOutUser, refreshUser } from '../services/actions/userActions';
+import { AppDispatch } from "../services/actions/types";
 
-function checkAuth(dispatch: any) {
+function checkAuth(dispatch: AppDispatch) {
   dispatch(fetchUserProcessing())
   checkAuthApi(localStorage.getItem('accessToken'))
     .then((res) => {
@@ -20,11 +21,13 @@ function checkAuth(dispatch: any) {
                 })
                 .catch((err) => {
                   console.log(`При обновлении токена произошла ошибка - ${err.message}`);
+                  dispatch(logOutUser());
                 });
             }
           })
           .catch((err) => {
             console.log(`При обновлении токена произошла ошибка - ${err.message}`);
+            dispatch(logOutUser());
           });
       } else {
         console.log(`При проверке токена произошла ошибка ${err.message}`);

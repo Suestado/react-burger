@@ -1,6 +1,6 @@
 import React, { useRef, memo, FC } from 'react';
-import { useDispatch } from 'react-redux';
 import {useDrag, useDrop, XYCoord} from 'react-dnd';
+import { useDispatch } from "../../../services/hooks/reduxHooks";
 import styles from './constructorElementFillings.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { deleteBurgerFilling } from '../../../services/actions/burgerConstructorActions';

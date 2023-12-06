@@ -1,0 +1,82 @@
+.mainWrapper {
+  margin: 0;
+  padding: 0;
+  min-width: 490px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 60px;
+  color: #F2F2F3;
+}
+
+.orderNumbersWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 280px);;
+  grid-template-rows: repeat(2, auto);
+  grid-row-gap: 24px;
+  grid-column-gap: 24px;
+  grid-template-areas:
+    "A B"
+    "C D";
+}
+
+.readyOrdersHeader {
+  grid-area: A;
+}
+
+.readyOrders {
+  grid-area: C;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(10, 24px);
+  grid-row-gap: 8px;
+  grid-column-gap: 24px;
+  grid-auto-flow: column;
+  grid-auto-rows: 0;
+  overflow-x: hidden;
+}
+
+.readyOrdersNumber {
+  color: #0CC
+}
+
+.inProgressOrdersHeader {
+  grid-area: B;
+}
+
+.inProgressOrders {
+  grid-area: D;
+  display: grid;
+  grid-template-columns: repeat(2, auto);;
+  grid-template-rows: repeat(5, 24px);
+  grid-row-gap: 8px;
+  grid-column-gap: 24px;
+  grid-auto-flow: column;
+  grid-auto-rows: 0;
+  overflow-x: hidden;
+  max-width: 280px;
+}
+
+.totalCounterWrapper {
+
+}
+
+.totalCounterHeader {
+
+}
+
+.totalCounterNumber {
+
+}
+
+.todayCounterWrapper {
+
+}
+
+.todayCounterHeader {
+
+}
+
+.todayCounterNumber {
+
+}

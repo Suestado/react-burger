@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import styles from './orderDetails.module.css';
 import okImage from '../../../images/done.png';
 

@@ -1,0 +1,21 @@
+.ingredientWrapper {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  grid-template-rows: auto;
+  grid-gap: 16px;
+  align-items: center;
+}
+
+.ingredientLogo {
+  width: 64px;
+  margin-left: 16px;
+}
+
+.costWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.cost {
+  margin-right: 8px;
+}

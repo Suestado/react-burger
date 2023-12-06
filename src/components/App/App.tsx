@@ -1,6 +1,5 @@
-import {useCallback, useEffect} from 'react';
-import {Routes, Route, useLocation, useNavigate, Location} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate, Location } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
 import Page404 from '../Page404/Page404';
@@ -15,6 +14,13 @@ import Modal from '../Modals/Modal/Modal';
 import IngredientPage from '../../Pages/Ingredients/Ingredients';
 import checkAuth from '../../utils/checkAuth';
 import UnAuthRouteElement from '../ProtectedRouteElement/UnAuthRouteElement';
+import ProfileData from "../ProfileData/ProfileData";
+import ProfileOrders from "../ProfileOrders/ProfileOrders";
+import OrderLine from "../../Pages/OrderLine/OrderLine";
+import { useDispatch } from "../../services/hooks/reduxHooks";
+import LineOrderDetails from "../Modals/LineOrderDetails/LineOrderDetails";
+import OrderDetailsPage from "../../Pages/OrderDetails/OrderDetailsPage";
+import getIngredients from "../../services/actions/fullIngredientsListActions";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,9 +33,21 @@ function App() {
     checkAuth(dispatch);
   }, []);
 
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, []);
+
   type TCloseModal = () => void;
-  const closeModal = useCallback<TCloseModal>(() => {
+  const closeModalMAin = useCallback<TCloseModal>(() => {
     navigate('/', {replace: true});
+  }, []);
+
+  const closeModalOrderLine = useCallback<TCloseModal>(() => {
+    navigate('/feed', {replace: true});
+  }, []);
+
+  const closeModalUserOrders = useCallback<TCloseModal>(() => {
+    navigate('/profile/orders', {replace: true});
   }, []);
 
   return (
@@ -38,30 +56,19 @@ function App() {
       <Routes location={stateRoute || location}>
         <Route path="/" element={<Main/>}/>
         <Route path="/ingredients/:id" element={<IngredientPage/>}/>
-        <Route path="/login" element={
-          <UnAuthRouteElement
-            element={<Login/>}
-          />}/>
-        <Route path="/register" element={
-          <UnAuthRouteElement
-            element={<Register/>}
-          />}/>
-        <Route path="/forgot-password" element={
-          <UnAuthRouteElement
-            element={<ForgotPassword/>}
-          />}/>
-        <Route path="/reset-password" element={
-          <UnAuthRouteElement
-            element={<ResetPassword/>}
-          />}/>
-        <Route path="/profile" element={
-          <ProtectedRouteElement
-            element={<Profile/>}/>
-        }/>
-        <Route path="/profile/orders" element={
-          <ProtectedRouteElement
-            element={<Profile/>}/>
-        }/>
+        <Route path="/feed" element={<OrderLine/>}/>
+        <Route path="/feed/:number" element={<OrderDetailsPage/>}/>
+
+        <Route path="/login" element={<UnAuthRouteElement element={<Login/>}/>}/>
+        <Route path="/register" element={<UnAuthRouteElement element={<Register/>}/>}/>
+        <Route path="/forgot-password" element={<UnAuthRouteElement element={<ForgotPassword/>}/>}/>
+        <Route path="/reset-password" element={<UnAuthRouteElement element={<ResetPassword/>}/>}/>
+
+        <Route path="/profile" element={<ProtectedRouteElement element={<Profile/>} state={location.state}/>}>
+          <Route index element={<ProfileData/>}/>
+          <Route path="orders" element={<ProfileOrders/>}/>
+        </Route>
+        <Route path="/profile/orders/:number" element={<ProtectedRouteElement element={<OrderDetailsPage/>} state={location.state}/>}/>
         <Route path="*" element={<Page404/>}/>
       </Routes>
 
@@ -70,9 +77,29 @@ function App() {
           <Route path="/ingredients/:id" element={
             <Modal
               title="Детали ингредиента"
-              closeModal={closeModal}
+              closeModal={closeModalMAin}
             >
               <IngredientDetails/>
+            </Modal>
+          }/>
+          <Route path="/feed/:number" element={
+            <Modal
+              closeModal={closeModalOrderLine}
+            >
+              <LineOrderDetails
+                scroll={true}
+                modalMod
+              />
+            </Modal>
+          }/>
+          <Route path="/profile/orders/:number" element={
+            <Modal
+               closeModal={closeModalUserOrders}
+            >
+              <LineOrderDetails
+                scroll={true}
+                modalMod
+              />
             </Modal>
           }/>
         </Routes>

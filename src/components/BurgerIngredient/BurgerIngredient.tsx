@@ -1,15 +1,15 @@
 import React, { memo, FC } from 'react';
-import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './burgerIngredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import {IngredientInterface} from "../../utils/commonTypes";
+import { useSelector } from "../../services/hooks/reduxHooks";
 
 interface IBurgerIngredient {
   item: IngredientInterface,
-};
+}
 
 const BurgerIngredient: FC<IBurgerIngredient> = ({ item }): React.ReactElement => {
   const location = useLocation();
@@ -32,7 +32,7 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({ item }): React.ReactElement =
 
   const ingredientRef = item.type === 'bun' ? dragRefBun : dragRefFillings;
   const ingredientIsDragging: boolean = isDragFillings || isDragBun;
-  const orderedCount = useSelector((store: any) => store.customerBurger.customerBurgerIngredients.reduce((acc: number, ingredient: IngredientInterface) => {
+  const orderedCount = useSelector((store) => store.customerBurger.customerBurgerIngredients.reduce((acc: number, ingredient) => {
     return ingredient._id === item._id ? acc + 1 : acc;
   }, 0));
 

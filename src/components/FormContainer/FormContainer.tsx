@@ -1,10 +1,10 @@
-import React, {memo, FC, SyntheticEvent} from 'react';
+import React, { memo, FC, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import styles from './formContainer.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modals/Modal/Modal';
 import { userResetFailure } from '../../services/actions/userActions';
+import { useDispatch, useSelector } from "../../services/hooks/reduxHooks";
 
 interface IFormContainer {
   children: React.ReactElement | React.ReactElement[],
@@ -25,15 +25,17 @@ interface IFormContainer {
 }
 
 const FormContainer: FC<IFormContainer> = (
-  { children,
+  {
+    children,
     header,
     buttonText,
     bottomOptionOne,
     bottomOptionTwo,
     onSubmit,
-    errorTitle }
+    errorTitle
+  }
 ): React.ReactElement => {
-  const { showFailureMessage, failureMessage } = useSelector((store: any) => store.currentUser);
+  const {showFailureMessage, failureMessage} = useSelector((store) => store.currentUser);
   const dispatch = useDispatch();
 
   const handleFormSubmit = (evt: SyntheticEvent): void => {
@@ -65,15 +67,16 @@ const FormContainer: FC<IFormContainer> = (
           </div>
         </form>
 
-        {bottomOptionOne && <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
-          {`${bottomOptionOne.text} `}
-          <Link
-            className={`${styles.bottomLink} text text_type_main-default text_color_inactive`}
-            to={bottomOptionOne.navLink}
-          >
-            {bottomOptionOne.linkText}
-          </Link>
-        </div>}
+        {bottomOptionOne &&
+          <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
+            {`${bottomOptionOne.text} `}
+            <Link
+              className={`${styles.bottomLink} text text_type_main-default text_color_inactive`}
+              to={bottomOptionOne.navLink}
+            >
+              {bottomOptionOne.linkText}
+            </Link>
+          </div>}
         {bottomOptionTwo &&
           <div className={`${styles.bottomContainer} text text_type_main-default text_color_inactive`}>
             {`${bottomOptionTwo.text} `}

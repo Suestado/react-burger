@@ -1,20 +1,18 @@
-import React, {memo, useState, FC, ChangeEvent} from 'react';
-import { useDispatch } from 'react-redux';
+import React, { memo, FC } from 'react';
 import FormContainer from '../../components/FormContainer/FormContainer';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createUser } from '../../services/actions/userActions';
+import { useDispatch } from "../../services/hooks/reduxHooks";
+import { useForm } from "../../utils/hooks/useForm";
 
 const Register: FC = (): React.ReactElement => {
-  const [nameValue, setNameValue] = useState<string>('');
-  const [emailValue, setEmailValue] = useState<string>('');
-  const [passwordValue, setPasswordValue] = useState<string>('');
   const dispatch = useDispatch();
+  const {values, handleChange} = useForm();
 
   const onSubmit = () => {
-    //@ts-ignore
-    dispatch(createUser(nameValue, emailValue, passwordValue));
+    dispatch(createUser(values.nameInput, values.emailInput, values.passwordInput));
   };
 
   return (
@@ -32,19 +30,19 @@ const Register: FC = (): React.ReactElement => {
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setNameValue(evt.target.value)}
-        value={nameValue}
+        onChange={handleChange}
+        value={values.nameInput || ''}
         name={'nameInput'}
       />
       <EmailInput
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setEmailValue(evt.target.value)}
-        value={emailValue}
+        onChange={handleChange}
+        value={values.emailInput || ''}
         name={'emailInput'}
         placeholder="E-mail"
       />
       <PasswordInput
-        onChange={(evt: ChangeEvent<HTMLInputElement>) => setPasswordValue(evt.target.value)}
-        value={passwordValue}
+        onChange={handleChange}
+        value={values.passwordInput || ''}
         name={'passwordInput'}
       />
     </FormContainer>

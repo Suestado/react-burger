@@ -22,16 +22,18 @@ function AppHeader() {
             >Конструктор</span>
           </Link>
 
-          <a className={styles.link} href="#">
+          <Link className={styles.link} to="/feed">
             <ListIcon type={location === '/history' ? 'primary' : 'secondary'}/>
             <span className={
               `text text_type_main-default
               ${location !== '/history' && 'text_color_inactive'}
               ${styles.linkText}`}
             >Лента заказов</span>
-          </a>
+          </Link>
         </nav>
-        <Logo/>
+        <Link to={'/'}>
+          <Logo/>
+        </Link>
         <nav className={`${styles.navBlock} ${styles.navBlock__auth}`}>
           <Link className={styles.link} to="/profile">
             <ProfileIcon type={~location.indexOf('/profile') ? 'primary' : 'secondary'}/>
