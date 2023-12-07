@@ -9,7 +9,7 @@ import {
 import { testIngredient } from '../../actions/tests/testData';
 
 
-describe('todos reducer for burgerConstructorReducers', () => {
+describe('reducer for burgerConstructorReducers', () => {
   it('should return the initial state', () => {
     expect(burgerConstructorReducer(undefined, {})).toEqual({
       customerBurgerIngredients: [],

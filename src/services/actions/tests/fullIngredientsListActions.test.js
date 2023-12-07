@@ -15,18 +15,19 @@ describe('async actions', () => {
 
   it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', () => {
     fetchMock.getOnce('https://norma.nomoreparties.space/api/ingredients', {
-      body: [testIngredient],
+      fullIngredientList: [testIngredient],
     })
 
     const expectedActions = [
       { type: GET_INGREDIENTS },
-      { type: GET_INGREDIENTS_SUCCESS, body: [testIngredient] }
+      { type: GET_INGREDIENTS_SUCCESS, fullIngredientList: [testIngredient] }
     ]
-    const store = mockStore([testIngredient])
+    const store = mockStore({ fullIngredientList: [] })
 
     return store.dispatch(getIngredients()).then(() => {
 // Возвращаем асинхронный экшен
       expect(store.getActions()).toEqual(expectedActions)
     })
+
   })
 })
