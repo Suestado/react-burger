@@ -1,6 +1,10 @@
 import { orderLineReducer } from '../orderLineReducers';
-import getOrderStatusReducer from '../orderDetailsReducers';
-import { GET_ORDER_STATUS } from '../../../utils/constants';
+import {
+  WS_ORDER_LINE_CLOSE,
+  WS_ORDER_LINE_CONNECTING, WS_ORDER_LINE_ERROR,
+  WS_ORDER_LINE_MESSAGE,
+  WS_ORDER_LINE_OPEN,
+} from '../../../utils/constants';
 
 const initialState = {
   status: 'OFFLINE',
@@ -18,15 +22,68 @@ describe('reducer for orderLineReducers', () => {
     expect(orderLineReducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle GET_ORDER_STATUS', () => {
+  it('should handle WS_ORDER_LINE_CONNECTING', () => {
     expect(
-      getOrderStatusReducer(initialState, {
-        type: GET_ORDER_STATUS,
+      orderLineReducer(initialState, {
+        type: WS_ORDER_LINE_CONNECTING,
       }),
     ).toEqual({
       ...initialState,
-      orderRequestProcessing: true,
-      orderRequestFailure: false,
+      status: 'CONNECTING...',
+    });
+  });
+
+  it('should handle WS_ORDER_LINE_OPEN', () => {
+    expect(
+      orderLineReducer(initialState, {
+        type: WS_ORDER_LINE_OPEN,
+      }),
+    ).toEqual({
+      ...initialState,
+      status: 'ONLINE',
+    });
+  });
+
+  it('should handle WS_ORDER_LINE_CLOSE', () => {
+    expect(
+      orderLineReducer(initialState, {
+        type: WS_ORDER_LINE_CLOSE,
+      }),
+    ).toEqual({
+      ...initialState,
+      status: 'OFFLINE',
+    });
+  });
+
+  it('should handle WS_ORDER_LINE_ERROR', () => {
+    expect(
+      orderLineReducer(initialState, {
+        type: WS_ORDER_LINE_ERROR,
+        payload: 'err message',
+      }),
+    ).toEqual({
+      ...initialState,
+      status: 'OFFLINE',
+      error: 'err message',
+    });
+  });
+
+  it('should handle WS_ORDER_LINE_MESSAGE', () => {
+    const orderLineDataTest = {
+      success: true,
+      orders: [{ order_1: '' }, { order_2: '' }],
+      total: 1,
+      totalToday: 1,
+    };
+
+    expect(
+      orderLineReducer(initialState, {
+        type: WS_ORDER_LINE_MESSAGE,
+        payload: orderLineDataTest,
+      }),
+    ).toEqual({
+      ...initialState,
+      orderLineData: orderLineDataTest,
     });
   });
 });
