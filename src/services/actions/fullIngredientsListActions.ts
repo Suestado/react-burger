@@ -30,7 +30,7 @@ const getIngredients = () => (dispatch: AppDispatch) => {
   dispatch({
     type: GET_INGREDIENTS
   });
-  getIngredientsApi()
+  return getIngredientsApi()
     .then((res) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,

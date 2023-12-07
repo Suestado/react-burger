@@ -37,7 +37,7 @@ const getOrderStatus = (ingredients: string[]) => (dispatch: AppDispatch) => {
   dispatch({
     type: GET_ORDER_STATUS,
   });
-  getOrderNumber(ingredients, token)
+  return getOrderNumber(ingredients, token)
     .then((res) => {
         dispatch({
           type: GET_ORDER_STATUS_SUCCESS,
