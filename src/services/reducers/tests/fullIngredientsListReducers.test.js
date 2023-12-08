@@ -24,13 +24,15 @@ describe('reducer for fullIngredientsListReducer', () => {
   });
 
   it('should handle GET_INGREDIENTS_SUCCESS', () => {
+    const payload = [testIngredient, testIngredient, testIngredient]
+
     expect(getIngredientsReducer({ ...initialState, getRequestProcessing: true }, {
       type: GET_INGREDIENTS_SUCCESS,
-      fullIngredientList: [testIngredient, testIngredient, testIngredient],
+      fullIngredientList: payload,
     })).toEqual({
       ...initialState,
       getRequestProcessing: false,
-      fullIngredientList: [testIngredient, testIngredient, testIngredient],
+      fullIngredientList: payload,
     });
   });
 

@@ -8,6 +8,11 @@ import {
 } from '../../../utils/constants';
 import { testIngredient } from '../../actions/tests/testData';
 
+const burgerIngredients = [
+  { ...testIngredient, testID: 1 },
+  { ...testIngredient, testID: 2 },
+  { ...testIngredient, testID: 3 },
+];
 
 describe('reducer for burgerConstructorReducers', () => {
   it('should return the initial state', () => {
@@ -59,11 +64,7 @@ describe('reducer for burgerConstructorReducers', () => {
   it('should handle DELETE_BURGER_FILLING', () => {
     expect(
       burgerConstructorReducer({
-        customerBurgerIngredients: [
-          { ...testIngredient, testID: 1 },
-          { ...testIngredient, testID: 2 },
-          { ...testIngredient, testID: 3 },
-        ],
+        customerBurgerIngredients: burgerIngredients,
       }, {
         type: DELETE_BURGER_FILLING,
         deleteIngredientIndex: 1,
@@ -78,27 +79,21 @@ describe('reducer for burgerConstructorReducers', () => {
   });
 
   it('should handle REPLACE_BURGER_FILLING', () => {
+    const payload = [
+      { ...testIngredient, testID: 1 },
+      { ...testIngredient, testID: 3 },
+      { ...testIngredient, testID: 2 },
+    ];
+
     expect(
       burgerConstructorReducer({
-        customerBurgerIngredients: [
-          { ...testIngredient, testID: 1 },
-          { ...testIngredient, testID: 2 },
-          { ...testIngredient, testID: 3 },
-        ],
+        customerBurgerIngredients: burgerIngredients,
       }, {
         type: REPLACE_BURGER_FILLING,
-        newIngredientsList: [
-          { ...testIngredient, testID: 1 },
-          { ...testIngredient, testID: 3 },
-          { ...testIngredient, testID: 2 },
-        ],
+        newIngredientsList: payload,
       }),
     ).toEqual({
-        customerBurgerIngredients: [
-          { ...testIngredient, testID: 1 },
-          { ...testIngredient, testID: 3 },
-          { ...testIngredient, testID: 2 },
-        ],
+        customerBurgerIngredients: payload,
       },
     );
   });
@@ -106,11 +101,7 @@ describe('reducer for burgerConstructorReducers', () => {
   it('should handle CLEAR_BURGER_FILLINGS', () => {
     expect(
       burgerConstructorReducer({
-        customerBurgerIngredients: [
-          { ...testIngredient, testID: 1 },
-          { ...testIngredient, testID: 2 },
-          { ...testIngredient, testID: 3 },
-        ],
+        customerBurgerIngredients: burgerIngredients,
       }, {
         type: CLEAR_BURGER_FILLINGS,
       }),

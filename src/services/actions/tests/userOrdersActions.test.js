@@ -1,13 +1,19 @@
 import {
   userOrdersConnect,
-  userOrdersDisconnect, wsUserOrdersClose,
-  wsUserOrdersConnecting, wsUserOrdersError, wsUserOrdersMessage,
+  userOrdersDisconnect,
+  wsUserOrdersClose,
+  wsUserOrdersConnecting,
+  wsUserOrdersError,
+  wsUserOrdersMessage,
   wsUserOrdersOpen,
 } from '../userOrdersActions';
 import {
   USER_ORDERS_CONNECTION,
-  USER_ORDERS_DISCONNECT, WS_USER_ORDERS_CLOSE,
-  WS_USER_ORDERS_CONNECTING, WS_USER_ORDERS_ERROR, WS_USER_ORDERS_MESSAGE,
+  USER_ORDERS_DISCONNECT,
+  WS_USER_ORDERS_CLOSE,
+  WS_USER_ORDERS_CONNECTING,
+  WS_USER_ORDERS_ERROR,
+  WS_USER_ORDERS_MESSAGE,
   WS_USER_ORDERS_OPEN,
 } from '../../../utils/constants';
 
