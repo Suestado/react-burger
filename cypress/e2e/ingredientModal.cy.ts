@@ -11,15 +11,9 @@ describe('ingredientModal', () => {
 
     // Аргументы - метод, эндпоинт, возвращаемое значение
     cy.intercept('GET', 'ingredients', {fixture: "ingredientsArr.json"})
-    cy.intercept('GET', 'auth/user', {
-      ok: true,
-      json: () => Promise.resolve({fixture: "login.json"}),
-    })
-    // cy.intercept('GET', 'auth/user', {fixture: "login.json"})
-
-    // cy.intercept('PATCH', 'auth/user', {fixture: "login.json"})
-
-
+    cy.intercept('GET', 'user', {fixture: "login.json"})
+    cy.intercept('PATCH', 'user', {fixture: "login.json"})
+    cy.intercept('POST', 'orders', {fixture: "orderResp.json"})
   })
 
   afterEach(() => {
@@ -54,6 +48,11 @@ describe('ingredientModal', () => {
     cy.get("[data-testid=burgerConstructorFilling]").trigger("drop");
 
     cy.get('[data-testid=submitOrder]').click()
-  })
+    cy.contains(12345)
 
+    cy.get('[data-testid=test-modalClose]').click()
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq('/')
+    })
+  })
 })
