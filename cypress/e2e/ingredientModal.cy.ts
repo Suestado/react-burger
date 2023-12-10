@@ -5,7 +5,7 @@ describe('ingredientModal', () => {
     // Чтобы не писать полный Url в конфиге cypress нужно указать базовый Url
     cy.visit('/')
 
-    // Аргументы - метод, эндпоинт, возвращаемое значение
+    // Аргументы - метод, эндпоинт (только послений), возвращаемое значение
     cy.intercept('GET', 'ingredients', {fixture: "ingredientsArr.json"})
   })
 

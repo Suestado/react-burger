@@ -35,6 +35,7 @@ Frontend for "Stellar Burger" prolect
     * Redux-thunk
     * Redux-toolkit
     * Reselect
+  * WebSocket
   * Tests
     * Jest
     * Cypress
