@@ -37,7 +37,12 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({ item }): React.ReactElement =
   }, 0));
 
   return (
-    <Link to={`/ingredients/${item._id}`} className={styles.burgerIngredientLink} state={{ backgroundLocation: location }}>
+    <Link
+      to={`/ingredients/${item._id}`}
+      className={styles.burgerIngredientLink}
+      state={{ backgroundLocation: location }}
+      data-testid='ingredientCardLink'
+    >
       <article
         className={`${styles.burgerIngredient} ${ingredientIsDragging && styles.isDragging}`}
         ref={ingredientRef}

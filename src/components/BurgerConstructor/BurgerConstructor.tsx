@@ -115,6 +115,7 @@ function BurgerConstructor() {
       <div
         className={`${styles.fixIngredientsContainer} ${bunIsHovered}`}
         ref={dropTargetBunTop}
+        data-testid='burgerConstructorBun'
       >
         {isBunPlaseEmpty ? <EmptyBun/> :
           <ConstructorElement
@@ -130,6 +131,7 @@ function BurgerConstructor() {
       <div
         className={`${styles.ingredientsContainer} ${fillingsIsHovered}`}
         ref={dropTargetFillings}
+        data-testid='burgerConstructorFilling'
       >
         {fillingsListEmpty ? <EmptyFillings/> :
           <>
@@ -179,6 +181,7 @@ function BurgerConstructor() {
             type="primary"
             size="large"
             onClick={submitOrder}
+            data-testid='submitOrder'
           >Оформить заказ</Button>
           : <div className={`text text_type_main-default ${styles.submitDisabled}`}>Оформить заказ</div>
         }

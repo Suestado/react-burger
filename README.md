@@ -25,7 +25,19 @@ ____
 Frontend for "Stellar Burger" prolect
 
 * Frontend
+  * Typescript
   * React
+    * React
+    * React-DnD
+    * React-router
+  * Redux
+    * Redux
+    * Redux-thunk
+    * Redux-toolkit
+    * Reselect
+  * Tests
+    * Jest
+    * Cypress
   * HTML5
   * CSS
   * Grid/flex layout
@@ -37,4 +49,4 @@ ____
 
 Sergey Kiselev - [GitHub](https://github.com/Suestado)
 
-Project Link: [https://github.com/Suestado/react-burger](https://github.com/Suestado/react-burger)
+Project Link: [https://suestado.github.io/react-burger/](https://suestado.github.io/react-burger/)

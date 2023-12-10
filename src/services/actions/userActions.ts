@@ -44,7 +44,7 @@ const createUser = (name: string, email: string, password: string) => {
       type: GET_USER_CREDENTIALS,
     });
 
-    registerUser(name, email, password)
+    return registerUser(name, email, password)
       .then((res) => {
           dispatch({
             type: GET_USER_CREDENTIALS_SUCCESS,
@@ -62,13 +62,12 @@ const createUser = (name: string, email: string, password: string) => {
   };
 }
 
-const loginUser = (email: string, password: string) => {
-  return function (dispatch: AppDispatch) {
+const loginUser = (email: string, password: string) => (dispatch: AppDispatch) => {
     dispatch({
       type: GET_USER_CREDENTIALS,
     });
 
-    loginUserApi(email, password)
+    return loginUserApi(email, password)
       .then((res) => {
           dispatch({
             type: GET_USER_CREDENTIALS_SUCCESS,
@@ -83,7 +82,6 @@ const loginUser = (email: string, password: string) => {
         });
         console.error(err);
       });
-  };
 }
 
 const refreshUser = (name: string, email: string): IFetchUserSuccessAction => ({
