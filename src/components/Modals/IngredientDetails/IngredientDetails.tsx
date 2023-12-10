@@ -25,28 +25,32 @@ const IngredientDetails: FC = (): React.ReactElement => {
     <>
       {!ingredient && <Preloader/>}
 
-      {ingredient && <article className={styles.ingredientWrapper}>
-        <img className={styles.picture} src={ingredient.image_large} alt={ingredient.name}/>
-        <p className={`text text_type_main-medium ${styles.header}`}>{ingredient.name}</p>
+      {ingredient &&
+        <article
+          className={styles.ingredientWrapper}
+          data-testid="ingredientDetails-page"
+        >
+        <img className={styles.picture} src={ingredient.image_large} alt={ingredient.name} data-testid="test-picture"/>
+        <p className={`text text_type_main-medium ${styles.header}`} data-testid="test-ingredientName">{ingredient.name}</p>
         <ul className={styles.nutrientsList}>
           <li className={styles.nutrientBlock}>
             <p className={`text text_type_main-default ${styles.nutrientName}`}>Калории,ккал</p>
-            <p className={`text text_type_digits-default ${styles.nutrientValue}`}>{ingredient.calories}</p>
+            <p className={`text text_type_digits-default ${styles.nutrientValue}`} data-testid="test-calories">{ingredient.calories}</p>
           </li>
 
           <li className={styles.nutrientBlock}>
             <p className={`text text_type_main-default ${styles.nutrientName}`}>Белки, г</p>
-            <p className={`text text_type_digits-default ${styles.nutrientValue}`}>{ingredient.proteins}</p>
+            <p className={`text text_type_digits-default ${styles.nutrientValue}`} data-testid="test-proteins">{ingredient.proteins}</p>
           </li>
 
           <li className={styles.nutrientBlock}>
             <p className={`text text_type_main-default ${styles.nutrientName}`}>Жиры, г</p>
-            <p className={`text text_type_digits-default ${styles.nutrientValue}`}>{ingredient.fat}</p>
+            <p className={`text text_type_digits-default ${styles.nutrientValue}`} data-testid="test-fat">{ingredient.fat}</p>
           </li>
 
           <li className={styles.nutrientBlock}>
             <p className={`text text_type_main-default ${styles.nutrientName}`}>Углеводы, г</p>
-            <p className={`text text_type_digits-default ${styles.nutrientValue}`}>{ingredient.carbohydrates}</p>
+            <p className={`text text_type_digits-default ${styles.nutrientValue}`} data-testid="test-carbohydrates">{ingredient.carbohydrates}</p>
           </li>
         </ul>
       </article>}

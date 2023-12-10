@@ -24,6 +24,7 @@ const Modal: FC<IModal> = ({title, closeModal, children}): React.ReactElement =>
         <div
           className={styles.closeBtnInner}
           onClick={closeModal}
+          data-testid="test-modalClose"
         >
           <CloseIcon type="primary"/>
         </div>
